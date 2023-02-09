@@ -7,8 +7,10 @@ public class Panel_Main extends JPanel {
     // Instanciando areas de texto que van a servir para input e output
     public JTextArea input_texto = new JTextArea();
     public JTextArea output_console = new JTextArea();
-    // Declarando botones que nos serán útiles
-    public JButton generate_afd, analyze_input;
+    // Instanciando botón que va a mostrar imágenes
+    JButton show = new JButton();
+    // Instanciando Jlabel en donde irá la imagen
+    JLabel label_picture = new JLabel();
 
     public Panel_Main() {
         // Definiendo propiedades del panel principal
