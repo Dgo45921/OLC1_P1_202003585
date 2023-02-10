@@ -20,10 +20,10 @@ public class Main_frame extends JFrame implements ActionListener {
 
     public Main_frame() {
         // Definiendo propiedades de la ventana
-        setSize(1300, 800);
+        setSize(1500, 800);
+        setBackground(Color.decode("#202020"));
         setLocationRelativeTo(null);
         setLayout(null);
-        getContentPane().setBackground(Color.white);
         setResizable(false);
         setVisible(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
