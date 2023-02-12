@@ -8,8 +8,8 @@ import java.io.File;
 
 public class Panel_Main extends JPanel implements ActionListener {
     // Instanciando areas de texto que van a servir para input e output
-    public JTextArea input_texto = new JTextArea();
-    public JTextArea output_console = new JTextArea();
+    public static JTextArea input_texto = new JTextArea();
+    public static JTextArea output_console = new JTextArea();
     // Instanciando botón que va a mostrar imágenes
     JButton show;
     // Instanciando Jlabel en donde irá la imagen

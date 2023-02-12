@@ -3,20 +3,27 @@ package Ventanas;
 import Paneles.*;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Objects;
+import java.util.Scanner;
 
 public class Main_frame extends JFrame implements ActionListener {
+    // Instanciando los paneles que formaran parte de la ventana principal
+    public Panel_Main panel_principal = new Panel_Main();
     // Instanciando los elementos que van a existir en nuestro menu
+    JMenuItem new_option = new JMenuItem("New");
     JMenuItem open = new JMenuItem("Open");
     JMenuItem save = new JMenuItem("Save");
     JMenuItem save_as = new JMenuItem("Save as...");
     JMenuItem generate_afd = new JMenuItem("Generate AFD");
     JMenuItem analyze_input = new JMenuItem("Analyze input");
-    // Instanciando los paneles que formaran parte de la ventana principal
-    public Panel_Main panel_principal = new Panel_Main();
 
     public Main_frame() {
         // Definiendo propiedades de la ventana
@@ -38,12 +45,14 @@ public class Main_frame extends JFrame implements ActionListener {
         // Creando y agregando sub opciones a la pestaña file
         main_menu.add(file);
         main_menu.add(reports);
+        file.add(new_option);
         file.add(open);
         file.add(save);
         file.add(save_as);
         reports.add(generate_afd);
         reports.add(analyze_input);
         // Agregando listeners a las opciones del menu file
+        new_option.addActionListener(this);
         open.addActionListener(this);
         save.addActionListener(this);
         save_as.addActionListener(this);
@@ -55,31 +64,67 @@ public class Main_frame extends JFrame implements ActionListener {
 
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-
-        if (e.getSource()==open){
-            System.out.println("yo abro el archivo");
+    public String get_file_path() {
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("OLC FILES", "olc", "olc");
+        File selectedFile = null;
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setFileFilter(filter);
+        fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
+        int result = fileChooser.showOpenDialog(this);
+        if (result == JFileChooser.APPROVE_OPTION) {
+            selectedFile = fileChooser.getSelectedFile();
+            return selectedFile.getAbsolutePath();
+        } else {
+            return "";
         }
 
-        if (e.getSource()==save){
+    }
+
+    public void set_input_text(String ruta) throws IOException {
+        byte[] encoded = Files.readAllBytes(Paths.get(ruta));
+        String texto = new String(encoded, StandardCharsets.UTF_8);
+        Panel_Main.input_texto.setText(texto);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == new_option) {
+            System.out.println("inicializo un nuevo archivo");
+            Panel_Main.input_texto.setText("");
+        }
+
+        if (e.getSource() == open) {
+            System.out.println("yo abro el archivo");
+            String path = get_file_path();
+            if (!Objects.equals(path, "")) {
+                try {
+                    set_input_text(path);
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
+        }
+
+        if (e.getSource() == save) {
             System.out.println("yo guardo el archivo");
         }
 
-        if (e.getSource()==save_as){
+        if (e.getSource() == save_as) {
             System.out.println("yo guardo como");
         }
-        if (e.getSource()==generate_afd){
+        if (e.getSource() == generate_afd) {
             System.out.println("creo afd");
-            if (Objects.equals(panel_principal.input_texto.getText(), "")){
+            if (Objects.equals(panel_principal.input_texto.getText(), "")) {
                 JOptionPane.showMessageDialog(null, "El input no puede estar vacío");
             }
         }
-        if (e.getSource()==analyze_input){
-            if (Objects.equals(panel_principal.input_texto.getText(), "")){
+        if (e.getSource() == analyze_input) {
+            if (Objects.equals(panel_principal.input_texto.getText(), "")) {
                 JOptionPane.showMessageDialog(null, "El input no puede estar vacío ");
             }
         }
 
     }
+
+
 }
