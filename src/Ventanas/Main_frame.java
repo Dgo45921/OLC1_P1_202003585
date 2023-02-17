@@ -1,6 +1,7 @@
 package Ventanas;
 
 import Paneles.*;
+import jflex.SilentExit;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -12,9 +13,9 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Objects;
-import java.util.Scanner;
 
 public class Main_frame extends JFrame implements ActionListener {
+    public boolean guardado = false;
     // Instanciando los paneles que formaran parte de la ventana principal
     public Panel_Main panel_principal = new Panel_Main();
     // Instanciando los elementos que van a existir en nuestro menu
@@ -66,7 +67,7 @@ public class Main_frame extends JFrame implements ActionListener {
 
     public String get_file_path() {
         FileNameExtensionFilter filter = new FileNameExtensionFilter("OLC FILES", "olc", "olc");
-        File selectedFile = null;
+        File selectedFile;
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setFileFilter(filter);
         fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
@@ -114,17 +115,19 @@ public class Main_frame extends JFrame implements ActionListener {
         }
         if (e.getSource() == generate_afd) {
             System.out.println("creo afd");
-            if (Objects.equals(panel_principal.input_texto.getText(), "")) {
+            if (Objects.equals(Panel_Main.input_texto.getText(), "")) {
                 JOptionPane.showMessageDialog(null, "El input no puede estar vacío");
             }
         }
         if (e.getSource() == analyze_input) {
-            if (Objects.equals(panel_principal.input_texto.getText(), "")) {
+            if (Objects.equals(Panel_Main.input_texto.getText(), "")) {
                 JOptionPane.showMessageDialog(null, "El input no puede estar vacío ");
             }
         }
 
     }
+
+
 
 
 }
