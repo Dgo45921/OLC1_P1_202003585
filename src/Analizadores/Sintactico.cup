@@ -1,0 +1,64 @@
+package analizador;
+import java_cup.runtime.*;
+
+
+//PARSER 
+parser code
+{://Codigo visible
+    
+    public void syntax_error(Symbol s){
+        System.out.println("Error R de sintaxis: "+ s.value +" Linea "+(s.left+1)+" columna "+(s.right+1) );
+    }
+
+    public void unrecovered_syntax_error(Symbol s) throws java.lang.Exception{ 
+        System.out.println("Error NR de sintaxis: "+ s.value +" Linea "+(s.left+1)+" columna "+(s.right+1) );                          //asas
+    }
+
+:}
+
+terminal String reservada_conjunto, llave_abre, llave_cierra, dos_puntos, punto_y_coma, porcentaje, concat, virgulilla, coma, flecha, klenee;
+terminal String or, plus, interrogacion, id, cadena, letra, numero, symbol, especial;
+
+nonterminal INICIO, INSTRUCCIONES, INSTRUCCION, SENTENCIA, CONJUNTOS, REGEX, EVALUACION, RANGO, LISTA, CARACTER,CARACTER2;
+
+
+start with INICIO;
+
+INICIO ::= INSTRUCCIONES;
+
+INSTRUCCIONES ::= llave_abre
+                  SENTENCIA LISTA_SENTENCIAS;
+
+LISTA_SENTENCIAS::= SENTENCIA LISTA_SENTENCIAS | llave_cierra;
+
+SENTENCIA ::=
+            CONJUNTOS
+            |REGEX
+            |EVALUACION
+            punto_y_coma;
+
+                // CONJ : conjunto1 -> !~#;
+CONJUNTOS ::= reservada_conjunto dos_puntos id flecha RANGO;
+
+
+
+RANGO ::= CARACTER CARACTER2;
+
+
+ CARACTER::=letra|
+           numero|
+           symbol|
+           llave_abre|
+           llave_cierra|
+           dos_puntos|
+           punto_y_coma|
+           porcentaje|
+           concat|
+           coma|
+           klenee;
+
+
+CARACTER2::= virgulilla CARACTER punto_y_coma|LISTA;
+
+
+LISTA ::= coma CARACTER LISTA|punto_y_coma;
