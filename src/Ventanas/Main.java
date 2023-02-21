@@ -10,7 +10,7 @@ public class Main {
     public static void main(String[] args) throws IOException {
         inicializar_directorios();
         generate_parser("src/Analizadores");
-       // generate_lexer("src/Analizadores/Lexico.jflex");
+        generate_lexer("src/Analizadores/Lexico.jflex");
         principal = new Main_frame();
     }
 
