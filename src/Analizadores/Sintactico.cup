@@ -19,25 +19,32 @@ parser code
 terminal String reservada_conjunto, llave_abre, llave_cierra, dos_puntos, punto_y_coma, porcentaje, concat, virgulilla, coma, flecha, klenee;
 terminal String or, plus, interrogacion, id, cadena, letra, numero, symbol, especial;
 
-nonterminal INICIO, INSTRUCCIONES, INSTRUCCION, SENTENCIA, CONJUNTOS, REGEX, EVALUACION, RANGO, LISTA, CARACTER,CARACTER2;
+nonterminal INICIO, INSTRUCCIONES, SENTENCIA, CONJUNTOS, REGEX, EVALUACION, RANGO, LISTA, CARACTER,CARACTER2, REG_EXP;
+nonterminal REG_EXP_PRIMA, ELEMENTO_REGEX, LISTA_SENTENCIAS_EVAL, LISTA_SENTENCIAS;
 
+
+precedence left concat, or;
+precedence left  klenee, interrogacion, plus;
 
 start with INICIO;
 
 INICIO ::= INSTRUCCIONES;
 
-INSTRUCCIONES ::= llave_abre
-                  SENTENCIA LISTA_SENTENCIAS;
+INSTRUCCIONES ::= llave_abre SENTENCIA LISTA_SENTENCIAS
+                  porcentaje porcentaje
+                  EVALUACION LISTA_SENTENCIAS_EVAL
+                  llave_cierra;
 
-LISTA_SENTENCIAS::= SENTENCIA LISTA_SENTENCIAS | llave_cierra;
+LISTA_SENTENCIAS::= SENTENCIA LISTA_SENTENCIAS| ;
+LISTA_SENTENCIAS_EVAL ::= EVALUACION LISTA_SENTENCIAS_EVAL|;
 
 SENTENCIA ::=
             CONJUNTOS
             |REGEX
-            |EVALUACION
             punto_y_coma;
 
-                // CONJ : conjunto1 -> !~#;
+
+// NO TERMINALES DE CONJUNTOS----------------------------------------------------------------------------------------------------
 CONJUNTOS ::= reservada_conjunto dos_puntos id flecha RANGO;
 
 
@@ -62,3 +69,26 @@ CARACTER2::= virgulilla CARACTER punto_y_coma|LISTA;
 
 
 LISTA ::= coma CARACTER LISTA|punto_y_coma;
+
+
+// NO TERMINALES DE REGEX----------------------------------------------------------------------------------------------------
+
+REGEX ::= id flecha REG_EXP punto_y_coma;
+
+REG_EXP ::= ELEMENTO_REGEX|REG_EXP REG_EXP_PRIMA;
+
+
+REG_EXP_PRIMA ::= concat REG_EXP REG_EXP_PRIMA
+|plus REG_EXP REG_EXP_PRIMA
+|klenee REG_EXP REG_EXP_PRIMA
+|or REG_EXP REG_EXP_PRIMA
+|interrogacion REG_EXP;
+
+
+
+ELEMENTO_REGEX ::= llave_abre id llave_cierra | cadena | especial ;
+
+
+// NO TERMINALES PARA REALIZAR UNA EVALUACION ------------------------------------------------------------------------------
+
+EVALUACION ::= id dos_puntos cadena punto_y_coma ;
