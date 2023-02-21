@@ -1,7 +1,8 @@
 package Ventanas;
 
+import Analizadores.Lexico;
+import Analizadores.Sintactico;
 import Paneles.*;
-import jflex.SilentExit;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -117,6 +118,17 @@ public class Main_frame extends JFrame implements ActionListener {
             System.out.println("creo afd");
             if (Objects.equals(Panel_Main.input_texto.getText(), "")) {
                 JOptionPane.showMessageDialog(null, "El input no puede estar vacío");
+            }
+            else{
+                Lexico scaner = new Lexico(new BufferedReader(new StringReader(Panel_Main.input_texto.getText())));
+                System.out.println("Analisis léxico finalizado");
+                Sintactico parser = new Sintactico(scaner);
+                try {
+                    parser.parse();
+                    System.out.println("funciona");
+                } catch (Exception ex) {
+                    throw new RuntimeException(ex);
+                }
             }
         }
         if (e.getSource() == analyze_input) {

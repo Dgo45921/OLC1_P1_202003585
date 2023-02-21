@@ -26,8 +26,8 @@ import java_cup.runtime.*;
 
 //Inicializar el contador de columna y fila con 1
 %init{
-    yyline = 0;
-    yychar = 0;
+    yyline = 1;
+    yychar = 1;
 %init}
 
 
@@ -67,7 +67,6 @@ IDENTIFICADOR = [a-zA-Z_][a-zA-Z0-9_]*
 {NUMERO} {System.out.println("Se encontró token en linea: "+ yyline+ " columna: "+ yycolumn+ " con valor : "+ yytext()); return new Symbol(sym.numero, yyline, yycolumn, yytext());}
 {SYMBOL} {System.out.println("Se encontró token en linea: "+ yyline+ " columna: "+ yycolumn+ " con valor : "+ yytext()); return new Symbol(sym.symbol, yyline, yycolumn, yytext());}
 {ESPECIALES} {System.out.println("Se encontró token en linea: "+ yyline+ " columna: "+ yycolumn+ " con valor : "+ yytext()); return new Symbol(sym.especial, yyline, yycolumn, yytext());}
-
 {ESPACIOS}   {}
 {MULTILINEA} {}
 {UNA_LINEA} {}
