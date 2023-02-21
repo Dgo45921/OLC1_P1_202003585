@@ -20,11 +20,11 @@ terminal String reservada_conjunto, llave_abre, llave_cierra, dos_puntos, punto_
 terminal String or, plus, interrogacion, id, cadena, letra, numero, symbol, especial;
 
 nonterminal INICIO, INSTRUCCIONES, SENTENCIA, CONJUNTOS, REGEX, EVALUACION, RANGO, LISTA, CARACTER,CARACTER2, REG_EXP;
-nonterminal REG_EXP_PRIMA, ELEMENTO_REGEX, LISTA_SENTENCIAS_EVAL, LISTA_SENTENCIAS;
+nonterminal ELEMENTO_REGEX, LISTA_SENTENCIAS_EVAL, LISTA_SENTENCIAS;
 
 
-precedence left concat, or;
-precedence left  klenee, interrogacion, plus;
+//precedence left concat, or;
+//precedence left  klenee, interrogacion, plus;
 
 start with INICIO;
 
@@ -74,15 +74,23 @@ LISTA ::= coma CARACTER LISTA|punto_y_coma;
 // NO TERMINALES DE REGEX----------------------------------------------------------------------------------------------------
 
 REGEX ::= id flecha REG_EXP punto_y_coma;
+//
+//REG_EXP ::= ELEMENTO_REGEX|REG_EXP REG_EXP_PRIMA;
+//
+//
+//REG_EXP_PRIMA ::= concat REG_EXP REG_EXP_PRIMA
+//|plus REG_EXP REG_EXP_PRIMA
+//|klenee REG_EXP REG_EXP_PRIMA
+//|or REG_EXP REG_EXP_PRIMA
+//|interrogacion REG_EXP;
 
-REG_EXP ::= ELEMENTO_REGEX|REG_EXP REG_EXP_PRIMA;
-
-
-REG_EXP_PRIMA ::= concat REG_EXP REG_EXP_PRIMA
-|plus REG_EXP REG_EXP_PRIMA
-|klenee REG_EXP REG_EXP_PRIMA
-|or REG_EXP REG_EXP_PRIMA
-|interrogacion REG_EXP;
+REG_EXP::= concat REG_EXP REG_EXP
+         | or REG_EXP REG_EXP
+         | klenee REG_EXP
+         | plus REG_EXP
+         | interrogacion REG_EXP
+         | ELEMENTO_REGEX
+         ;
 
 
 
