@@ -52,10 +52,12 @@ CONJUNTOS ::= reservada_conjunto dos_puntos id flecha RANGO;
 
 
 
-RANGO ::= CARACTER CARACTER2;
+RANGO ::= CARACTER:c1 CARACTER2
+{:System.out.println("derive en " + c1);:}
+;
 
 
-CARACTER::=letra|numero|symbol|llave_abre|llave_cierra|dos_puntos|punto_y_coma|porcentaje|concat|coma|klenee|menor;
+CARACTER::=letra:l{:RESULT=l;:}|numero|symbol|llave_abre|llave_cierra|dos_puntos|punto_y_coma|porcentaje|concat|coma|klenee|menor;
 
 
 CARACTER2::= virgulilla CARACTER punto_y_coma|LISTA;

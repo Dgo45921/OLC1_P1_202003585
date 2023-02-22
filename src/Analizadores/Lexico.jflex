@@ -7,7 +7,8 @@ import java_cup.runtime.*;
 /* 2. Configuraciones para el análisis (opciones y declaraciones) */
 
 %{
-String comentario="";
+// aca se definen variables
+String comentario = "";
 boolean flag = false;
 %}
 
@@ -32,6 +33,7 @@ boolean flag = false;
 
 
 //Expresiones regulares
+COMILLA_DOBLE = \"
 MENOR = <
 ESPACIOS = [\r|\f|\s|\t|\n]
 CADENA = \"[^\"]*\"
@@ -79,20 +81,20 @@ IDENTIFICADOR = [a-zA-Z_][a-zA-Z0-9_]*
 <VERIFICAR>{
 
         [^!] {
-                String tmp=comentario;
-                comentario="";
+
                 yybegin(YYINITIAL);
                 yypushback(1);
-                System.out.println("que onda");
+                //System.out.println("que onda");
                 System.out.println("Se encontró token en linea: "+ yyline+ " columna: "+ yycolumn+ " con valor : "+ "<");
                 return new Symbol(sym.symbol, yyline, yycolumn, "<");
 
                 }
         [\!] {
                 yybegin(MULTI);
-                comentario="";
+
                 }
-           }
+
+          }
 
 <MULTI>{
 

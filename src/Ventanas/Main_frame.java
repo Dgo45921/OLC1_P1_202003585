@@ -129,7 +129,7 @@ public class Main_frame extends JFrame implements ActionListener {
                     throw new RuntimeException(ex);
                 }
             }
-        }
+      }
         if (e.getSource() == analyze_input) {
             if (Objects.equals(Panel_Main.input_texto.getText(), "")) {
                 JOptionPane.showMessageDialog(null, "El input no puede estar vacío ");
