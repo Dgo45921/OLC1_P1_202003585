@@ -61,8 +61,8 @@ public class Lexico implements java_cup.runtime.Scanner {
   private static final String ZZ_ACTION_PACKED_0 =
     "\1\0\1\1\1\2\3\3\1\4\1\5\2\3\1\6"+
     "\1\4\1\7\1\10\1\11\1\12\1\13\1\14\1\15"+
-    "\1\16\1\17\1\20\1\21\1\22\1\0\1\2\1\23"+
-    "\1\24\1\6\1\25\1\6\1\26";
+    "\1\16\1\17\1\20\1\21\1\22\1\0\1\23\1\2"+
+    "\1\24\1\25\2\6\1\26";
 
   private static int [] zzUnpackAction() {
     int [] result = new int[32];
@@ -93,7 +93,7 @@ public class Lexico implements java_cup.runtime.Scanner {
     "\0\0\0\37\0\37\0\76\0\37\0\135\0\174\0\233"+
     "\0\272\0\331\0\174\0\370\0\37\0\37\0\37\0\37"+
     "\0\37\0\37\0\37\0\37\0\37\0\37\0\37\0\37"+
-    "\0\u0117\0\u0136\0\37\0\37\0\u0155\0\37\0\u0174\0\174";
+    "\0\76\0\37\0\u0117\0\37\0\37\0\u0136\0\u0155\0\174";
 
   private static int [] zzUnpackRowMap() {
     int [] result = new int[32];
@@ -122,16 +122,16 @@ public class Lexico implements java_cup.runtime.Scanner {
     "\1\2\1\3\1\4\2\5\1\6\1\3\1\7\1\10"+
     "\1\11\1\7\1\5\1\12\1\13\1\10\1\14\3\7"+
     "\1\15\1\16\1\17\1\20\1\21\1\22\1\23\1\24"+
-    "\1\25\1\26\1\27\1\30\37\0\2\31\1\0\34\31"+
-    "\5\0\1\32\40\0\1\13\2\0\1\13\2\0\6\13"+
-    "\24\0\1\10\5\0\1\10\22\0\1\33\7\0\2\33"+
-    "\27\0\1\34\41\0\1\13\2\0\1\13\2\0\3\13"+
-    "\1\35\2\13\16\0\1\36\34\0\6\32\1\0\30\32"+
-    "\7\0\1\13\2\0\1\13\2\0\4\13\1\37\1\13"+
-    "\23\0\1\13\2\0\1\13\2\0\5\13\1\40\14\0";
+    "\1\25\1\26\1\27\1\30\37\0\2\31\1\32\34\31"+
+    "\5\0\1\33\40\0\1\13\2\0\1\13\2\0\6\13"+
+    "\24\0\1\10\5\0\1\10\22\0\1\34\7\0\2\34"+
+    "\27\0\1\35\41\0\1\13\2\0\1\13\2\0\3\13"+
+    "\1\36\2\13\14\0\6\33\1\0\30\33\7\0\1\13"+
+    "\2\0\1\13\2\0\4\13\1\37\1\13\23\0\1\13"+
+    "\2\0\1\13\2\0\5\13\1\40\14\0";
 
   private static int [] zzUnpackTrans() {
-    int [] result = new int[403];
+    int [] result = new int[372];
     int offset = 0;
     offset = zzUnpackTrans(ZZ_TRANS_PACKED_0, offset, result);
     return result;
@@ -169,8 +169,8 @@ public class Lexico implements java_cup.runtime.Scanner {
   private static final int [] ZZ_ATTRIBUTE = zzUnpackAttribute();
 
   private static final String ZZ_ATTRIBUTE_PACKED_0 =
-    "\1\0\2\11\1\1\1\11\7\1\14\11\1\0\1\1"+
-    "\2\11\1\1\1\11\2\1";
+    "\1\0\2\11\1\1\1\11\7\1\14\11\1\0\1\11"+
+    "\1\1\2\11\3\1";
 
   private static int [] zzUnpackAttribute() {
     int [] result = new int[32];
@@ -716,17 +716,17 @@ public class Lexico implements java_cup.runtime.Scanner {
             // fall through
           case 40: break;
           case 19: 
-            { System.out.println("Se encontró token en linea: "+ yyline+ " columna: "+ yycolumn+ " con valor : "+ yytext()); return new Symbol(sym.especial, yyline, yycolumn, yytext());
+            { System.out.println("Se encontró token en linea: "+ yyline+ " columna: "+ yycolumn+ " con valor : "+ yytext()); return new Symbol(sym.cadena, yyline, yycolumn, yytext());
             } 
             // fall through
           case 41: break;
           case 20: 
-            { System.out.println("Se encontró token en linea: "+ yyline+ " columna: "+ yycolumn+ " con valor : "+ yytext()); return new Symbol(sym.flecha, yyline, yycolumn, yytext());
+            { System.out.println("Se encontró token en linea: "+ yyline+ " columna: "+ yycolumn+ " con valor : "+ yytext()); return new Symbol(sym.especial, yyline, yycolumn, yytext());
             } 
             // fall through
           case 42: break;
           case 21: 
-            { System.out.println("Se encontró token en linea: "+ yyline+ " columna: "+ yycolumn+ " con valor : "+ yytext()); return new Symbol(sym.cadena, yyline, yycolumn, yytext());
+            { System.out.println("Se encontró token en linea: "+ yyline+ " columna: "+ yycolumn+ " con valor : "+ yytext()); return new Symbol(sym.flecha, yyline, yycolumn, yytext());
             } 
             // fall through
           case 43: break;

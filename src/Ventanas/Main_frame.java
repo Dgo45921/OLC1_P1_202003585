@@ -121,7 +121,6 @@ public class Main_frame extends JFrame implements ActionListener {
             }
             else{
                 Lexico scaner = new Lexico(new BufferedReader(new StringReader(Panel_Main.input_texto.getText())));
-                System.out.println("Analisis léxico finalizado");
                 Sintactico parser = new Sintactico(scaner);
                 try {
                     parser.parse();

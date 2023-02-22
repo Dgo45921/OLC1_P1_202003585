@@ -30,13 +30,19 @@ start with INICIO;
 
 INICIO ::= INSTRUCCIONES;
 
-INSTRUCCIONES ::= llave_abre LISTA_SENTENCIAS
-                  //porcentaje porcentaje
-                  //EVALUACION LISTA_SENTENCIAS_EVAL
+INSTRUCCIONES ::= llave_abre
+                  LISTA_SENTENCIAS
+                  porcentaje porcentaje
+                  LISTA_SENTENCIAS_EVAL
                   llave_cierra;
 
+
+// NO TERMINALES PARA REALIZAR UNA EVALUACION ------------------------------------------------------------------------------
+
+EVALUACION ::= id dos_puntos cadena punto_y_coma ;
+
 LISTA_SENTENCIAS::= SENTENCIA LISTA_SENTENCIAS| SENTENCIA;
-LISTA_SENTENCIAS_EVAL ::= EVALUACION LISTA_SENTENCIAS_EVAL|;
+LISTA_SENTENCIAS_EVAL ::= EVALUACION LISTA_SENTENCIAS_EVAL|EVALUACION;
 
 SENTENCIA ::=
             CONJUNTOS
@@ -89,7 +95,3 @@ ELEMENTO_REGEX ::= llave_abre id llave_cierra
                    | cadena
                    | especial;
 
-
-// NO TERMINALES PARA REALIZAR UNA EVALUACION ------------------------------------------------------------------------------
-
-EVALUACION ::= id dos_puntos cadena punto_y_coma ;

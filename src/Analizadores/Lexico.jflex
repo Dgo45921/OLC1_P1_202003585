@@ -33,7 +33,7 @@ import java_cup.runtime.*;
 
 //Expresiones regulares
 ESPACIOS = [\r|\f|\s|\t|\n]
-CADENA = \"[^\"]\"
+CADENA = \"[^\"]*\"
 MULTILINEA = <![\s\S]*!>
 UNA_LINEA = \/\/.*
 LETRA = [A-Za-z]
@@ -65,11 +65,12 @@ IDENTIFICADOR = [a-zA-Z_][a-zA-Z0-9_]*
 {IDENTIFICADOR} {System.out.println("Se encontró token en linea: "+ yyline+ " columna: "+ yycolumn+ " con valor : "+ yytext()); return new Symbol(sym.id, yyline, yycolumn, yytext());}
 {CADENA} {System.out.println("Se encontró token en linea: "+ yyline+ " columna: "+ yycolumn+ " con valor : "+ yytext()); return new Symbol(sym.cadena, yyline, yycolumn, yytext());}
 {NUMERO} {System.out.println("Se encontró token en linea: "+ yyline+ " columna: "+ yycolumn+ " con valor : "+ yytext()); return new Symbol(sym.numero, yyline, yycolumn, yytext());}
-{SYMBOL} {System.out.println("Se encontró token en linea: "+ yyline+ " columna: "+ yycolumn+ " con valor : "+ yytext()); return new Symbol(sym.symbol, yyline, yycolumn, yytext());}
-{ESPECIALES} {System.out.println("Se encontró token en linea: "+ yyline+ " columna: "+ yycolumn+ " con valor : "+ yytext()); return new Symbol(sym.especial, yyline, yycolumn, yytext());}
 {ESPACIOS}   {}
 {MULTILINEA} {}
 {UNA_LINEA} {}
+{SYMBOL} {System.out.println("Se encontró token en linea: "+ yyline+ " columna: "+ yycolumn+ " con valor : "+ yytext()); return new Symbol(sym.symbol, yyline, yycolumn, yytext());}
+{ESPECIALES} {System.out.println("Se encontró token en linea: "+ yyline+ " columna: "+ yycolumn+ " con valor : "+ yytext()); return new Symbol(sym.especial, yyline, yycolumn, yytext());}
+
 
 . {
     //Aqui se debe guardar los valores (yytext(), yyline, yychar ) para posteriormente generar el reporte de errores Léxicos.
