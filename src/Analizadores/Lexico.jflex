@@ -7,9 +7,8 @@ import java_cup.runtime.*;
 /* 2. Configuraciones para el análisis (opciones y declaraciones) */
 
 %{
-// acá se agrega código en java
-
-
+String comentario="";
+boolean flag = false;
 %}
 
 //Directivas
@@ -27,49 +26,87 @@ import java_cup.runtime.*;
 //Inicializar el contador de columna y fila con 1
 %init{
     yyline = 1;
+    yycolumn = 1;
     yychar = 1;
 %init}
 
 
 //Expresiones regulares
+MENOR = <
 ESPACIOS = [\r|\f|\s|\t|\n]
 CADENA = \"[^\"]*\"
-MULTILINEA = <![\s\S]*!>
 UNA_LINEA = \/\/.*
 LETRA = [A-Za-z]
 NUMERO = \d+
 ESPECIALES = \\n|\\\'|\\\"
-SYMBOL = [!-$]|[&-)]|\/|-|[<->]|@|[\[-\`]
+SYMBOL = [!-$]|[&-)]|\/|-|[=->]|@|[\[-\`]
 IDENTIFICADOR = [a-zA-Z_][a-zA-Z0-9_]*
+
+%state YYINITIAL
+%state MULTI
+%state VERIFICAR
+
 
 %%
 /* 3. Reglas semánticas */
 
-"CONJ" {System.out.println("Se encontró token en linea: "+ yyline+ " columna: "+ yycolumn+ " con valor : "+ yytext()); return new Symbol(sym.reservada_conjunto, yyline, yycolumn, yytext());}
-"{" {System.out.println("Se encontró token en linea: "+ yyline+ " columna: "+ yycolumn+ " con valor : "+ yytext()); return new Symbol(sym.llave_abre, yyline, yycolumn, yytext());}
-"}" {System.out.println("Se encontró token en linea: "+ yyline+ " columna: "+ yycolumn+ " con valor : "+ yytext()); return new Symbol(sym.llave_cierra, yyline, yycolumn, yytext());}
-":" {System.out.println("Se encontró token en linea: "+ yyline+ " columna: "+ yycolumn+ " con valor : "+ yytext()); return new Symbol(sym.dos_puntos, yyline, yycolumn, yytext());}
-";" {System.out.println("Se encontró token en linea: "+ yyline+ " columna: "+ yycolumn+ " con valor : "+ yytext()); return new Symbol(sym.punto_y_coma, yyline, yycolumn, yytext());}
-"%" {System.out.println("Se encontró token en linea: "+ yyline+ " columna: "+ yycolumn+ " con valor : "+ yytext()); return new Symbol(sym.porcentaje, yyline, yycolumn, yytext());}
-"." {System.out.println("Se encontró token en linea: "+ yyline+ " columna: "+ yycolumn+ " con valor : "+ yytext()); return new Symbol(sym.concat, yyline, yycolumn, yytext());}
-"~" {System.out.println("Se encontró token en linea: "+ yyline+ " columna: "+ yycolumn+ " con valor : "+ yytext()); return new Symbol(sym.virgulilla, yyline, yycolumn, yytext());}
-"," {System.out.println("Se encontró token en linea: "+ yyline+ " columna: "+ yycolumn+ " con valor : "+ yytext()); return new Symbol(sym.coma, yyline, yycolumn, yytext());}
-"->" {System.out.println("Se encontró token en linea: "+ yyline+ " columna: "+ yycolumn+ " con valor : "+ yytext()); return new Symbol(sym.flecha, yyline, yycolumn, yytext());}
-"*" {System.out.println("Se encontró token en linea: "+ yyline+ " columna: "+ yycolumn+ " con valor : "+ yytext()); return new Symbol(sym.klenee, yyline, yycolumn, yytext());}
-"|" {System.out.println("Se encontró token en linea: "+ yyline+ " columna: "+ yycolumn+ " con valor : "+ yytext()); return new Symbol(sym.or, yyline, yycolumn, yytext());}
-"+" {System.out.println("Se encontró token en linea: "+ yyline+ " columna: "+ yycolumn+ " con valor : "+ yytext()); return new Symbol(sym.plus, yyline, yycolumn, yytext());}
-"?" {System.out.println("Se encontró token en linea: "+ yyline+ " columna: "+ yycolumn+ " con valor : "+ yytext()); return new Symbol(sym.interrogacion, yyline, yycolumn, yytext());   }
+<YYINITIAL> "CONJ" {System.out.println("Se encontró token en linea: "+ yyline+ " columna: "+ yycolumn+ " con valor : "+ yytext()); return new Symbol(sym.reservada_conjunto, yyline, yycolumn, yytext());}
+<YYINITIAL> "{" {System.out.println("Se encontró token en linea: "+ yyline+ " columna: "+ yycolumn+ " con valor : "+ yytext()); return new Symbol(sym.llave_abre, yyline, yycolumn, yytext());}
+<YYINITIAL> "}" {System.out.println("Se encontró token en linea: "+ yyline+ " columna: "+ yycolumn+ " con valor : "+ yytext()); return new Symbol(sym.llave_cierra, yyline, yycolumn, yytext());}
+<YYINITIAL> ":" {System.out.println("Se encontró token en linea: "+ yyline+ " columna: "+ yycolumn+ " con valor : "+ yytext()); return new Symbol(sym.dos_puntos, yyline, yycolumn, yytext());}
+<YYINITIAL> ";" {System.out.println("Se encontró token en linea: "+ yyline+ " columna: "+ yycolumn+ " con valor : "+ yytext()); return new Symbol(sym.punto_y_coma, yyline, yycolumn, yytext());}
+<YYINITIAL> "%" {System.out.println("Se encontró token en linea: "+ yyline+ " columna: "+ yycolumn+ " con valor : "+ yytext()); return new Symbol(sym.porcentaje, yyline, yycolumn, yytext());}
+<YYINITIAL> "." {System.out.println("Se encontró token en linea: "+ yyline+ " columna: "+ yycolumn+ " con valor : "+ yytext()); return new Symbol(sym.concat, yyline, yycolumn, yytext());}
+<YYINITIAL> "~" {System.out.println("Se encontró token en linea: "+ yyline+ " columna: "+ yycolumn+ " con valor : "+ yytext()); return new Symbol(sym.virgulilla, yyline, yycolumn, yytext());}
+<YYINITIAL> "," {System.out.println("Se encontró token en linea: "+ yyline+ " columna: "+ yycolumn+ " con valor : "+ yytext()); return new Symbol(sym.coma, yyline, yycolumn, yytext());}
+<YYINITIAL> "->" {System.out.println("Se encontró token en linea: "+ yyline+ " columna: "+ yycolumn+ " con valor : "+ yytext()); return new Symbol(sym.flecha, yyline, yycolumn, yytext());}
+<YYINITIAL> "*" {System.out.println("Se encontró token en linea: "+ yyline+ " columna: "+ yycolumn+ " con valor : "+ yytext()); return new Symbol(sym.klenee, yyline, yycolumn, yytext());}
+<YYINITIAL> "|" {System.out.println("Se encontró token en linea: "+ yyline+ " columna: "+ yycolumn+ " con valor : "+ yytext()); return new Symbol(sym.or, yyline, yycolumn, yytext());}
+<YYINITIAL> "+" {System.out.println("Se encontró token en linea: "+ yyline+ " columna: "+ yycolumn+ " con valor : "+ yytext()); return new Symbol(sym.plus, yyline, yycolumn, yytext());}
+<YYINITIAL> "?" {System.out.println("Se encontró token en linea: "+ yyline+ " columna: "+ yycolumn+ " con valor : "+ yytext()); return new Symbol(sym.interrogacion, yyline, yycolumn, yytext());   }
 
 
-{LETRA}  {System.out.println("Se encontró token en linea: "+ yyline+ " columna: "+ yycolumn+ " con valor : "+ yytext()); return new Symbol(sym.letra, yyline, yycolumn, yytext());}
-{IDENTIFICADOR} {System.out.println("Se encontró token en linea: "+ yyline+ " columna: "+ yycolumn+ " con valor : "+ yytext()); return new Symbol(sym.id, yyline, yycolumn, yytext());}
-{CADENA} {System.out.println("Se encontró token en linea: "+ yyline+ " columna: "+ yycolumn+ " con valor : "+ yytext()); return new Symbol(sym.cadena, yyline, yycolumn, yytext());}
-{NUMERO} {System.out.println("Se encontró token en linea: "+ yyline+ " columna: "+ yycolumn+ " con valor : "+ yytext()); return new Symbol(sym.numero, yyline, yycolumn, yytext());}
-{ESPACIOS}   {}
-{MULTILINEA} {}
-{UNA_LINEA} {}
-{SYMBOL} {System.out.println("Se encontró token en linea: "+ yyline+ " columna: "+ yycolumn+ " con valor : "+ yytext()); return new Symbol(sym.symbol, yyline, yycolumn, yytext());}
-{ESPECIALES} {System.out.println("Se encontró token en linea: "+ yyline+ " columna: "+ yycolumn+ " con valor : "+ yytext()); return new Symbol(sym.especial, yyline, yycolumn, yytext());}
+<YYINITIAL> {LETRA}  {System.out.println("Se encontró token en linea: "+ yyline+ " columna: "+ yycolumn+ " con valor : "+ yytext()); return new Symbol(sym.letra, yyline, yycolumn, yytext());}
+<YYINITIAL> {IDENTIFICADOR} {System.out.println("Se encontró token en linea: "+ yyline+ " columna: "+ yycolumn+ " con valor : "+ yytext()); return new Symbol(sym.id, yyline, yycolumn, yytext());}
+<YYINITIAL> {CADENA} {System.out.println("Se encontró token en linea: "+ yyline+ " columna: "+ yycolumn+ " con valor : "+ yytext()); return new Symbol(sym.cadena, yyline, yycolumn, yytext());}
+<YYINITIAL> {NUMERO} {System.out.println("Se encontró token en linea: "+ yyline+ " columna: "+ yycolumn+ " con valor : "+ yytext()); return new Symbol(sym.numero, yyline, yycolumn, yytext());}
+<YYINITIAL> {MENOR}  {yybegin(VERIFICAR); comentario=yytext();}
+<YYINITIAL> {SYMBOL} {System.out.println("Se encontró token en linea: "+ yyline+ " columna: "+ yycolumn+ " con valor : "+ yytext()); return new Symbol(sym.symbol, yyline, yycolumn, yytext());}
+<YYINITIAL> {ESPECIALES} {System.out.println("Se encontró token en linea: "+ yyline+ " columna: "+ yycolumn+ " con valor : "+ yytext()); return new Symbol(sym.especial, yyline, yycolumn, yytext());}
+<YYINITIAL> {UNA_LINEA} {}
+<YYINITIAL> {ESPACIOS}   {}
+
+<VERIFICAR>{
+
+        [^!] {
+                String tmp=comentario;
+                comentario="";
+                yybegin(YYINITIAL);
+                yypushback(1);
+                System.out.println("que onda");
+                System.out.println("Se encontró token en linea: "+ yyline+ " columna: "+ yycolumn+ " con valor : "+ "<");
+                return new Symbol(sym.symbol, yyline, yycolumn, "<");
+
+                }
+        [\!] {
+                yybegin(MULTI);
+                comentario="";
+                }
+           }
+
+<MULTI>{
+
+     \! {flag=true;}
+      \> {
+              if(flag){
+                  yybegin(YYINITIAL);
+              }
+          }
+      [^\!\>] {}
+
+}
+
+
 
 
 . {

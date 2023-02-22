@@ -20,6 +20,7 @@ public class sym {
   public static final int punto_y_coma = 6;
   public static final int or = 13;
   public static final int dos_puntos = 5;
+  public static final int menor = 22;
   public static final int EOF = 0;
   public static final int letra = 18;
   public static final int id = 16;
@@ -52,7 +53,8 @@ public class sym {
   "letra",
   "numero",
   "symbol",
-  "especial"
+  "especial",
+  "menor"
   };
 }
 

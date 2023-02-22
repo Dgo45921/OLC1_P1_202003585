@@ -17,7 +17,7 @@ parser code
 :}
 
 terminal String reservada_conjunto, llave_abre, llave_cierra, dos_puntos, punto_y_coma, porcentaje, concat, virgulilla, coma, flecha, klenee;
-terminal String or, plus, interrogacion, id, cadena, letra, numero, symbol, especial;
+terminal String or, plus, interrogacion, id, cadena, letra, numero, symbol, especial, menor;
 
 nonterminal INICIO, INSTRUCCIONES, SENTENCIA, CONJUNTOS, REGEX, EVALUACION, RANGO, LISTA, CARACTER,CARACTER2, REG_EXP;
 nonterminal ELEMENTO_REGEX, LISTA_SENTENCIAS_EVAL, LISTA_SENTENCIAS;
@@ -44,10 +44,7 @@ EVALUACION ::= id dos_puntos cadena punto_y_coma ;
 LISTA_SENTENCIAS::= SENTENCIA LISTA_SENTENCIAS| SENTENCIA;
 LISTA_SENTENCIAS_EVAL ::= EVALUACION LISTA_SENTENCIAS_EVAL|EVALUACION;
 
-SENTENCIA ::=
-            CONJUNTOS
-            |REGEX
-            punto_y_coma;
+SENTENCIA ::= CONJUNTOS|REGEX punto_y_coma;
 
 
 // NO TERMINALES DE CONJUNTOS----------------------------------------------------------------------------------------------------
@@ -58,17 +55,7 @@ CONJUNTOS ::= reservada_conjunto dos_puntos id flecha RANGO;
 RANGO ::= CARACTER CARACTER2;
 
 
- CARACTER::=letra|
-           numero|
-           symbol|
-           llave_abre|
-           llave_cierra|
-           dos_puntos|
-           punto_y_coma|
-           porcentaje|
-           concat|
-           coma|
-           klenee;
+CARACTER::=letra|numero|symbol|llave_abre|llave_cierra|dos_puntos|punto_y_coma|porcentaje|concat|coma|klenee|menor;
 
 
 CARACTER2::= virgulilla CARACTER punto_y_coma|LISTA;
@@ -79,7 +66,7 @@ LISTA ::= coma CARACTER LISTA|punto_y_coma;
 
 // NO TERMINALES DE REGEX----------------------------------------------------------------------------------------------------
 
-REGEX ::= id flecha REG_EXP|punto_y_coma;
+REGEX ::= id flecha REG_EXP;
 
 REG_EXP::= concat REG_EXP REG_EXP
          | or REG_EXP REG_EXP
