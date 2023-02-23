@@ -13,6 +13,7 @@ import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Hashtable;
 import java.util.Objects;
 
 public class Main_frame extends JFrame implements ActionListener {
@@ -120,11 +121,13 @@ public class Main_frame extends JFrame implements ActionListener {
                 JOptionPane.showMessageDialog(null, "El input no puede estar vacío");
             }
             else{
+                Main.variables_valor = new Hashtable<String, Object>();
                 Lexico scaner = new Lexico(new BufferedReader(new StringReader(Panel_Main.input_texto.getText())));
                 Sintactico parser = new Sintactico(scaner);
                 try {
                     parser.parse();
                     System.out.println("funciona");
+
                 } catch (Exception ex) {
                     throw new RuntimeException(ex);
                 }

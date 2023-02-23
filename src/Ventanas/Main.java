@@ -9,12 +9,11 @@ import java.util.Hashtable;
 
 public class Main {
     public static Main_frame principal;
-    public static Hashtable<String, String> variables_valor;
+    public static Hashtable<String, Object> variables_valor = new Hashtable<String, Object>();
     public static void main(String[] args) throws IOException {
-        variables_valor = new Hashtable<String, String>();
         inicializar_directorios();
-        generate_parser("src/Analizadores");
-        generate_lexer("src/Analizadores/Lexico.jflex");
+        // generate_parser("src/Analizadores");
+        // generate_lexer("src/Analizadores/Lexico.jflex");
         principal = new Main_frame();
     }
 

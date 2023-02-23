@@ -6,6 +6,7 @@
 package Analizadores;
 
 import java_cup.runtime.*;
+import Funcionalidades.*;
 import java_cup.runtime.XMLElement;
 
 /** CUP v0.11b 20160615 (GIT 4ac7450) generated parser.
@@ -264,7 +265,13 @@ class CUP$Sintactico$actions {
           case 3: // EVALUACION ::= id dos_puntos cadena punto_y_coma 
             {
               Object RESULT =null;
-
+		int IDleft = ((java_cup.runtime.Symbol)CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-3)).left;
+		int IDright = ((java_cup.runtime.Symbol)CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-3)).right;
+		String ID = (String)((java_cup.runtime.Symbol) CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-3)).value;
+		int chainleft = ((java_cup.runtime.Symbol)CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-1)).left;
+		int chainright = ((java_cup.runtime.Symbol)CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-1)).right;
+		String chain = (String)((java_cup.runtime.Symbol) CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-1)).value;
+		 System.out.println("hey encontré una ev que va a comparar la regex: " + ID + " con la cadena: "+ chain);
               CUP$Sintactico$result = parser.getSymbolFactory().newSymbol("EVALUACION",5, ((java_cup.runtime.Symbol)CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-3)), ((java_cup.runtime.Symbol)CUP$Sintactico$stack.peek()), RESULT);
             }
           return CUP$Sintactico$result;
@@ -351,9 +358,10 @@ System.out.println("encontre la regex: "+ regex);
 		int rangoright = ((java_cup.runtime.Symbol)CUP$Sintactico$stack.peek()).right;
 		Object rango = (Object)((java_cup.runtime.Symbol) CUP$Sintactico$stack.peek()).value;
 		
-                                            System.out.println("encontre un rango llamado " + ID.toString()  + " y tiene "+ rango.toString());
-
-                                            
+                System.out.println("wasa");
+                Funcion mensajero = new Funcion();
+                mensajero.guarda_rango(ID, rango.toString());
+             
               CUP$Sintactico$result = parser.getSymbolFactory().newSymbol("CONJUNTOS",3, ((java_cup.runtime.Symbol)CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-4)), ((java_cup.runtime.Symbol)CUP$Sintactico$stack.peek()), RESULT);
             }
           return CUP$Sintactico$result;
@@ -515,6 +523,7 @@ System.out.println("encontre la regex: "+ regex);
 		int car12right = ((java_cup.runtime.Symbol)CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-1)).right;
 		Object car12 = (Object)((java_cup.runtime.Symbol) CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-1)).value;
 		
+            // retorna el rango en el caso de que haya una virgulilla
             RESULT="~"+car12.toString();
         
               CUP$Sintactico$result = parser.getSymbolFactory().newSymbol("CARACTER2",9, ((java_cup.runtime.Symbol)CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-2)), ((java_cup.runtime.Symbol)CUP$Sintactico$stack.peek()), RESULT);
@@ -529,8 +538,8 @@ System.out.println("encontre la regex: "+ regex);
 		int lisright = ((java_cup.runtime.Symbol)CUP$Sintactico$stack.peek()).right;
 		Object lis = (Object)((java_cup.runtime.Symbol) CUP$Sintactico$stack.peek()).value;
 		
-            RESULT = lis;
-        
+                RESULT = lis;
+            
               CUP$Sintactico$result = parser.getSymbolFactory().newSymbol("CARACTER2",9, ((java_cup.runtime.Symbol)CUP$Sintactico$stack.peek()), ((java_cup.runtime.Symbol)CUP$Sintactico$stack.peek()), RESULT);
             }
           return CUP$Sintactico$result;
@@ -546,7 +555,7 @@ System.out.println("encontre la regex: "+ regex);
 		int result_listaright = ((java_cup.runtime.Symbol)CUP$Sintactico$stack.peek()).right;
 		Object result_lista = (Object)((java_cup.runtime.Symbol) CUP$Sintactico$stack.peek()).value;
 		
-
+            // retorna los valores de la lista seguidos de coma
             if (result_lista != null) {
             RESULT= "," + car_lista.toString() + result_lista.toString();
             }
@@ -564,8 +573,8 @@ System.out.println("encontre la regex: "+ regex);
             {
               Object RESULT =null;
 		
-        RESULT = "";
-        
+                RESULT = ""; // retorna una cadena vacia ya que el rango solo es de 1 elemento
+            
               CUP$Sintactico$result = parser.getSymbolFactory().newSymbol("LISTA",7, ((java_cup.runtime.Symbol)CUP$Sintactico$stack.peek()), ((java_cup.runtime.Symbol)CUP$Sintactico$stack.peek()), RESULT);
             }
           return CUP$Sintactico$result;

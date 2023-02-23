@@ -1,5 +1,6 @@
 package Analizadores;
 import java_cup.runtime.*;
+import Funcionalidades.*;
 
 
 //PARSER 
@@ -45,7 +46,7 @@ INSTRUCCIONES ::= llave_abre
 
 // NO TERMINALES PARA REALIZAR UNA EVALUACION ------------------------------------------------------------------------------
 
-EVALUACION ::= id dos_puntos cadena punto_y_coma ;
+EVALUACION ::= id:ID dos_puntos cadena:chain punto_y_coma {: System.out.println("hey encontré una ev que va a comparar la regex: " + ID + " con la cadena: "+ chain);:};
 
 LISTA_SENTENCIAS::= SENTENCIA LISTA_SENTENCIAS| SENTENCIA;
 LISTA_SENTENCIAS_EVAL ::= EVALUACION LISTA_SENTENCIAS_EVAL|EVALUACION;
@@ -54,10 +55,12 @@ SENTENCIA ::= CONJUNTOS|REGEX:regex {:System.out.println("encontre la regex: "+ 
 
 
 // NO TERMINALES DE CONJUNTOS----------------------------------------------------------------------------------------------------
-CONJUNTOS ::= reservada_conjunto dos_puntos id:ID flecha RANGO:rango {:
-                                            System.out.println("encontre un rango llamado " + ID.toString()  + " y tiene "+ rango.toString());
-
-                                            :};
+CONJUNTOS ::= reservada_conjunto dos_puntos id:ID flecha RANGO:rango
+             {:
+                System.out.println("wasa");
+                Funcion mensajero = new Funcion();
+                mensajero.guarda_rango(ID, rango.toString());
+             :};
 
 
 
@@ -84,13 +87,14 @@ CARACTER::=letra:l {:RESULT=l;:}
 
 CARACTER2::= virgulilla CARACTER:car12 punto_y_coma
         {:
+            // retorna el rango en el caso de que haya una virgulilla
             RESULT="~"+car12.toString();
         :}
 
         |LISTA:lis
-        {:
-            RESULT = lis;
-        :}
+            {:
+                RESULT = lis;
+            :}
 
 
 ;
@@ -98,7 +102,7 @@ CARACTER2::= virgulilla CARACTER:car12 punto_y_coma
 
 LISTA ::= coma CARACTER:car_lista LISTA:result_lista
         {:
-
+            // retorna los valores de la lista seguidos de coma
             if (result_lista != null) {
             RESULT= "," + car_lista.toString() + result_lista.toString();
             }
@@ -109,9 +113,9 @@ LISTA ::= coma CARACTER:car_lista LISTA:result_lista
         :}
         |punto_y_coma
 
-        {:
-        RESULT = "";
-        :}
+            {:
+                RESULT = ""; // retorna una cadena vacia ya que el rango solo es de 1 elemento
+            :}
 
 
 ;
