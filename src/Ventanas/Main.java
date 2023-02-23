@@ -1,15 +1,17 @@
 package Ventanas;
 
-import jflex.anttask.JFlexTask;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Hashtable;
 
 public class Main {
     public static Main_frame principal;
+    public static Hashtable<String, String> variables_valor;
     public static void main(String[] args) throws IOException {
+        variables_valor = new Hashtable<String, String>();
         inicializar_directorios();
         generate_parser("src/Analizadores");
         generate_lexer("src/Analizadores/Lexico.jflex");

@@ -33,7 +33,6 @@ boolean flag = false;
 
 
 //Expresiones regulares
-COMILLA_DOBLE = \"
 MENOR = <
 ESPACIOS = [\r|\f|\s|\t|\n]
 CADENA = \"[^\"]*\"

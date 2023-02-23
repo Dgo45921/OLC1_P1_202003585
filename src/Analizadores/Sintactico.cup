@@ -15,6 +15,12 @@ parser code
     }
 
 :}
+action code
+{:
+    String regex_guardado = "";
+    String cadena = "";
+
+:}
 
 terminal String reservada_conjunto, llave_abre, llave_cierra, dos_puntos, punto_y_coma, porcentaje, concat, virgulilla, coma, flecha, klenee;
 terminal String or, plus, interrogacion, id, cadena, letra, numero, symbol, especial, menor;
@@ -44,43 +50,87 @@ EVALUACION ::= id dos_puntos cadena punto_y_coma ;
 LISTA_SENTENCIAS::= SENTENCIA LISTA_SENTENCIAS| SENTENCIA;
 LISTA_SENTENCIAS_EVAL ::= EVALUACION LISTA_SENTENCIAS_EVAL|EVALUACION;
 
-SENTENCIA ::= CONJUNTOS|REGEX punto_y_coma;
+SENTENCIA ::= CONJUNTOS|REGEX:regex {:System.out.println("encontre la regex: "+ regex);:} punto_y_coma;
 
 
 // NO TERMINALES DE CONJUNTOS----------------------------------------------------------------------------------------------------
-CONJUNTOS ::= reservada_conjunto dos_puntos id flecha RANGO;
+CONJUNTOS ::= reservada_conjunto dos_puntos id:ID flecha RANGO:rango {:
+                                            System.out.println("encontre un rango llamado " + ID.toString()  + " y tiene "+ rango.toString());
+
+                                            :};
 
 
 
-RANGO ::= CARACTER:c1 CARACTER2
-{:System.out.println("derive en " + c1);:}
+RANGO ::= CARACTER:res1 CARACTER2:res2
+            {:
+                RESULT = res1.toString() + res2.toString();
+            :}
 ;
 
 
-CARACTER::=letra:l{:RESULT=l;:}|numero|symbol|llave_abre|llave_cierra|dos_puntos|punto_y_coma|porcentaje|concat|coma|klenee|menor;
+CARACTER::=letra:l {:RESULT=l;:}
+           |numero:n {:RESULT=n;:}
+           |symbol:s {:RESULT=s;:}
+           |llave_abre:la {:RESULT=la;:}
+           |llave_cierra:lc {:RESULT=lc;:}
+           |dos_puntos:dp {:RESULT=dp;:}
+           |punto_y_coma:pc {:RESULT=pc;:}
+           |porcentaje:per {:RESULT=per;:}
+           |concat:con {:RESULT=con;:}
+           |coma:com {:RESULT=com;:}
+           |klenee:kle {:RESULT=kle;:}
+           ;
 
 
-CARACTER2::= virgulilla CARACTER punto_y_coma|LISTA;
+CARACTER2::= virgulilla CARACTER:car12 punto_y_coma
+        {:
+            RESULT="~"+car12.toString();
+        :}
+
+        |LISTA:lis
+        {:
+            RESULT = lis;
+        :}
 
 
-LISTA ::= coma CARACTER LISTA|punto_y_coma;
+;
+
+
+LISTA ::= coma CARACTER:car_lista LISTA:result_lista
+        {:
+
+            if (result_lista != null) {
+            RESULT= "," + car_lista.toString() + result_lista.toString();
+            }
+            else{
+            RESULT = "," + car_lista.toString();
+            }
+
+        :}
+        |punto_y_coma
+
+        {:
+        RESULT = "";
+        :}
+
+
+;
 
 
 // NO TERMINALES DE REGEX----------------------------------------------------------------------------------------------------
 
-REGEX ::= id flecha REG_EXP;
+REGEX ::= id flecha REG_EXP:reg {:RESULT=reg;:};
 
-REG_EXP::= concat REG_EXP REG_EXP
-         | or REG_EXP REG_EXP
-         | klenee REG_EXP
-         | plus REG_EXP
-         | interrogacion REG_EXP
-         | ELEMENTO_REGEX
+REG_EXP::= concat REG_EXP:reg1 REG_EXP: reg2 {:RESULT="."+reg1.toString()+reg2.toString();:}
+         | or REG_EXP:reg3 REG_EXP: reg4 {:RESULT="|"+reg3.toString()+reg4.toString();:}
+         | klenee REG_EXP:reg5 {:RESULT="*"+reg5.toString();:}
+         | plus REG_EXP:reg6 {:RESULT="+"+reg6.toString();:}
+         | interrogacion REG_EXP:reg7 {:RESULT="?"+reg7.toString();:}
+         | ELEMENTO_REGEX:e {:RESULT=e;:}
          ;
 
 
 
-ELEMENTO_REGEX ::= llave_abre id llave_cierra
-                   | cadena
-                   | especial;
-
+ELEMENTO_REGEX ::= llave_abre id:ID llave_cierra{:RESULT ="{"+ ID + "}";:}
+                   | cadena:cad {:RESULT = cad;:}
+                   | especial:esp {:RESULT = esp;:};
