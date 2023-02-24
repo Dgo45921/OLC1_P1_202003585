@@ -3,7 +3,6 @@ package Funcionalidades;
 import Ventanas.Main;
 
 import java.util.ArrayList;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Funcion {
@@ -25,37 +24,6 @@ public class Funcion {
         return patron_letra.matcher(strLett).matches();
     }
 
-    public boolean tieneLetra(String cadena){
-        String text = "1ab,55";
-
-        String regex = ".*[a-zA-Z].*";  // regex to check if string contains any letters
-        Pattern pattern = Pattern.compile(regex);  // compiles the regex
-
-        // find match between given string and pattern
-        Matcher matcherText = pattern.matcher(cadena);
-
-        // return true if the string matched the regex
-        Boolean textMatches = matcherText.matches();
-
-        return textMatches;
-    }
-
-    public boolean tieneNumero(String cadena){
-        String text = "1ab,55";
-
-        String regex = ".*\\d.*";  // regex to check if string contains any letters
-        Pattern pattern = Pattern.compile(regex);  // compiles the regex
-
-        // find match between given string and pattern
-        Matcher matcherText = pattern.matcher(cadena);
-
-        // return true if the string matched the regex
-        Boolean textMatches = matcherText.matches();
-
-        return textMatches;
-    }
-
-
 
     public void guarda_rango(String ID, String rango){
         if (rango.contains("~")){
@@ -70,7 +38,7 @@ public class Funcion {
                 for (int i = Integer.parseInt(limite_inferior); i <=Integer.parseInt(limite_superior) ; i++) {
                     conjunto.add(i);
                 }
-                Main.variables_valor.put(ID, conjunto);
+                Main.conjuntos_valor.put(ID, conjunto);
             }
 
             // verifica que sean letras los limites de los rangos (letra~letra)
@@ -79,7 +47,7 @@ public class Funcion {
                 for (char i = limite_inferior.charAt(0); i <= limite_superior.charAt(0) ; i++) {
                     conjunto.add(i);
                 }
-                Main.variables_valor.put(ID, conjunto);
+                Main.conjuntos_valor.put(ID, conjunto);
             }
             // caso en el que sea un rango caracter~caracter
             else{
@@ -89,10 +57,11 @@ public class Funcion {
                         conjunto.add(i);
                     }
                 }
-                Main.variables_valor.put(ID, conjunto);
+                Main.conjuntos_valor.put(ID, conjunto);
             }
         }
         else{
+            // caso en el que venga una lista: 1,A,$
             System.out.println("encontre una lista " + ID + " y tiene "+ rango);
             ArrayList<String> conjunto = new ArrayList<String>();
             String [] datos = rango.split(",");
@@ -100,13 +69,19 @@ public class Funcion {
                 conjunto.add(datos[i]);
             }
 
-            Main.variables_valor.put(ID, conjunto);
+            Main.conjuntos_valor.put(ID, conjunto);
 
         }
-
-        System.out.println("hey guarde rangos");
     }
 
+
+    public void guarda_evaluaciones(String ID, String cadena){
+        Main.lista_evaluaciones.put(ID,cadena);
+    }
+
+    public void guarda_regex(String ID, String cadena){
+        Main.regex_valor.put(ID, cadena);
+    }
 
 
 

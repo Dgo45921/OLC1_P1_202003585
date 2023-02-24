@@ -1,7 +1,7 @@
 package Analizadores;
 import java_cup.runtime.*;
 import Funcionalidades.*;
-
+import Ventanas.Main;
 
 //PARSER 
 parser code
@@ -20,6 +20,7 @@ action code
 {:
     String regex_guardado = "";
     String cadena = "";
+    Funcion mensajero = new Funcion();
 
 :}
 
@@ -46,19 +47,20 @@ INSTRUCCIONES ::= llave_abre
 
 // NO TERMINALES PARA REALIZAR UNA EVALUACION ------------------------------------------------------------------------------
 
-EVALUACION ::= id:ID dos_puntos cadena:chain punto_y_coma {: System.out.println("hey encontré una ev que va a comparar la regex: " + ID + " con la cadena: "+ chain);:};
+EVALUACION ::= id:ID dos_puntos cadena:chain punto_y_coma {:
+
+                mensajero.guarda_evaluaciones(ID, chain.toString());
+:};
 
 LISTA_SENTENCIAS::= SENTENCIA LISTA_SENTENCIAS| SENTENCIA;
 LISTA_SENTENCIAS_EVAL ::= EVALUACION LISTA_SENTENCIAS_EVAL|EVALUACION;
 
-SENTENCIA ::= CONJUNTOS|REGEX:regex {:System.out.println("encontre la regex: "+ regex);:} punto_y_coma;
+SENTENCIA ::= CONJUNTOS|REGEX punto_y_coma;
 
 
 // NO TERMINALES DE CONJUNTOS----------------------------------------------------------------------------------------------------
 CONJUNTOS ::= reservada_conjunto dos_puntos id:ID flecha RANGO:rango
              {:
-                System.out.println("wasa");
-                Funcion mensajero = new Funcion();
                 mensajero.guarda_rango(ID, rango.toString());
              :};
 
@@ -123,7 +125,10 @@ LISTA ::= coma CARACTER:car_lista LISTA:result_lista
 
 // NO TERMINALES DE REGEX----------------------------------------------------------------------------------------------------
 
-REGEX ::= id flecha REG_EXP:reg {:RESULT=reg;:};
+REGEX ::= id:ID flecha REG_EXP:reg {:
+mensajero.guarda_regex(ID, reg.toString());
+
+:};
 
 REG_EXP::= concat REG_EXP:reg1 REG_EXP: reg2 {:RESULT="."+reg1.toString()+reg2.toString();:}
          | or REG_EXP:reg3 REG_EXP: reg4 {:RESULT="|"+reg3.toString()+reg4.toString();:}

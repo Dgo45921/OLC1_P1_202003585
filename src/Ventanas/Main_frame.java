@@ -121,7 +121,9 @@ public class Main_frame extends JFrame implements ActionListener {
                 JOptionPane.showMessageDialog(null, "El input no puede estar vacío");
             }
             else{
-                Main.variables_valor = new Hashtable<String, Object>();
+                Main.conjuntos_valor = new Hashtable<String, Object>();
+                Main.regex_valor = new Hashtable<String, Object>();
+                Main.lista_evaluaciones = new Hashtable<String, Object>();
                 Lexico scaner = new Lexico(new BufferedReader(new StringReader(Panel_Main.input_texto.getText())));
                 Sintactico parser = new Sintactico(scaner);
                 try {
