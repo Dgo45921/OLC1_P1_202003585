@@ -1,10 +1,13 @@
 package Ventanas;
 
 
+import Arboles.ArbolBinario;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Hashtable;
 
 public class Main {
@@ -12,6 +15,7 @@ public class Main {
     public static Hashtable<String, Object> conjuntos_valor = new Hashtable<String, Object>();
     public static Hashtable<String, Object> regex_valor = new Hashtable<String, Object>();
     public static Hashtable<String, Object> lista_evaluaciones = new Hashtable<String, Object>();
+    public static ArrayList<ArbolBinario> lista_arboles = new ArrayList<>();
     public static void main(String[] args) throws IOException {
         inicializar_directorios();
         principal = new Main_frame();

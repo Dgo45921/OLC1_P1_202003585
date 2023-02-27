@@ -2,6 +2,7 @@ package Ventanas;
 
 import Analizadores.Lexico;
 import Analizadores.Sintactico;
+import Arboles.ArbolBinario;
 import Paneles.*;
 
 import javax.swing.*;
@@ -14,6 +15,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Hashtable;
+import java.util.Map;
 import java.util.Objects;
 
 public class Main_frame extends JFrame implements ActionListener {
@@ -129,6 +131,7 @@ public class Main_frame extends JFrame implements ActionListener {
                 try {
                     parser.parse();
                     System.out.println("funciona");
+                    genera_arboles();
 
                 } catch (Exception ex) {
                     throw new RuntimeException(ex);
@@ -143,7 +146,17 @@ public class Main_frame extends JFrame implements ActionListener {
 
     }
 
+    public void genera_arboles(){
+        for (Map.Entry<String,Object> mapElement : Main.regex_valor.entrySet()) {
+            String key = mapElement.getKey();
 
+            String regex_value = (String) (mapElement.getValue());
+            System.out.println(key + " : " + regex_value);
+            ArbolBinario arbolito = new ArbolBinario(regex_value);
+            Main.lista_arboles.add(arbolito);
+
+        }
+    }
 
 
 }
