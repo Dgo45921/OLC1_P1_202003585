@@ -37,9 +37,9 @@ public class NodoArbol {
         this.tabla = tabla;
     }
 
-    public NodoArbol getNode(){
-        Object leftNode = this.izquierda != null ? ((NodoArbol) this.izquierda).getNode():null;
-        Object rightNode = this.derecha != null ? ((NodoArbol) this.derecha).getNode() : null;
+    public NodoArbol inicializa_propiedades_nodo(){
+        Object leftNode = this.izquierda != null ? ((NodoArbol) this.izquierda).inicializa_propiedades_nodo():null;
+        Object rightNode = this.derecha != null ? ((NodoArbol) this.derecha).inicializa_propiedades_nodo() : null;
 
         if (this.type != null){
             switch (this.type){
@@ -51,14 +51,21 @@ public class NodoArbol {
                 case AND:
                     if (leftNode != null && rightNode != null){
                         this.anulable = ((NodoArbol)leftNode).anulable && ((NodoArbol)rightNode).anulable;
-                        this.primeros.addAll(((NodoArbol)leftNode).primeros);
-                        if (((NodoArbol)leftNode).anulable){
-                            this.primeros.addAll(((NodoArbol)rightNode).ultimos);
+                        if (!(((NodoArbol) leftNode).anulable)){
+                            this.primeros.addAll(((NodoArbol)leftNode).primeros);
                         }
-                        if (((NodoArbol)rightNode).anulable){
+                        else {
+                            this.primeros.addAll(((NodoArbol)leftNode).primeros);
+                            this.primeros.addAll(((NodoArbol)rightNode).primeros);
+                        }
+                        if (!((NodoArbol)rightNode).anulable){
+                            this.ultimos.addAll(((NodoArbol)rightNode).ultimos);
+                        }
+                        else{
                             this.ultimos.addAll(((NodoArbol)leftNode).ultimos);
+                            this.ultimos.addAll(((NodoArbol)rightNode).ultimos);
                         }
-                        this.ultimos.addAll(((NodoArbol)rightNode).ultimos);
+
                     }
                     break;
                 case OR:
@@ -90,11 +97,11 @@ public class NodoArbol {
     }
 
 
-    public Object siguientes(){
-        Object izquierda_siguiente = this.izquierda != null ? ((NodoArbol)this.izquierda).siguientes():null;
-        Object derecha_siguiente = this.derecha != null ? ((NodoArbol)this.derecha).siguientes():null;
+    public Object ultima_pos(){
+        Object izquierda_siguiente = this.izquierda != null ? ((NodoArbol)this.izquierda).ultima_pos():null;
+        Object derecha_siguiente = this.derecha != null ? ((NodoArbol)this.derecha).ultima_pos():null;
 
-        if (this.type != null){
+         if (this.type != null){
             switch (this.type){
                 case AND:
                     for (int elemento : ((NodoArbol)izquierda_siguiente).ultimos) {

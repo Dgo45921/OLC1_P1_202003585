@@ -3,6 +3,7 @@ package Ventanas;
 import Analizadores.Lexico;
 import Analizadores.Sintactico;
 import Arboles.ArbolBinario;
+import Arboles.NodoArbol;
 import Paneles.*;
 
 import javax.swing.*;
@@ -154,8 +155,15 @@ public class Main_frame extends JFrame implements ActionListener {
             System.out.println(key + " : " + regex_value);
             ArbolBinario arbolito = new ArbolBinario(regex_value);
             Main.lista_arboles.add(arbolito);
-
         }
+
+        for (int i =0; i< Main.lista_arboles.size(); i++) {
+            ArbolBinario arbolito = Main.lista_arboles.get(i);
+            NodoArbol raiz = arbolito.getRaiz();
+            raiz.inicializa_propiedades_nodo();
+            raiz.ultima_pos();
+        }
+
     }
 
 
