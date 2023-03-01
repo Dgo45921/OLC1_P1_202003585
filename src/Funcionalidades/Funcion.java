@@ -27,7 +27,7 @@ public class Funcion {
 
     public void guarda_rango(String ID, String rango){
         if (rango.contains("~")){
-            System.out.println("encontre un rango llamado " + ID + " y tiene "+ rango);
+            // System.out.println("encontre un rango llamado " + ID + " y tiene "+ rango);
             String [] limites = rango.split("~");
             String limite_inferior = limites[0];
             String limite_superior = limites[1];
@@ -62,7 +62,7 @@ public class Funcion {
         }
         else{
             // caso en el que venga una lista: 1,A,$
-            System.out.println("encontre una lista " + ID + " y tiene "+ rango);
+            // System.out.println("encontre una lista " + ID + " y tiene "+ rango);
             ArrayList<String> conjunto = new ArrayList<String>();
             String [] datos = rango.split(",");
             for (int i = 0; i <datos.length ; i++) {

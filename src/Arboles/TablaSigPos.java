@@ -2,8 +2,8 @@ package Arboles;
 
 import java.util.ArrayList;
 
-public class TablaSiguientes {
-    public void agregar(int id, String lexema, ArrayList lista_siguientes,  ArrayList<ArrayList> tabla){
+public class TablaSigPos {
+    public void agregar_tabla_sigPos(int id, String lexema, ArrayList lista_siguientes, ArrayList<ArrayList> tabla){
         for (ArrayList elemento: tabla) {
             if( (int) elemento.get(0) == id && elemento.get(1) == lexema ){
                 for (Object flwItem : lista_siguientes){
@@ -24,10 +24,10 @@ public class TablaSiguientes {
 
     }
 
-    public ArrayList next(int id, ArrayList<ArrayList> tabla){
+    public ArrayList next(int numNode, ArrayList<ArrayList> table){
         ArrayList result = new ArrayList();
-        for(ArrayList item : tabla){
-            if( (int) item.get(0) == id ){
+        for(ArrayList item : table){
+            if( (int) item.get(0) == numNode ){
                 result.add(item.get(1));
                 result.add(((ArrayList)item.get(2)).clone());
                 return result;
@@ -38,9 +38,5 @@ public class TablaSiguientes {
         return result;
     }
 
-    public void printTable(ArrayList<ArrayList> table){
-        for(ArrayList item : table){
-            System.out.println(item.get(0) + " - " + item.get(1) + " - " + item.get(2) );
-        }
-    }
+
 }

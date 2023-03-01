@@ -37,7 +37,6 @@ public class ArbolBinario {
         char [] new_regex = reverse_string(this.regex);
         for (int i = 0; i<new_regex.length; i++) {
             if (new_regex[i]=='.'){
-                System.out.println("concat");
                 NodoArbol izquierdo = (NodoArbol) pila.pop();
                 NodoArbol derecho = (NodoArbol) pila.pop();
                 NodoArbol nuevo = new NodoArbol(".", Type.Types.AND, -1, izquierdo, derecho, hojas, tabla_sig_pos);
@@ -45,26 +44,22 @@ public class ArbolBinario {
 
             }
             else if(new_regex[i]=='|'){
-                System.out.println("or");
                 NodoArbol izquierdo = (NodoArbol) pila.pop();
                 NodoArbol derecho = (NodoArbol) pila.pop();
                 NodoArbol nuevo = new NodoArbol("|", Type.Types.OR, -1, izquierdo, derecho, hojas, tabla_sig_pos);
                 pila.push(nuevo);
             }
             else if(new_regex[i] == '*'){
-                System.out.println("kleene");
                 NodoArbol nodito = (NodoArbol) pila.pop();
                 NodoArbol nuevo = new NodoArbol("*", Type.Types.KLEENE, -1, nodito, null, hojas, tabla_sig_pos);
                 pila.push(nuevo);
             }
             else if(new_regex[i]=='?'){
-                System.out.println("cero o una incidencias");
                 NodoArbol nodito = (NodoArbol) pila.pop();
                 NodoArbol nuevo = new NodoArbol("?", Type.Types.INTERROGACION, -1, nodito, null, hojas, tabla_sig_pos);
                 pila.push(nuevo);
             }
             else if(new_regex[i]=='+'){
-                System.out.println("plus");
                 NodoArbol nodito = (NodoArbol) pila.pop();
                 NodoArbol nuevo = new NodoArbol("+", Type.Types.PLUS, -1, nodito, null, hojas, tabla_sig_pos);
                 pila.push(nuevo);
@@ -75,6 +70,7 @@ public class ArbolBinario {
                 if (new_regex[i] == '#'){
                     // creo nodo
                     NodoArbol nodo = new NodoArbol(Character.toString(new_regex[i]), Type.Types.HOJA, contador--, null, null, hojas, tabla_sig_pos);
+                    nodo.setAceptacion(true);
                     pila.push(nodo);
                     hojas.add(nodo);
                 }
@@ -86,7 +82,7 @@ public class ArbolBinario {
                         if (new_regex[j] == '"'){
                             // aqui se guarda el nodo con el lexema que incluye a una cadena. Por ejemplo : "holaaa"
                             posible_id.reverse();
-                            System.out.println(posible_id);
+                           // System.out.println(posible_id);
                             i = j;
                             NodoArbol nodo = new NodoArbol(posible_id.toString(), Type.Types.HOJA, contador--, null, null, hojas, tabla_sig_pos);
                             pila.push(nodo);
@@ -102,7 +98,7 @@ public class ArbolBinario {
                         if (new_regex[j] == '{'){
                             // aqui se guarda el nodo con el lexema que incluye a los conjuntos. Por ejemplo : {numeros}
                             posible_id.reverse();
-                            System.out.println(posible_id);
+                           // System.out.println(posible_id);
                             i = j;
                             NodoArbol nodo = new NodoArbol(posible_id.toString(), Type.Types.HOJA, contador--, null, null, hojas, tabla_sig_pos);
                             pila.push(nodo);
@@ -153,6 +149,18 @@ public class ArbolBinario {
         }
 
         return contador;
+    }
+
+    public ArrayList<ArrayList> getTabla_sig_pos() {
+        return tabla_sig_pos;
+    }
+
+    public ArrayList<NodoArbol> getHojas() {
+        return hojas;
+    }
+
+    public ArrayList<ArrayList> getTabla_transiciones() {
+        return tabla_transiciones;
     }
 }
 

@@ -4,6 +4,9 @@ import Analizadores.Lexico;
 import Analizadores.Sintactico;
 import Arboles.ArbolBinario;
 import Arboles.NodoArbol;
+import Arboles.TablaSigPos;
+import Arboles.TablaT;
+import Funcionalidades.Reportes;
 import Paneles.*;
 
 import javax.swing.*;
@@ -152,7 +155,7 @@ public class Main_frame extends JFrame implements ActionListener {
             String key = mapElement.getKey();
 
             String regex_value = (String) (mapElement.getValue());
-            System.out.println(key + " : " + regex_value);
+            //System.out.println(key + " : " + regex_value);
             ArbolBinario arbolito = new ArbolBinario(regex_value);
             Main.lista_arboles.add(arbolito);
         }
@@ -161,8 +164,17 @@ public class Main_frame extends JFrame implements ActionListener {
             ArbolBinario arbolito = Main.lista_arboles.get(i);
             NodoArbol raiz = arbolito.getRaiz();
             raiz.inicializa_propiedades_nodo();
-            raiz.ultima_pos();
+            raiz.sig_pos();
+
+            Reportes repo = new Reportes();
+            System.out.println("tabla de sigPOS");
+            repo.printTable(arbolito.getTabla_sig_pos());
+
+            TablaT generadorTrancisiones = new TablaT(arbolito);
+            generadorTrancisiones.impTable();
+
         }
+        System.out.println("a");
 
     }
 

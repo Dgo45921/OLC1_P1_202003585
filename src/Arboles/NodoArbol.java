@@ -23,7 +23,7 @@ public class NodoArbol {
         primeros = new ArrayList<>();
         ultimos = new ArrayList<>();
         anulable = true;
-        aceptacion = "#".equals(this.lexema);
+        aceptacion = false;
 
         this.lexema = lexema;
         this.type = type;
@@ -97,9 +97,9 @@ public class NodoArbol {
     }
 
 
-    public Object ultima_pos(){
-        Object izquierda_siguiente = this.izquierda != null ? ((NodoArbol)this.izquierda).ultima_pos():null;
-        Object derecha_siguiente = this.derecha != null ? ((NodoArbol)this.derecha).ultima_pos():null;
+    public Object sig_pos(){
+        Object izquierda_siguiente = this.izquierda != null ? ((NodoArbol)this.izquierda).sig_pos():null;
+        Object derecha_siguiente = this.derecha != null ? ((NodoArbol)this.derecha).sig_pos():null;
 
          if (this.type != null){
             switch (this.type){
@@ -107,16 +107,16 @@ public class NodoArbol {
                     for (int elemento : ((NodoArbol)izquierda_siguiente).ultimos) {
                         Hoja hoja = new Hoja();
                         NodoArbol nodo = hoja.get_hoja(elemento, hojas);
-                        TablaSiguientes table= new TablaSiguientes();
-                        table.agregar(nodo.id, nodo.lexema, ((NodoArbol) derecha_siguiente).primeros, tabla);
+                        TablaSigPos table= new TablaSigPos();
+                        table.agregar_tabla_sigPos(nodo.id, nodo.lexema, ((NodoArbol) derecha_siguiente).primeros, tabla);
                     }
                     break;
                 case KLEENE:
                     for (int item : ((NodoArbol)izquierda_siguiente).ultimos) {
                         Hoja hoja = new Hoja();
                         NodoArbol nodo = hoja.get_hoja(item, hojas);
-                        TablaSiguientes table = new TablaSiguientes();
-                        table.agregar(nodo.id, nodo.lexema, ((NodoArbol) izquierda_siguiente).primeros, tabla);
+                        TablaSigPos table = new TablaSigPos();
+                        table.agregar_tabla_sigPos(nodo.id, nodo.lexema, ((NodoArbol) izquierda_siguiente).primeros, tabla);
                     }
                     break;
                 default:
@@ -127,5 +127,7 @@ public class NodoArbol {
 
     }
 
-
+    public void setAceptacion(boolean aceptacion) {
+        this.aceptacion = aceptacion;
+    }
 }
