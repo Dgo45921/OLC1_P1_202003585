@@ -24,8 +24,16 @@ public class TablaT {
             ArrayList<Integer> sig_posActual = (ArrayList) estado_actual.get(1); // obtenemos las siguientes posiciones del estado actual
             for(int id_hoja: sig_posActual){ // empieza a recorrer los siguientes del estado actual
                 TablaSigPos nuevaTablaSigPos = new TablaSigPos();
-                ArrayList SigPos =(ArrayList)nuevaTablaSigPos.next(id_hoja, tabla).clone(); // se encarga de obtener las siguientes posiciones del nodo que estamos analizando
+                ArrayList SigPos =(ArrayList)nuevaTablaSigPos.next(id_hoja, tabla).clone(); // se encarga de obtener las siguientes posiciones de la hoja que estamos analizando
+                ArrayList SigPos2 = (ArrayList) SigPos.clone();
 
+                if (verifica_TransicionesDuplicadas((ArrayList) estado_actual.get(2), SigPos2)){
+
+                    int val = deletetrans((ArrayList) estado_actual.get(2), SigPos);
+                    ((ArrayList)(ArrayList) (estado_actual.get(2))).remove(val);
+                    agrega_alFinal(SigPos2, estado_actual);
+
+                }
 
                 boolean existente = false;
                 String lexema_found = "";
@@ -61,7 +69,9 @@ public class TablaT {
                         estados.add(nuevo_estado);
                     }
                     else{
+
                         contador ++;
+                        ((ArrayList)((ArrayList)nuevo_estado).get(1)).addAll((ArrayList)sig_posActual);
                         estados.add(nuevo_estado);
                         deleteDuplicates((ArrayList) estado_actual.get(2), SigPos, nuevo_estado);
                         // acá debo de agregar un nuevo estado con uniones de los duplicados
@@ -117,7 +127,7 @@ public class TablaT {
     }
 
     public void impTable(){
-        for(ArrayList state : estados){
+        for(ArrayList state : this.estados){
             String tran = "[";
             for(Object tr : (ArrayList)state.get(2)){
                 Transition t = (Transition) tr;
@@ -135,6 +145,9 @@ public class TablaT {
         for(Object t:  transiciones){
             if (((Transition)t).transition.equals(SigPos.get(0))){
                 System.out.println("el estado: "+ ((Transition) t).initialState+ " tiene conflicto con la transicion: "+ ((Transition) t).transition);
+                if (((Transition) t).initialState.equals("S2")){
+                    System.out.println("a");
+                }
                 return true;
                 }
             }
@@ -150,6 +163,16 @@ public class TablaT {
 
     }
 
+    public int deletetrans(ArrayList transiciones, ArrayList SigPos){
+        for (int i = 0; i <transiciones.size() ; i++) {
+            if (((Transition)transiciones.get(i)).transition.equals(SigPos.get(0))){
+                transiciones.remove(i);
+                return i;
+            }
+        }
+        return -1;
+    }
+
     public void deleteDuplicates2(ArrayList transiciones, ArrayList SigPos, String nuevo_estado){
         for (Object t : transiciones){
             if (((Transition)t).transition.equals(SigPos.get(0))){
@@ -159,6 +182,68 @@ public class TablaT {
 
     }
 
+    public void agrega_alFinal(ArrayList SigPos, ArrayList estado_actual){
+        for (Object obj: (ArrayList) estado_actual.get(2)){
+            if (((Transition)obj).transition.equals(SigPos.get(0))){
+                ArrayList hola =((ArrayList) search_state(((Transition) obj).finalState));
+                ArrayList concat = new ArrayList();
 
+                for (Object obj2:((ArrayList)(ArrayList)hola.get(1))){
+                 concat.add(obj2);
+                }
+                for (Object obj2:((ArrayList)(ArrayList)SigPos.get(1))){
+                    concat.add(obj2);
+                }
+
+
+                ArrayList nuevo_estado = new ArrayList();
+                nuevo_estado.add("S"+contador);
+                nuevo_estado.add(concat);
+                nuevo_estado.add(new ArrayList<>());
+                nuevo_estado.add(false);
+                this.estados.add(nuevo_estado);
+                ((ArrayList)SigPos).set(1, concat);
+
+                Transition transicion = new Transition((String) estado_actual.get(0),  SigPos.get(0) + "", "S"+contador);
+                ((ArrayList)((ArrayList)estado_actual).get(2)).add(transicion);
+                setContador(contador++);
+                break;
+            }
+        }
     }
+
+    public Object search_state(String id_state){
+        for (Object obj:this.estados){
+            if (((ArrayList)obj).get(0).equals(id_state)){
+                return obj;
+            }
+        }
+        return null;
+    }
+
+
+    public ArrayList<ArrayList> getEstados() {
+        return estados;
+    }
+
+    public void setEstados(ArrayList<ArrayList> estados) {
+        this.estados = estados;
+    }
+
+    public int getContador() {
+        return contador;
+    }
+
+    public void setContador(int contador) {
+        this.contador = contador;
+    }
+
+    public ArrayList getEstado_inicial() {
+        return estado_inicial;
+    }
+
+    public void setEstado_inicial(ArrayList estado_inicial) {
+        this.estado_inicial = estado_inicial;
+    }
+}
 
