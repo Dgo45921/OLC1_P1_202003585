@@ -44,9 +44,6 @@ public class TablaT {
                             }
 
 
-                            if (estado_actual.get(0) == "S2"){
-                                System.out.println("a");
-                            }
 
                             ArrayList nuevo_estado = new ArrayList();
                             nuevo_estado.add("S"+contador);
@@ -63,6 +60,9 @@ public class TablaT {
                             }
                             else{
                                 System.out.println("a");
+                                String res = getStateName(concat);
+                                Transition transicion = new Transition((String) estado_actual.get(0),  SigPos.get(0) + "", res);
+                                ((ArrayList)((ArrayList)estado_actual).get(2)).add(transicion);
                             }
 
                             break;
@@ -263,24 +263,14 @@ public class TablaT {
         return estados;
     }
 
-    public void setEstados(ArrayList<ArrayList> estados) {
-        this.estados = estados;
-    }
-
-    public int getContador() {
-        return contador;
-    }
-
-    public void setContador(int contador) {
-        this.contador = contador;
-    }
-
-    public ArrayList getEstado_inicial() {
-        return estado_inicial;
-    }
-
-    public void setEstado_inicial(ArrayList estado_inicial) {
-        this.estado_inicial = estado_inicial;
+    public String getStateName(ArrayList concat){
+        String nombre = "";
+        for (ArrayList e : this.estados){ // verifica si un estado ya existe, revisa la lista de estados y compara el conjunto de transiciones de cada uno de los estados
+            if (e.get(1).equals(concat)){
+                nombre =(String) e.get(0);
+            }
+        }
+        return  nombre;
     }
 }
 

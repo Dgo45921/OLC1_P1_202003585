@@ -80,8 +80,16 @@ public class NodoArbol {
                     }
                     break;
                 case KLEENE:
+                case INTERROGACION:
                     if(leftNode != null){
                         this.anulable = true;
+                        this.primeros.addAll(((NodoArbol)leftNode).primeros);
+                        this.ultimos.addAll(((NodoArbol)leftNode).ultimos);
+                    }
+
+                case PLUS:
+                    if(leftNode != null){
+                        this.anulable = false;
                         this.primeros.addAll(((NodoArbol)leftNode).primeros);
                         this.ultimos.addAll(((NodoArbol)leftNode).ultimos);
                     }
@@ -112,6 +120,7 @@ public class NodoArbol {
                     }
                     break;
                 case KLEENE:
+                case PLUS:
                     for (int item : ((NodoArbol)izquierda_siguiente).ultimos) {
                         Hoja hoja = new Hoja();
                         NodoArbol nodo = hoja.get_hoja(item, hojas);
@@ -119,6 +128,7 @@ public class NodoArbol {
                         table.agregar_tabla_sigPos(nodo.id, nodo.lexema, ((NodoArbol) izquierda_siguiente).primeros, tabla);
                     }
                     break;
+
                 default:
                     break;
             }
