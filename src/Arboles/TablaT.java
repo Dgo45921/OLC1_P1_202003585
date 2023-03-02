@@ -8,9 +8,9 @@ import java.util.ArrayList;
 
 
 public class TablaT {
-    public ArrayList<ArrayList> estados = new ArrayList<>();
-    public int contador;
-    public ArrayList estado_inicial =new ArrayList();  // lista que contendrá la información del estado
+    public static ArrayList<ArrayList> estados = new ArrayList<>();
+    public static int contador;
+    public static ArrayList estado_inicial =new ArrayList();  // lista que contendrá la información del estado
 
     public TablaT(ArbolBinario arbolito){
         NodoArbol root = arbolito.getRaiz(); // obtenemos la raiz del árbol para luego hallar los primeros de la raiz y así comenzar con las transiciones
@@ -29,85 +29,143 @@ public class TablaT {
 
                 if (verifica_TransicionesDuplicadas((ArrayList) estado_actual.get(2), SigPos2)){
 
-                    int val = deletetrans((ArrayList) estado_actual.get(2), SigPos);
-                    ((ArrayList)(ArrayList) (estado_actual.get(2))).remove(val);
-                    agrega_alFinal(SigPos2, estado_actual);
+                    //agrega_alFinal(SigPos2, estado_actual);
 
-                }
+                    for (Object obj:((ArrayList)((ArrayList)estado_actual).get(2)) ){
+                        if (((Transition)obj).transition.equals(SigPos.get(0))){
+                            ArrayList hola =((ArrayList) search_state(((Transition) obj).finalState));
+                            ArrayList concat = new ArrayList();
 
-                boolean existente = false;
-                String lexema_found = "";
-                for (ArrayList e : this.estados){ // verifica si un estado ya existe, revisa la lista de estados y compara el conjunto de transiciones de cada uno de los estados
-                    if (e.get(1).equals(SigPos.get(1))){
-                        existente = true;
-                        lexema_found = (String) e.get(0);
-                        break;
+                            for (Object obj2:((ArrayList)(ArrayList)hola.get(1))){
+                                concat.add(obj2);
+                            }
+                            for (Object obj2:((ArrayList)(ArrayList)SigPos.get(1))){
+                                concat.add(obj2);
+                            }
+
+
+                            if (estado_actual.get(0) == "S2"){
+                                System.out.println("a");
+                            }
+
+                            ArrayList nuevo_estado = new ArrayList();
+                            nuevo_estado.add("S"+contador);
+                            nuevo_estado.add(concat);
+                            nuevo_estado.add(new ArrayList<>());
+                            nuevo_estado.add(false);
+                            if (!stateExists(nuevo_estado)){
+                                this.estados.add(nuevo_estado);
+                                ((ArrayList)SigPos).set(1, concat);
+
+                                Transition transicion = new Transition((String) estado_actual.get(0),  SigPos.get(0) + "", "S"+contador);
+                                ((ArrayList)((ArrayList)estado_actual).get(2)).add(transicion);
+                                contador++;
+                            }
+                            else{
+                                System.out.println("a");
+                            }
+
+                            break;
+                        }
+
                     }
-                }
 
-                if (!existente){
+
+                    //deletetrans((ArrayList) estado_actual.get(2), SigPos);
+                    for (int k = 0; k <((ArrayList)(ArrayList) estado_actual.get(2)).size() ; k++) {
+                        if (((Transition)((ArrayList)((ArrayList)estado_actual.get(2))).get(k)).transition.equals(SigPos.get(0))){
+                            ((ArrayList)(ArrayList) estado_actual.get(2)).remove(k);
+                            break;
+                        }
+                    }
+
+
                     Hoja hojita =new Hoja();
                     if (hojita.es_aceptacion(id_hoja, hojas)){
                         estado_actual.set(3, true);
                     }
-                    if (SigPos.get(0).equals("")){
+                    if (SigPos2.get(0).equals("")){
                         continue;
                     }
-
-
-                    ArrayList nuevo_estado = new ArrayList();
-                    nuevo_estado.add("S"+contador);
-                    nuevo_estado.add(SigPos.get(1));
-                    nuevo_estado.add(new ArrayList());
-                    nuevo_estado.add(false);
-
-
-                    if (!verifica_TransicionesDuplicadas((ArrayList) estado_actual.get(2), SigPos)){
-                        Transition transicion = new Transition((String) estado_actual.get(0),  SigPos.get(0) + "", (String) nuevo_estado.get(0));
-                        ((ArrayList)estado_actual.get(2)).add(transicion);
-                        contador ++;
-                        estados.add(nuevo_estado);
-                    }
-                    else{
-
-                        contador ++;
-                        ((ArrayList)((ArrayList)nuevo_estado).get(1)).addAll((ArrayList)sig_posActual);
-                        estados.add(nuevo_estado);
-                        deleteDuplicates((ArrayList) estado_actual.get(2), SigPos, nuevo_estado);
-                        // acá debo de agregar un nuevo estado con uniones de los duplicados
-                    }
-
+                    continue;
                 }
                 else{
-                    Hoja hojaa = new Hoja();
-                    if(hojaa.es_aceptacion(id_hoja, hojas)){
-                        estado_actual.set(3, true);
-                    }
-
-                    boolean trans_exist = false;
-
-                    for(Object trans : (ArrayList)estado_actual.get(2)){
-                        Transition t = (Transition) trans;
-                        if(t.comparar(estado_actual.get(0) + "", sig_posActual.get(0) + "")){
-                            trans_exist = true;
+                    boolean existente = false;
+                    String lexema_found = "";
+                    for (ArrayList e : this.estados){ // verifica si un estado ya existe, revisa la lista de estados y compara el conjunto de transiciones de cada uno de los estados
+                        if (e.get(1).equals(SigPos.get(1))){
+                            existente = true;
+                            lexema_found = (String) e.get(0);
                             break;
                         }
                     }
-                    if(!trans_exist){
+
+                    if (!existente){
+                        Hoja hojita =new Hoja();
+                        if (hojita.es_aceptacion(id_hoja, hojas)){
+                            estado_actual.set(3, true);
+                        }
+                        if (SigPos.get(0).equals("")){
+                            continue;
+                        }
+
+
+                        ArrayList nuevo_estado = new ArrayList();
+                        nuevo_estado.add("S"+contador);
+                        nuevo_estado.add(SigPos.get(1));
+                        nuevo_estado.add(new ArrayList());
+                        nuevo_estado.add(false);
 
 
                         if (!verifica_TransicionesDuplicadas((ArrayList) estado_actual.get(2), SigPos)){
-                            Transition trans = new Transition(estado_actual.get(0) + "", SigPos.get(0) + "", lexema_found + "");
-                            ((ArrayList)estado_actual.get(2)).add(trans);
+                            Transition transicion = new Transition((String) estado_actual.get(0),  SigPos.get(0) + "", (String) nuevo_estado.get(0));
+                            ((ArrayList)estado_actual.get(2)).add(transicion);
+                            contador ++;
+                            estados.add(nuevo_estado);
                         }
                         else{
-                            deleteDuplicates2((ArrayList) estado_actual.get(2), SigPos, lexema_found); //cambiar lexema found por nuevo estado???
+
+                            contador ++;
+                            ((ArrayList)((ArrayList)nuevo_estado).get(1)).addAll((ArrayList)sig_posActual);
+                            estados.add(nuevo_estado);
+                            deleteDuplicates((ArrayList) estado_actual.get(2), SigPos, nuevo_estado);
                             // acá debo de agregar un nuevo estado con uniones de los duplicados
                         }
 
                     }
+                    else{
+                        Hoja hojaa = new Hoja();
+                        if(hojaa.es_aceptacion(id_hoja, hojas)){
+                            estado_actual.set(3, true);
+                        }
 
+                        boolean trans_exist = false;
+
+                        for(Object trans : (ArrayList)estado_actual.get(2)){
+                            Transition t = (Transition) trans;
+                            if(t.comparar(estado_actual.get(0) + "", sig_posActual.get(0) + "")){
+                                trans_exist = true;
+                                break;
+                            }
+                        }
+                        if(!trans_exist){
+
+
+                            if (!verifica_TransicionesDuplicadas((ArrayList) estado_actual.get(2), SigPos)){
+                                Transition trans = new Transition(estado_actual.get(0) + "", SigPos.get(0) + "", lexema_found + "");
+                                ((ArrayList)estado_actual.get(2)).add(trans);
+                            }
+                            else{
+                                deleteDuplicates2((ArrayList) estado_actual.get(2), SigPos, lexema_found); //cambiar lexema found por nuevo estado???
+                                // acá debo de agregar un nuevo estado con uniones de los duplicados
+                            }
+
+                        }
+
+                    }
                 }
+
+
 
 
             }
@@ -154,6 +212,15 @@ public class TablaT {
         return false;
         }
 
+        public boolean SigPosDistinto(ArrayList SigPos){
+            for (ArrayList e : this.estados){ // verifica si un estado ya existe, revisa la lista de estados y compara el conjunto de transiciones de cada uno de los estados
+                if (e.get(1).equals(SigPos.get(1))){
+                    return true;
+                }
+            }
+            return false;
+        }
+
     public void deleteDuplicates(ArrayList transiciones, ArrayList SigPos, ArrayList nuevo_estado){
         for (Object t : transiciones){
             if (((Transition)t).transition.equals(SigPos.get(0))){
@@ -163,15 +230,6 @@ public class TablaT {
 
     }
 
-    public int deletetrans(ArrayList transiciones, ArrayList SigPos){
-        for (int i = 0; i <transiciones.size() ; i++) {
-            if (((Transition)transiciones.get(i)).transition.equals(SigPos.get(0))){
-                transiciones.remove(i);
-                return i;
-            }
-        }
-        return -1;
-    }
 
     public void deleteDuplicates2(ArrayList transiciones, ArrayList SigPos, String nuevo_estado){
         for (Object t : transiciones){
@@ -182,34 +240,13 @@ public class TablaT {
 
     }
 
-    public void agrega_alFinal(ArrayList SigPos, ArrayList estado_actual){
-        for (Object obj: (ArrayList) estado_actual.get(2)){
-            if (((Transition)obj).transition.equals(SigPos.get(0))){
-                ArrayList hola =((ArrayList) search_state(((Transition) obj).finalState));
-                ArrayList concat = new ArrayList();
-
-                for (Object obj2:((ArrayList)(ArrayList)hola.get(1))){
-                 concat.add(obj2);
-                }
-                for (Object obj2:((ArrayList)(ArrayList)SigPos.get(1))){
-                    concat.add(obj2);
-                }
-
-
-                ArrayList nuevo_estado = new ArrayList();
-                nuevo_estado.add("S"+contador);
-                nuevo_estado.add(concat);
-                nuevo_estado.add(new ArrayList<>());
-                nuevo_estado.add(false);
-                this.estados.add(nuevo_estado);
-                ((ArrayList)SigPos).set(1, concat);
-
-                Transition transicion = new Transition((String) estado_actual.get(0),  SigPos.get(0) + "", "S"+contador);
-                ((ArrayList)((ArrayList)estado_actual).get(2)).add(transicion);
-                setContador(contador++);
-                break;
+    public boolean stateExists(ArrayList estado){
+        for (ArrayList e : this.estados){ // verifica si un estado ya existe, revisa la lista de estados y compara el conjunto de transiciones de cada uno de los estados
+           if (e.get(1).equals(estado.get(1))){
+               return true;
             }
         }
+        return false;
     }
 
     public Object search_state(String id_state){
