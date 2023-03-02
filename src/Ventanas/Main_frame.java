@@ -18,6 +18,7 @@ import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Map;
 import java.util.Objects;
@@ -127,9 +128,10 @@ public class Main_frame extends JFrame implements ActionListener {
                 JOptionPane.showMessageDialog(null, "El input no puede estar vacío");
             }
             else{
-                Main.conjuntos_valor = new Hashtable<String, Object>();
-                Main.regex_valor = new Hashtable<String, Object>();
-                Main.lista_evaluaciones = new Hashtable<String, Object>();
+                Main.conjuntos_valor.clear();
+                Main.regex_valor.clear();
+                Main.lista_evaluaciones.clear();
+                Main.lista_arboles.clear();
                 Lexico scaner = new Lexico(new BufferedReader(new StringReader(Panel_Main.input_texto.getText())));
                 Sintactico parser = new Sintactico(scaner);
                 try {

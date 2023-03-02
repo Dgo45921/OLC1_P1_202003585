@@ -8,9 +8,9 @@ import java.util.ArrayList;
 
 
 public class TablaT {
-    public static ArrayList<ArrayList> estados = new ArrayList<>();
-    public static int contador;
-    public static ArrayList estado_inicial =new ArrayList();  // lista que contendrá la información del estado
+    public  ArrayList<ArrayList> estados = new ArrayList<>();
+    public  int contador;
+    public  ArrayList estado_inicial =new ArrayList();  // lista que contendrá la información del estado
 
     public TablaT(ArbolBinario arbolito){
         NodoArbol root = arbolito.getRaiz(); // obtenemos la raiz del árbol para luego hallar los primeros de la raiz y así comenzar con las transiciones

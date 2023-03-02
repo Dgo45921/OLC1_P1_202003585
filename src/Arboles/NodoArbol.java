@@ -86,7 +86,7 @@ public class NodoArbol {
                         this.primeros.addAll(((NodoArbol)leftNode).primeros);
                         this.ultimos.addAll(((NodoArbol)leftNode).ultimos);
                     }
-
+                    break;
                 case PLUS:
                     if(leftNode != null){
                         this.anulable = false;
