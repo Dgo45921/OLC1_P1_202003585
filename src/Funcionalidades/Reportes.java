@@ -46,9 +46,8 @@ public class Reportes {
             e.printStackTrace();
         }
 
-
         try {
-            Process p = Runtime.getRuntime().exec("dot -Tpng" + dotFilePath + " -o " + pngFilePath);
+            Process p = Runtime.getRuntime().exec("dot -Tpng " + dotFilePath + " -o " + pngFilePath);
             p.waitFor();
             System.out.println("Archivo .png creado exitosamente en " + pngFilePath);
         } catch (IOException e) {
@@ -56,8 +55,6 @@ public class Reportes {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
-
 
 
     }

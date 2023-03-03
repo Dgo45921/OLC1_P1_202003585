@@ -169,7 +169,6 @@ public class Main_frame extends JFrame implements ActionListener {
             repo.printTable(arbolito.getTabla_sig_pos());
             repo.dotTree(raiz);
             repo.generate_tree(i);
-            System.out.println(repo.codigo + "}");
 
             TablaT generadorTrancisiones = new TablaT(arbolito);
             generadorTrancisiones.impTable();
