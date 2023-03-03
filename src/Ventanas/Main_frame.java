@@ -4,11 +4,9 @@ import Analizadores.Lexico;
 import Analizadores.Sintactico;
 import Arboles.ArbolBinario;
 import Arboles.NodoArbol;
-import Arboles.TablaSigPos;
 import Arboles.TablaT;
 import Funcionalidades.Reportes;
 import Paneles.*;
-
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
@@ -18,8 +16,6 @@ import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Hashtable;
 import java.util.Map;
 import java.util.Objects;
 
@@ -152,7 +148,7 @@ public class Main_frame extends JFrame implements ActionListener {
 
     }
 
-    public void genera_arboles(){
+    public void genera_arboles() {
         for (Map.Entry<String,Object> mapElement : Main.regex_valor.entrySet()) {
             String key = mapElement.getKey();
 
@@ -171,12 +167,15 @@ public class Main_frame extends JFrame implements ActionListener {
             Reportes repo = new Reportes();
             System.out.println("tabla de sigPOS");
             repo.printTable(arbolito.getTabla_sig_pos());
+            repo.dotTree(raiz);
+            repo.generate_tree(i);
+            System.out.println(repo.codigo + "}");
 
             TablaT generadorTrancisiones = new TablaT(arbolito);
             generadorTrancisiones.impTable();
 
+
         }
-        System.out.println("a");
 
     }
 

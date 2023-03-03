@@ -3,23 +3,24 @@ package Arboles;
 import java.util.ArrayList;
 
 public class NodoArbol {
-    ArrayList<Integer> primeros;
-    ArrayList<Integer> ultimos;
-    boolean anulable;
+    public ArrayList<Integer> primeros;
+    public ArrayList<Integer> ultimos;
+    public boolean anulable;
 
-    String lexema;
-    Type.Types type;
-    int id;
+    public String lexema;
+    public Type.Types type;
+    public int id;
+    public int id_2;
 
     boolean aceptacion;
 
-    NodoArbol izquierda;
-    NodoArbol derecha;
+    public NodoArbol izquierda;
+    public NodoArbol derecha;
 
     ArrayList<NodoArbol> hojas;
     ArrayList<ArrayList> tabla;
 
-    public NodoArbol(String lexema, Type.Types type, int id, NodoArbol izquierda, NodoArbol derecha, ArrayList<NodoArbol> hojas, ArrayList<ArrayList> tabla) {
+    public NodoArbol(String lexema, Type.Types type, int id, NodoArbol izquierda, NodoArbol derecha, ArrayList<NodoArbol> hojas, ArrayList<ArrayList> tabla, int id_2) {
         primeros = new ArrayList<>();
         ultimos = new ArrayList<>();
         anulable = true;
@@ -35,6 +36,8 @@ public class NodoArbol {
 
         this.hojas = hojas;
         this.tabla = tabla;
+
+        this.id_2 = id_2;
     }
 
     public NodoArbol inicializa_propiedades_nodo(){
