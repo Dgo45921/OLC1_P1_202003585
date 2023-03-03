@@ -74,6 +74,58 @@ public class Reportes {
     }
 
 
+    public void Generate_SigPosTable(ArrayList<ArrayList> table, int iterable) throws IOException {
+        String texto = "digraph G {\n" +
+                "    rankdir=LR\n" +
+                "    node [shape=none fontname=Helvetica]\n" +
+                "\n" +
+                "    A [label=<\n" +
+                "      <TABLE BORDER=\"0\" CELLBORDER=\"1\" CELLSPACING=\"0\">\n" +
+                "       <TR PORT=\"header\">\n" +
+                "        <TD BGCOLOR=\"#d23939\" COLSPAN=\"3\">TABLA DE SIGUIENTES</TD>\n" +
+                "       </TR>\n" +
+                "       <TR>\n" +
+                "        <TD BGCOLOR=\"#ff6363\">Num_hoja</TD>\n" +
+                "        <TD BGCOLOR=\"#ff6363\">Simbolo</TD>\n" +
+                "        <TD BGCOLOR=\"#ff6363\">Siguientes</TD>\n" +
+                "       </TR>";
+
+        for(ArrayList item : table){
+            texto += "<TR>\n";
+            texto += "<TD>" +item.get(0) + "</TD>" + "\n";
+            texto += "<TD>" +item.get(1) + "</TD>" + "\n";
+            texto += "<TD>" +item.get(2) + "</TD>" + "\n";
+            texto += "</TR>\n";
+        }
+        texto+="</TABLE>\n" + "    >];\n" + "}";
+
+
+        String dotFilePath = "SIGUIENTES_202003585/" + "siguientes_" +iterable + ".dot";
+        String pngFilePath = "SIGUIENTES_202003585/" + "siguientes_" + iterable + ".png";
+
+        try{
+            FileWriter archivo = new FileWriter(dotFilePath);
+            PrintWriter pw  = new PrintWriter(archivo);
+            pw.println(texto);
+            archivo.close();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+
+        try {
+            Process p = Runtime.getRuntime().exec("dot -Tpng " + dotFilePath + " -o " + pngFilePath);
+            p.waitFor();
+            System.out.println("aaa");
+
+
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
 
 
 }

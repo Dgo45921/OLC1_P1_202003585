@@ -148,7 +148,7 @@ public class Main_frame extends JFrame implements ActionListener {
 
     }
 
-    public void genera_arboles() {
+    public void genera_arboles() throws IOException {
         for (Map.Entry<String,Object> mapElement : Main.regex_valor.entrySet()) {
             String key = mapElement.getKey();
 
@@ -169,6 +169,9 @@ public class Main_frame extends JFrame implements ActionListener {
             repo.printTable(arbolito.getTabla_sig_pos());
             repo.dotTree(raiz);
             repo.generate_tree(i);
+
+
+            repo.Generate_SigPosTable(arbolito.getTabla_sig_pos(), i);
 
             TablaT generadorTrancisiones = new TablaT(arbolito);
             generadorTrancisiones.impTable();
