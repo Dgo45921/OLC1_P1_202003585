@@ -1,6 +1,5 @@
-package Funcionalidades;
+package Extra;
 
-import Arboles.Hoja;
 import Arboles.NodoArbol;
 import Arboles.Transition;
 
@@ -8,7 +7,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.Objects;
 
 public class Reportes {
@@ -21,9 +19,12 @@ public class Reportes {
 
     public void dotTree(NodoArbol root) {
         if (root != null){
-            root.lexema = root.lexema.replace("\"", "\\\"");
-            if (root.lexema == "|"){
+            root.lexema = root.lexema.replace("\"", "\\\"").replace("", "");
+            if (root.lexema.equals("|")){
                 root.lexema = "\\|";
+            }
+            if (root.lexema.equals("\\\\\"")){
+                root.lexema = "\\\\\\\"";
             }
             codigo += "nodo" + root.id_2 + " [label=\"" + root.lexema + "\"];\n"; // crear el nodo con el id y el texto
             if (root.izquierda != null) {

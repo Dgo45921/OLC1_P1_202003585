@@ -81,11 +81,20 @@ public class ArbolBinario {
                     for (int j = i+1; j <new_regex.length ; j++) {
                         posible_id.append(new_regex[j]);
                         if (new_regex[j] == '"'){
-                            // aqui se guarda el nodo con el lexema que incluye a una cadena. Por ejemplo : "holaaa"
-                            posible_id.reverse();
-                           // System.out.println(posible_id);
+                                if (new_regex[j] != '\\'){
+                                    // aqui se guarda el nodo con el lexema que incluye a una cadena. Por ejemplo : "holaaa"
+                                    posible_id.reverse();
+                                    // System.out.println(posible_id);
+                                    i = j;
+                                    NodoArbol nodo = new NodoArbol(posible_id.toString(), Type.Types.HOJA, contador--, null, null, hojas, tabla_sig_pos, contador2--);
+                                    pila.push(nodo);
+                                    hojas.add(nodo);
+                                    break;
+                                }
+                        }
+                        else if (new_regex[j] == '\\'){
                             i = j;
-                            NodoArbol nodo = new NodoArbol(posible_id.toString(), Type.Types.HOJA, contador--, null, null, hojas, tabla_sig_pos, contador2--);
+                            NodoArbol nodo = new NodoArbol("\\\"", Type.Types.HOJA, contador--, null, null, hojas, tabla_sig_pos, contador2--);
                             pila.push(nodo);
                             hojas.add(nodo);
                             break;
@@ -135,6 +144,7 @@ public class ArbolBinario {
                         contador++;
                         break;
                     }
+
                 }
             }
             if (caracteres[i] == '{'){
@@ -143,6 +153,33 @@ public class ArbolBinario {
                         i = j;
                         contador++;
                         break;
+                    }
+                }
+            }
+
+            if (caracteres[i] == '\\'){
+                if (i+1 != caracteres.length){
+                    if (caracteres[i+1] == '"'){
+                        i = i+1;
+                        contador++;
+                    }
+                }
+            }
+
+            if (caracteres[i] == '\\'){
+                if (i+1 != caracteres.length){
+                    if (caracteres[i+1] == '\''){
+                        i=1+i;
+                        contador++;
+                    }
+                }
+            }
+
+            if (caracteres[i] == '\\'){
+                if (i+1 != caracteres.length){
+                    if (caracteres[i+1] == 'n'){
+                        i=1+i;
+                        contador++;
                     }
                 }
             }

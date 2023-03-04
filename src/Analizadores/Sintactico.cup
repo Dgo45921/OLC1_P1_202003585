@@ -1,6 +1,6 @@
 package Analizadores;
 import java_cup.runtime.*;
-import Funcionalidades.*;
+import Extra.*;
 import Ventanas.Main;
 
 //PARSER 

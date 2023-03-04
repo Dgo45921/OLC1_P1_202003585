@@ -6,9 +6,7 @@
 package Analizadores;
 
 import java_cup.runtime.*;
-import Funcionalidades.*;
-import Ventanas.Main;
-import java_cup.runtime.XMLElement;
+import Extra.*;
 
 /** CUP v0.11b 20160615 (GIT 4ac7450) generated parser.
   */

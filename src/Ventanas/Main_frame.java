@@ -1,11 +1,5 @@
 package Ventanas;
 
-import Analizadores.Lexico;
-import Analizadores.Sintactico;
-import Arboles.ArbolBinario;
-import Arboles.NodoArbol;
-import Arboles.TablaT;
-import Funcionalidades.Reportes;
 import Paneles.*;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -16,7 +10,6 @@ import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Map;
 import java.util.Objects;
 
 public class Main_frame extends JFrame implements ActionListener {

@@ -1,6 +1,5 @@
-package Funcionalidades;
+package Extra;
 
-import Arboles.Transition;
 import Ventanas.Main;
 
 import java.util.ArrayList;

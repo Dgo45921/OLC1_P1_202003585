@@ -5,7 +5,7 @@ import Analizadores.Sintactico;
 import Arboles.ArbolBinario;
 import Arboles.NodoArbol;
 import Arboles.TablaT;
-import Funcionalidades.Reportes;
+import Extra.Reportes;
 import Ventanas.Main;
 
 import javax.swing.*;
