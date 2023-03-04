@@ -175,6 +175,7 @@ public class Main_frame extends JFrame implements ActionListener {
 
             TablaT generadorTrancisiones = new TablaT(arbolito);
             generadorTrancisiones.impTable();
+            repo.generateTransitionTable(generadorTrancisiones.estados, arbolito.getHojas(), i);
 
 
         }

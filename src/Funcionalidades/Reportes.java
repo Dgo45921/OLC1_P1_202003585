@@ -1,11 +1,15 @@
 package Funcionalidades;
 
+import Arboles.Hoja;
 import Arboles.NodoArbol;
+import Arboles.Transition;
 
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Objects;
 
 public class Reportes {
     public String codigo = "digraph G\n" +
@@ -49,7 +53,7 @@ public class Reportes {
         try {
             Process p = Runtime.getRuntime().exec("dot -Tpng " + dotFilePath + " -o " + pngFilePath);
             p.waitFor();
-            System.out.println("Archivo .png creado exitosamente en " + pngFilePath);
+            System.out.println("Arbol generado exitosamente en: " + pngFilePath);
         } catch (IOException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
@@ -64,17 +68,11 @@ public class Reportes {
         for(ArrayList item : table){
             System.out.println(item.get(0) + " - " + item.get(1) + " - " + item.get(2) );
         }
-//        for (int i = 0; i < table.size() ; i++) {
-//            for (int j = 0; j <table.get(0).size() ; j++) {
-//                System.out.println(table.get(i).get(j));
-//            }
-//
-//        }
 
     }
 
 
-    public void Generate_SigPosTable(ArrayList<ArrayList> table, int iterable) throws IOException {
+    public void Generate_SigPosTable(ArrayList<ArrayList> table, int iterable){
         String texto = "digraph G {\n" +
                 "    rankdir=LR\n" +
                 "    node [shape=none fontname=Helvetica]\n" +
@@ -116,7 +114,7 @@ public class Reportes {
         try {
             Process p = Runtime.getRuntime().exec("dot -Tpng " + dotFilePath + " -o " + pngFilePath);
             p.waitFor();
-            System.out.println("aaa");
+            System.out.println("Se generó la tabla de siguientes: " + pngFilePath);
 
 
         } catch (IOException | InterruptedException e) {
@@ -126,6 +124,115 @@ public class Reportes {
 
     }
 
+    public void generateTransitionTable(ArrayList<ArrayList> estados, ArrayList<NodoArbol> hojas, int iterable){
+        ArrayList<String> encabezados = new ArrayList<>();
+        encabezados.add("Estados/Terminales");
+        String texto = "digraph G {\n" +
+                "    rankdir=LR\n" +
+                "    node [shape=none fontname=Helvetica]\n" +
+                "\n" +
+                "    A [label=<\n" +
+                "      <TABLE BORDER=\"0\" CELLBORDER=\"1\" CELLSPACING=\"0\">\n" +
+                "       <TR>\n";
+
+
+        for(NodoArbol hojita: hojas){
+            if (!Objects.equals(hojita.lexema, "#") && !checkRepetido(encabezados, hojita.lexema.replace("\\\"", "\""))){
+                encabezados.add(hojita.lexema.replace("\\\"", "\""));
+            }
+        }
+        for (String terminal : encabezados){
+                texto +=  "<TD BGCOLOR=\"#ff6363\">"+terminal+"</TD>\n";
+        }
+
+        texto += "</TR>\n";
+
+
+
+        for(int i =0; i< estados.size(); i++){
+            texto += "<TR>\n";
+            ArrayList state = estados.get(i);
+
+            String sigpos_estado = "";
+            for(int j = 0; j<((ArrayList)state.get(1)).size(); j++){
+                Object tr = (ArrayList)state.get(1);
+                Integer t = (Integer) ((ArrayList)tr).get(j);
+                if (j!=((ArrayList<?>) state.get(1)).size()-1){
+                    sigpos_estado += t.toString() + ",";
+                }
+                else{
+                    sigpos_estado += t.toString();
+                }
+
+            }
+            if ((Boolean) state.get(3)){
+                texto += "<TD>" + state.get(0) + "* {"+ sigpos_estado +"}" + "</TD>\n";
+            }
+            else{
+                texto += "<TD>" + state.get(0) + " {"+ sigpos_estado +"}" + "</TD>\n";
+            }
+
+
+
+            for (int j = 1; j <encabezados.size() ; j++) {
+                String respuesta = findFinalState(encabezados.get(j).replace("\\\"", "\""),(ArrayList) state.get(2));
+                texto += "<TD>" + respuesta + "</TD>\n";
+                }
+
+
+            texto += "</TR>\n";
+        }
+        texto+="</TABLE>\n" + "    >];\n" + "}";
+
+        // metodos para generar el .dot
+
+        String dotFilePath = "TRANSICIONES_202003585/" + "Transicion_" +iterable + ".dot";
+        String pngFilePath = "TRANSICIONES_202003585/" + "Transicion_" +iterable + ".png";
+        try{
+            FileWriter archivo = new FileWriter(dotFilePath);
+            PrintWriter pw  = new PrintWriter(archivo);
+            pw.println(texto);
+            archivo.close();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        try {
+            Process p = Runtime.getRuntime().exec("dot -Tpng " + dotFilePath + " -o " + pngFilePath);
+            p.waitFor();
+            System.out.println("Tabla de transiciones generada exitosamente en: " + pngFilePath);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
+
+    public String findFinalState(String terminal, ArrayList transiciones){
+        for (Object transicion :transiciones){
+            if (Objects.equals(terminal, ((Transition) transicion).transition)){
+                return  ((Transition) transicion).finalState;
+            }
+
+            }
+
+        return "-";
+    }
+
+
+    public Boolean checkRepetido (ArrayList<String> lista, String terminal){
+
+        for (int i = 0; i <lista.size() ; i++) {
+            if (terminal.equals(lista.get(i))) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 
 
 }

@@ -1,5 +1,6 @@
 package Funcionalidades;
 
+import Arboles.Transition;
 import Ventanas.Main;
 
 import java.util.ArrayList;
@@ -82,7 +83,5 @@ public class Funcion {
     public void guarda_regex(String ID, String cadena){
         Main.regex_valor.put(ID, cadena);
     }
-
-
 
 }
