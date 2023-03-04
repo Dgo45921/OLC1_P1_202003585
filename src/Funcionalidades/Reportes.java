@@ -88,6 +88,21 @@ public class Reportes {
                 "        <TD BGCOLOR=\"#ff6363\">Siguientes</TD>\n" +
                 "       </TR>";
 
+
+        for (int i = 0; i <table.size()-1 ; i++) {
+            for (int j = 0; j <table.size()-i-1 ; j++) {
+                int num_hoja1 = (int) ((ArrayList)((ArrayList)table).get(j)).get(0);
+                int num_hoja2 = (int) ((ArrayList)((ArrayList)table).get(j+1)).get(0);
+                if (num_hoja1 > num_hoja2){
+                    ArrayList aux2 = table.get(j);
+                    table.set(j, table.get(j+1));
+                    table.set(j+1, aux2);
+
+                }
+            }
+        }
+
+
         for(ArrayList item : table){
             texto += "<TR>\n";
             texto += "<TD>" +item.get(0) + "</TD>" + "\n";
@@ -233,6 +248,8 @@ public class Reportes {
 
         return false;
     }
+
+
 
 
 }
