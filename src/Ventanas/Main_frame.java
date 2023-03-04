@@ -33,7 +33,7 @@ public class Main_frame extends JFrame implements ActionListener {
 
     public Main_frame() {
         // Definiendo propiedades de la ventana
-        setSize(1500, 800);
+        setSize(1500, 900);
         setBackground(Color.decode("#202020"));
         setLocationRelativeTo(null);
         setLayout(null);
@@ -120,64 +120,12 @@ public class Main_frame extends JFrame implements ActionListener {
         }
         if (e.getSource() == generate_afd) {
             System.out.println("creo afd");
-            if (Objects.equals(Panel_Main.input_texto.getText(), "")) {
-                JOptionPane.showMessageDialog(null, "El input no puede estar vacío");
-            }
-            else{
-                Main.conjuntos_valor.clear();
-                Main.regex_valor.clear();
-                Main.lista_evaluaciones.clear();
-                Main.lista_arboles.clear();
-                Lexico scaner = new Lexico(new BufferedReader(new StringReader(Panel_Main.input_texto.getText())));
-                Sintactico parser = new Sintactico(scaner);
-                try {
-                    parser.parse();
-                    System.out.println("funciona");
-                    genera_arboles();
 
-                } catch (Exception ex) {
-                    throw new RuntimeException(ex);
-                }
-            }
       }
         if (e.getSource() == analyze_input) {
             if (Objects.equals(Panel_Main.input_texto.getText(), "")) {
                 JOptionPane.showMessageDialog(null, "El input no puede estar vacío ");
             }
-        }
-
-    }
-
-    public void genera_arboles() throws IOException {
-        for (Map.Entry<String,Object> mapElement : Main.regex_valor.entrySet()) {
-            String key = mapElement.getKey();
-
-            String regex_value = (String) (mapElement.getValue());
-            //System.out.println(key + " : " + regex_value);
-            ArbolBinario arbolito = new ArbolBinario(regex_value);
-            Main.lista_arboles.add(arbolito);
-        }
-
-        for (int i =0; i< Main.lista_arboles.size(); i++) {
-            ArbolBinario arbolito = Main.lista_arboles.get(i);
-            NodoArbol raiz = arbolito.getRaiz();
-            raiz.inicializa_propiedades_nodo();
-            raiz.sig_pos();
-
-            Reportes repo = new Reportes();
-            System.out.println("tabla de sigPOS");
-            repo.printTable(arbolito.getTabla_sig_pos());
-            repo.dotTree(raiz);
-            repo.generate_tree(i);
-
-
-            repo.Generate_SigPosTable(arbolito.getTabla_sig_pos(), i);
-
-            TablaT generadorTrancisiones = new TablaT(arbolito);
-            generadorTrancisiones.impTable();
-            repo.generateTransitionTable(generadorTrancisiones.estados, arbolito.getHojas(), i);
-
-
         }
 
     }

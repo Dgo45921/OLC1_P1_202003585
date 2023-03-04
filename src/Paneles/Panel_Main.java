@@ -1,10 +1,22 @@
 package Paneles;
 
+import Analizadores.Lexico;
+import Analizadores.Sintactico;
+import Arboles.ArbolBinario;
+import Arboles.NodoArbol;
+import Arboles.TablaT;
+import Funcionalidades.Reportes;
+import Ventanas.Main;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.StringReader;
+import java.util.Map;
+import java.util.Objects;
 
 public class Panel_Main extends JPanel implements ActionListener {
     // Instanciando areas de texto que van a servir para input e output
@@ -17,11 +29,13 @@ public class Panel_Main extends JPanel implements ActionListener {
     // Instanciando JComboBox que almacenará rutas de archivos
     JComboBox<String> combo_rutas = new JComboBox<>();
     JComboBox<String> combo_imagenes = new JComboBox<>();
+    // Creando botón para analizar el texto
+    JButton analizar = new JButton();
 
     public Panel_Main() {
         // Definiendo propiedades del panel principal
         this.setBackground(Color.decode("#202020"));
-        this.setBounds(0, 0, 1500, 800);
+        this.setBounds(0, 0, 1500, 900);
         this.setLayout(null);
         // Creando y definiendo labels para indicar la funcionalidad de las textarea
         JLabel input_label = new JLabel("Input");
@@ -32,11 +46,11 @@ public class Panel_Main extends JPanel implements ActionListener {
         JLabel output_label = new JLabel("Consola");
         output_label.setFont(new Font("Verdana", Font.BOLD, 18));
         output_label.setForeground(Color.WHITE);
-        output_label.setBounds(100,515,80,30);
+        output_label.setBounds(100,580,100,30);
 
         // Definiendo propiedades del área de texto del input
         JScrollPane scroll_input = new JScrollPane(input_texto);
-        scroll_input.setBounds(100, 100, 600, 400);
+        scroll_input.setBounds(100, 100, 700, 400);
         // Definiendo propiedades del área de texto del output e input
         output_console.setEditable(false);
         output_console.setBackground(Color.decode("#fbfbfb"));
@@ -44,7 +58,7 @@ public class Panel_Main extends JPanel implements ActionListener {
         input_texto.setBackground(Color.decode("#fbfbfb"));
         input_texto.setFont(new Font("Verdana", Font.PLAIN, 18));
         JScrollPane scroll_output = new JScrollPane(output_console);
-        scroll_output.setBounds(100, 550, 1325, 150);
+        scroll_output.setBounds(100, 615, 1325, 150);
         // Creando botones
         show = new JButton();
         show.setText("Mostrar");
@@ -54,6 +68,16 @@ public class Panel_Main extends JPanel implements ActionListener {
         show.setFocusable(false);
         show.addActionListener(this);
         show.setBounds(1320, 50, 100, 40);
+
+        analizar.setText("Analizar");
+        analizar.setFont(new Font("Verdana", Font.BOLD, 15));
+        analizar.setBackground(Color.decode("#fbfbfb"));
+        analizar.setBorder(BorderFactory.createLineBorder(Color.decode("#d9faea")));
+        analizar.setFocusable(false);
+        analizar.addActionListener(this);
+        analizar.setBounds(700,520,100,40);
+
+
         // Creando JComboBoxes
         final String[] opciones_imagenes = {"AFD", "AFND", "ARBOLES", "SIGUIENTES", "TRANSICIONES"};
         combo_imagenes.setModel(new DefaultComboBoxModel<>(opciones_imagenes));
@@ -61,7 +85,7 @@ public class Panel_Main extends JPanel implements ActionListener {
         combo_rutas.setBounds(990, 50, 300, 40);
         combo_imagenes.addActionListener(this);
         //Creando JLABEL para fotos
-        label_picture.setBounds(720, 100, 700, 400);
+        label_picture.setBounds(835, 100, 580, 400);
         label_picture.setBorder(BorderFactory.createLineBorder(Color.WHITE, 1));
 
         // Agregando componentes al panel
@@ -72,6 +96,7 @@ public class Panel_Main extends JPanel implements ActionListener {
         this.add(scroll_output);
         this.add(label_picture);
         this.add(show);
+        this.add(analizar);
         this.add(combo_imagenes);
         this.add(combo_rutas);
 
@@ -147,6 +172,28 @@ public class Panel_Main extends JPanel implements ActionListener {
 
 
         }
+        if (e.getSource() == analizar){
+            if (Objects.equals(Panel_Main.input_texto.getText(), "")) {
+                JOptionPane.showMessageDialog(null, "El input no puede estar vacío");
+            }
+            else{
+                Main.conjuntos_valor.clear();
+                Main.regex_valor.clear();
+                Main.lista_evaluaciones.clear();
+                Main.lista_arboles.clear();
+                Lexico scaner = new Lexico(new BufferedReader(new StringReader(Panel_Main.input_texto.getText())));
+                Sintactico parser = new Sintactico(scaner);
+                try {
+                    parser.parse();
+                    System.out.println("funciona");
+                    genera_arboles();
+
+                } catch (Exception ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
+        }
+
     }
 
     public void hallar_archivos(String ruta) {
@@ -164,6 +211,40 @@ public class Panel_Main extends JPanel implements ActionListener {
         combo_rutas.setModel(new DefaultComboBoxModel<>(pathnames));
     }
 
+
+    public void genera_arboles(){
+        for (Map.Entry<String,Object> mapElement : Main.regex_valor.entrySet()) {
+            String key = mapElement.getKey();
+
+            String regex_value = (String) (mapElement.getValue());
+            //System.out.println(key + " : " + regex_value);
+            ArbolBinario arbolito = new ArbolBinario(regex_value);
+            Main.lista_arboles.add(arbolito);
+        }
+
+        for (int i =0; i< Main.lista_arboles.size(); i++) {
+            ArbolBinario arbolito = Main.lista_arboles.get(i);
+            NodoArbol raiz = arbolito.getRaiz();
+            raiz.inicializa_propiedades_nodo();
+            raiz.sig_pos();
+
+            Reportes repo = new Reportes();
+            System.out.println("tabla de sigPOS");
+            repo.printTable(arbolito.getTabla_sig_pos());
+            repo.dotTree(raiz);
+            repo.generate_tree(i);
+
+
+            repo.Generate_SigPosTable(arbolito.getTabla_sig_pos(), i);
+
+            TablaT generadorTrancisiones = new TablaT(arbolito);
+            generadorTrancisiones.impTable();
+            repo.generateTransitionTable(generadorTrancisiones.estados, arbolito.getHojas(), i);
+
+
+        }
+
+    }
 
 
 }
