@@ -270,7 +270,7 @@ public class Reportes {
             pw.println("<link rel=\"stylesheet\" href=\"style.css\">");
             pw.println("</head>\n");
             pw.println("<body>\n");
-            pw.println("<h1>Reporte de tokens</h1>");
+            pw.println("<h1>Reporte de errores</h1>");
             pw.println("<table>\n");
             pw.println("<tr>\n");
             pw.println("<th>Tipo</th>\n");
@@ -293,6 +293,75 @@ public class Reportes {
         }catch (Exception e){
             e.printStackTrace();
         }
+    }
+
+    public void generate_AFD(ArrayList<ArrayList> estados, int iterable){
+    String texto = "digraph finite_state_machine {\n" +
+            "\tfontname=\"Helvetica,Arial,sans-serif\"\n" +
+            "\tnode [fontname=\"Helvetica,Arial,sans-serif\"]\n" +
+            "\tedge [fontname=\"Helvetica,Arial,sans-serif\"]\n" +
+            "\trankdir=LR;\n" +
+            "\tnode [shape = doublecircle]; " ;
+    // definiendo que nodos serán los que serán de aceptación en el grafo
+        for (int i = 0; i <estados.size() ; i++) {
+            ArrayList estado = estados.get(i);
+            if ((Boolean) estado.get(3)){
+                if (i!= estados.size()-1){
+                    texto += estado.get(0) + ",";
+                }
+                else{
+                    texto += estado.get(0) + ";\n";
+                }
+            }
+        }
+
+        texto += "node [shape = circle]; \n";
+
+        // haciendo las conexiones entre los nodos
+
+        for (int i = 0; i <estados.size() ; i++) {
+            ArrayList estado = estados.get(i);
+            ArrayList transiciones = (ArrayList) estado.get(2);
+            for (int j = 0; j <transiciones.size() ; j++) {
+                Transition trans = (Transition) transiciones.get(j);
+                trans.transition = trans.transition.replace("\"", "\\\"").replace("", "");
+                if (trans.transition.equals("\\\\\"")){
+                    trans.transition = "\\\\\\\"";
+                }
+                else if (trans.transition.equals("\\'")){
+                    trans.transition = "\\\\'";
+                }
+                else if (trans.transition.equals("\\n")){
+                    trans.transition ="\\\\n" ;
+                }
+                texto += trans.initialState + "->" + trans.finalState + " [label = \""+ trans.transition + "\"];\n" ;
+            }
+
+        }
+
+
+        texto+= "}";
+        //System.out.println(texto);
+        String dotFilePath = "AFD_202003585/" + "AFD_" +iterable + ".dot";
+        String pngFilePath = "AFD_202003585/" + "AFD_" +iterable + ".png";
+        try{
+            FileWriter archivo = new FileWriter(dotFilePath);
+            PrintWriter pw  = new PrintWriter(archivo);
+            pw.println(texto);
+            archivo.close();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        try {
+            Process p = Runtime.getRuntime().exec("dot -Tpng " + dotFilePath + " -o " + pngFilePath);
+            p.waitFor();
+            System.out.println("AFD generado exitosamente en: " + pngFilePath);
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
+
+
     }
 
 

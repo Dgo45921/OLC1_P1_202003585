@@ -1,5 +1,8 @@
 package Ventanas;
 
+import Arboles.ArbolBinario;
+import Arboles.NodoArbol;
+import Arboles.TablaT;
 import Extra.Reportes;
 import Paneles.*;
 import javax.swing.*;
@@ -114,11 +117,16 @@ public class Main_frame extends JFrame implements ActionListener {
         }
         if (e.getSource() == generate_afd) {
             System.out.println("creo afd");
+            Reportes repo = new Reportes();
             if (Main.lista_errores.size() != 0){
-                Reportes repo = new Reportes();
                 repo.generateErrorReport();
                 JOptionPane.showMessageDialog(null, "Se detectaron errores en la entrada. Generando reporte de errores...");
-
+            }
+            else{
+                for (int i =0; i< Main.lista_arboles.size(); i++) {
+                    ArbolBinario arbolito = Main.lista_arboles.get(i);
+                    repo.generate_AFD(arbolito.getTabla_transiciones(), i);
+                }
             }
 
       }
