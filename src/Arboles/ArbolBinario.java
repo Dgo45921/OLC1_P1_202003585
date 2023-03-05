@@ -7,7 +7,7 @@ public class ArbolBinario {
     private NodoArbol raiz;
     private ArrayList<NodoArbol> hojas = new ArrayList<NodoArbol>();
     private ArrayList<ArrayList> tabla_sig_pos = new ArrayList<ArrayList>();
-    private ArrayList<ArrayList> tabla_transiciones = new ArrayList<ArrayList>();
+    private ArrayList tabla_transiciones = new ArrayList();
     private String regex;
 
     public ArbolBinario(String regex){
@@ -113,6 +113,16 @@ public class ArbolBinario {
                             }
                         }
                 }
+
+                else if (new_regex[i] == 'n'){
+                    if (i+1 < new_regex.length){
+                        if(new_regex[i+1] == '\\'){
+                            NodoArbol nodo = new NodoArbol("\\n", Type.Types.HOJA, contador--, null, null, hojas, tabla_sig_pos, contador2--);
+                            pila.push(nodo);
+                            hojas.add(nodo);
+                        }
+                    }
+                }
                 else{
                     for (int j = i; j <new_regex.length ; j++) {
                         posible_id.append(new_regex[j]);
@@ -183,11 +193,6 @@ public class ArbolBinario {
                         i=1+i;
                         contador++;
                     }
-                }
-            }
-
-            if (caracteres[i] == '\\'){
-                if (i+1 != caracteres.length){
                     if (caracteres[i+1] == 'n'){
                         i=1+i;
                         contador++;
@@ -242,6 +247,10 @@ public class ArbolBinario {
 
     public ArrayList<ArrayList> getTabla_transiciones() {
         return tabla_transiciones;
+    }
+
+    public void setTabla_transiciones(ArrayList tabla_transiciones) {
+        this.tabla_transiciones = tabla_transiciones;
     }
 }
 

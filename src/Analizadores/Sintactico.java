@@ -190,10 +190,14 @@ public class Sintactico extends java_cup.runtime.lr_parser {
     
     public void syntax_error(Symbol s){
         System.out.println("Error R de sintaxis: "+ s.value +" Linea "+(s.left+1)+" columna "+(s.right+1) );
+        Errores error = new Errores(s.right+1, (s.left+1), ""+s.value, "Sintáctico R" );
+        Main.lista_errores.add(error);
     }
 
     public void unrecovered_syntax_error(Symbol s) throws java.lang.Exception{ 
-        System.out.println("Error NR de sintaxis: "+ s.value +" Linea "+(s.left+1)+" columna "+(s.right+1) );                          //asas
+        System.out.println("Error NR de sintaxis: "+ s.value +" Linea "+(s.left+1)+" columna "+(s.right+1) );
+        Errores error = new Errores(s.right+1, (s.left+1), ""+s.value, "Sintáctico NR" );
+        Main.lista_errores.add(error);
     }
 
 

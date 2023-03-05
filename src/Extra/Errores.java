@@ -1,28 +1,28 @@
 package Extra;
 
-public class Error {
+public class Errores {
     private int fila;
     private int columna;
     private String lexema;
-
-    public Error(int fila, int columna, String lexema){
+    private String tipo;
+    public Errores(int fila, int columna, String lexema, String tipo){
         this.fila = fila;
         this.columna = columna;
         this.lexema = lexema;
+        this.tipo = tipo;
     }
 
 
-    public int getFila() {
-        String x = "\"";
-        return fila;
+    public String getFila() {
+        return Integer.toString(fila);
     }
 
     public void setFila(int fila) {
         this.fila = fila;
     }
 
-    public int getColumna() {
-        return columna;
+    public String getColumna() {
+        return Integer.toString(columna);
     }
 
     public void setColumna(int columna) {
@@ -35,5 +35,13 @@ public class Error {
 
     public void setLexema(String lexema) {
         this.lexema = lexema;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
 }

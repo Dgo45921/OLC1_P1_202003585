@@ -2,8 +2,8 @@ package Ventanas;
 
 
 import Arboles.ArbolBinario;
+import Extra.Errores;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -16,6 +16,7 @@ public class Main {
     public static Hashtable<String, Object> regex_valor = new Hashtable<String, Object>();
     public static Hashtable<String, Object> lista_evaluaciones = new Hashtable<String, Object>();
     public static ArrayList<ArbolBinario> lista_arboles = new ArrayList<>();
+    public static ArrayList<Errores> lista_errores = new ArrayList<Errores>();
     public static void main(String[] args) throws IOException {
         inicializar_directorios();
         principal = new Main_frame();

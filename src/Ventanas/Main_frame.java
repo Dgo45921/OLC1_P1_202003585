@@ -1,5 +1,6 @@
 package Ventanas;
 
+import Extra.Reportes;
 import Paneles.*;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -113,6 +114,12 @@ public class Main_frame extends JFrame implements ActionListener {
         }
         if (e.getSource() == generate_afd) {
             System.out.println("creo afd");
+            if (Main.lista_errores.size() != 0){
+                Reportes repo = new Reportes();
+                repo.generateErrorReport();
+                JOptionPane.showMessageDialog(null, "Se detectaron errores en la entrada. Generando reporte de errores...");
+
+            }
 
       }
         if (e.getSource() == analyze_input) {

@@ -181,12 +181,13 @@ public class Panel_Main extends JPanel implements ActionListener {
                 Main.regex_valor.clear();
                 Main.lista_evaluaciones.clear();
                 Main.lista_arboles.clear();
+                Main.lista_errores.clear();
                 Lexico scaner = new Lexico(new BufferedReader(new StringReader(Panel_Main.input_texto.getText())));
                 Sintactico parser = new Sintactico(scaner);
                 try {
                     parser.parse();
                     System.out.println("funciona");
-                    genera_arboles();
+                    generaArbolesYTablas();
 
                 } catch (Exception ex) {
                     throw new RuntimeException(ex);
@@ -212,7 +213,7 @@ public class Panel_Main extends JPanel implements ActionListener {
     }
 
 
-    public void genera_arboles(){
+    public void generaArbolesYTablas(){
         for (Map.Entry<String,Object> mapElement : Main.regex_valor.entrySet()) {
             String key = mapElement.getKey();
 
@@ -240,7 +241,7 @@ public class Panel_Main extends JPanel implements ActionListener {
             TablaT generadorTrancisiones = new TablaT(arbolito);
             generadorTrancisiones.impTable();
             repo.generateTransitionTable(generadorTrancisiones.estados, arbolito.getHojas(), i);
-
+            arbolito.setTabla_transiciones(generadorTrancisiones.estados);
 
         }
 

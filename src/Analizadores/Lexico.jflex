@@ -1,6 +1,8 @@
 /* 1. Package e importaciones */
 package Analizadores;
 import java_cup.runtime.*;
+import Extra.Errores;
+import Ventanas.Main;
 
 %%
 
@@ -114,6 +116,8 @@ IDENTIFICADOR = [a-zA-Z_][a-zA-Z0-9_]*
     //Aqui se debe guardar los valores (yytext(), yyline, yychar ) para posteriormente generar el reporte de errores Léxicos.
 
     System.out.println("Este es un error lexico: "+yytext()+ ", en la linea: "+yyline+", en la columna: "+yychar);
+    Errores error = new Errores(yyline, yycolumn, yytext(), "Léxico");
+    Main.lista_errores.add(error);
 }
 
 

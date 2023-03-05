@@ -2,6 +2,7 @@ package Extra;
 
 import Arboles.NodoArbol;
 import Arboles.Transition;
+import Ventanas.Main;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -29,6 +30,10 @@ public class Reportes {
             if (root.lexema.equals("\\'")){
                 root.lexema = "\\\\'";
             }
+            if (root.lexema.equals("\\n")){
+                root.lexema ="\\\\n" ;
+            }
+
             codigo += "nodo" + root.id_2 + " [label=\"" + root.lexema + "\"];\n"; // crear el nodo con el id y el texto
             if (root.izquierda != null) {
                 codigo += "nodo" + root.id_2 + " -> " + "nodo" + root.izquierda.id_2 + "[minlen=3 ]"+ ";\n"; // agregar la conexión con el hijo izquierdo
@@ -194,7 +199,7 @@ public class Reportes {
 
 
             for (int j = 1; j <encabezados.size() ; j++) {
-                String respuesta = findFinalState(encabezados.get(j).replace("\\\"", "\"").replace("\\\\'", "\\'"),(ArrayList) state.get(2));
+                String respuesta = findFinalState(encabezados.get(j).replace("\\\"", "\"").replace("\\\\'", "\\'").replace("\\\\n", "\\n"),(ArrayList) state.get(2));
                 texto += "<TD>" + respuesta + "</TD>\n";
                 }
 
@@ -253,6 +258,42 @@ public class Reportes {
         return false;
     }
 
+    public void generateErrorReport(){
+        try{
+            FileWriter archivo = new FileWriter("ERRORES_202003585/errores.html");
+            PrintWriter pw  = new PrintWriter(archivo);
+            pw.println("<!DOCTYPE html>\n");
+            pw.println("<html>\n");
+            pw.println("<head>\n");
+            pw.println("<meta charset=\"UTF-8\">");
+            pw.println("<title>Reporte de errores</title>\n");
+            pw.println("<link rel=\"stylesheet\" href=\"style.css\">");
+            pw.println("</head>\n");
+            pw.println("<body>\n");
+            pw.println("<h1>Reporte de tokens</h1>");
+            pw.println("<table>\n");
+            pw.println("<tr>\n");
+            pw.println("<th>Tipo</th>\n");
+            pw.println("<th>Lexema</th>\n");
+            pw.println("<th>Fila</th>\n");
+            pw.println("<th>Columna</th>\n");
+            pw.println("</tr>\n");
+            for (Errores err: Main.lista_errores) {
+                pw.println("<tr>\n");
+                pw.println("<td>" +err.getTipo()  +"</td>");
+                pw.println("<td>"+"\"" +err.getLexema()+"\"" +"</td>");
+                pw.println("<td>" +err.getFila() +"</td>");
+                pw.println("<td>" +err.getColumna() +"</td>");
+                pw.println("</tr>\n");
+            }
+            pw.println("</table>\n");
+            pw.println("</body>\n");
+            pw.println("</html>\n");
+            archivo.close();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
 
 
 
