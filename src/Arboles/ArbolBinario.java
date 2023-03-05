@@ -75,6 +75,7 @@ public class ArbolBinario {
                     pila.push(nodo);
                     hojas.add(nodo);
                 }
+
                 else if (new_regex[i] == '"'){
                     // Acá agregaremos nodos hoja que tengan como lexeman un valor entre comillas
                     posible_id.append(new_regex[i]);
@@ -101,6 +102,16 @@ public class ArbolBinario {
                         }
                     }
 
+                }
+
+                else if (new_regex[i] == '\''){
+                        if (i+1 < new_regex.length){
+                            if(new_regex[i+1] == '\\'){
+                                NodoArbol nodo = new NodoArbol("\\'", Type.Types.HOJA, contador--, null, null, hojas, tabla_sig_pos, contador2--);
+                                pila.push(nodo);
+                                hojas.add(nodo);
+                            }
+                        }
                 }
                 else{
                     for (int j = i; j <new_regex.length ; j++) {

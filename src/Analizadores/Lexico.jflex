@@ -35,7 +35,7 @@ boolean flag = false;
 //Expresiones regulares
 MENOR = <
 ESPACIOS = [\r|\f|\s|\t|\n]
-CADENA = \"[^\"]*\"
+CADENA = \"(\\.|[^\"])*\"
 UNA_LINEA = \/\/.*
 LETRA = [A-Za-z]
 NUMERO = \d+

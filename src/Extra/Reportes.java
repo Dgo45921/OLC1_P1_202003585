@@ -26,6 +26,9 @@ public class Reportes {
             if (root.lexema.equals("\\\\\"")){
                 root.lexema = "\\\\\\\"";
             }
+            if (root.lexema.equals("\\'")){
+                root.lexema = "\\\\'";
+            }
             codigo += "nodo" + root.id_2 + " [label=\"" + root.lexema + "\"];\n"; // crear el nodo con el id y el texto
             if (root.izquierda != null) {
                 codigo += "nodo" + root.id_2 + " -> " + "nodo" + root.izquierda.id_2 + "[minlen=3 ]"+ ";\n"; // agregar la conexión con el hijo izquierdo
@@ -191,7 +194,7 @@ public class Reportes {
 
 
             for (int j = 1; j <encabezados.size() ; j++) {
-                String respuesta = findFinalState(encabezados.get(j).replace("\\\"", "\""),(ArrayList) state.get(2));
+                String respuesta = findFinalState(encabezados.get(j).replace("\\\"", "\"").replace("\\\\'", "\\'"),(ArrayList) state.get(2));
                 texto += "<TD>" + respuesta + "</TD>\n";
                 }
 
