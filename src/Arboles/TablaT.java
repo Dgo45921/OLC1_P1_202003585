@@ -33,10 +33,10 @@ public class TablaT {
 
                     for (Object obj:((ArrayList)((ArrayList)estado_actual).get(2)) ){
                         if (((Transition)obj).transition.equals(SigPos.get(0))){
-                            ArrayList hola =((ArrayList) search_state(((Transition) obj).finalState));
+                            ArrayList final_state =((ArrayList) search_state(((Transition) obj).finalState));
                             ArrayList concat = new ArrayList();
 
-                            for (Object obj2:((ArrayList)(ArrayList)hola.get(1))){
+                            for (Object obj2:((ArrayList)(ArrayList)final_state.get(1))){
                                 concat.add(obj2);
                             }
                             for (Object obj2:((ArrayList)(ArrayList)SigPos.get(1))){
@@ -51,15 +51,22 @@ public class TablaT {
                             nuevo_estado.add(new ArrayList<>());
                             nuevo_estado.add(false);
                             if (!stateExists(nuevo_estado)){
-                                this.estados.add(nuevo_estado);
-                                ((ArrayList)SigPos).set(1, concat);
+                                if (check_uses(((Transition)obj).finalState)){
+                                    this.estados.add(nuevo_estado);
+                                    ((ArrayList)SigPos).set(1, concat);
+                                    Transition transicion = new Transition((String) estado_actual.get(0),  SigPos.get(0) + "", "S"+contador);
+                                    ((ArrayList)((ArrayList)estado_actual).get(2)).add(transicion);
+                                    contador++;
+                                }
+                                else {
+                                    //System.out.println("x");
+                                    final_state.set(1, concat);
 
-                                Transition transicion = new Transition((String) estado_actual.get(0),  SigPos.get(0) + "", "S"+contador);
-                                ((ArrayList)((ArrayList)estado_actual).get(2)).add(transicion);
-                                contador++;
+                                }
+
+
                             }
                             else{
-                                System.out.println("a");
                                 String res = getStateName(concat);
                                 Transition transicion = new Transition((String) estado_actual.get(0),  SigPos.get(0) + "", res);
                                 ((ArrayList)((ArrayList)estado_actual).get(2)).add(transicion);
@@ -149,16 +156,7 @@ public class TablaT {
                             }
                         }
                         if(!trans_exist){
-
-
-                            if (!verifica_TransicionesDuplicadas((ArrayList) estado_actual.get(2), SigPos)){
-                                Transition trans = new Transition(estado_actual.get(0) + "", SigPos.get(0) + "", lexema_found + "");
-                                ((ArrayList)estado_actual.get(2)).add(trans);
-                            }
-                            else{
-                                deleteDuplicates2((ArrayList) estado_actual.get(2), SigPos, lexema_found); //cambiar lexema found por nuevo estado???
-                                // acá debo de agregar un nuevo estado con uniones de los duplicados
-                            }
+                            Transition trans = new Transition(estado_actual.get(0) + "", SigPos.get(0) + "", lexema_found + "");((ArrayList)estado_actual.get(2)).add(trans);
 
                         }
 
@@ -203,7 +201,7 @@ public class TablaT {
         for(Object t:  transiciones){
             if (((Transition)t).transition.equals(SigPos.get(0))){
                 System.out.println("el estado: "+ ((Transition) t).initialState+ " tiene conflicto con la transicion: "+ ((Transition) t).transition);
-                if (((Transition) t).initialState.equals("S2")){
+                if (((Transition) t).initialState.equals("S0")){
                     System.out.println("a");
                 }
                 return true;
@@ -212,14 +210,6 @@ public class TablaT {
         return false;
         }
 
-        public boolean SigPosDistinto(ArrayList SigPos){
-            for (ArrayList e : this.estados){ // verifica si un estado ya existe, revisa la lista de estados y compara el conjunto de transiciones de cada uno de los estados
-                if (e.get(1).equals(SigPos.get(1))){
-                    return true;
-                }
-            }
-            return false;
-        }
 
     public void deleteDuplicates(ArrayList transiciones, ArrayList SigPos, ArrayList nuevo_estado){
         for (Object t : transiciones){
@@ -230,15 +220,6 @@ public class TablaT {
 
     }
 
-
-    public void deleteDuplicates2(ArrayList transiciones, ArrayList SigPos, String nuevo_estado){
-        for (Object t : transiciones){
-            if (((Transition)t).transition.equals(SigPos.get(0))){
-                ((Transition)t).finalState = nuevo_estado;
-            }
-        }
-
-    }
 
     public boolean stateExists(ArrayList estado){
         for (ArrayList e : this.estados){ // verifica si un estado ya existe, revisa la lista de estados y compara el conjunto de transiciones de cada uno de los estados
@@ -272,5 +253,25 @@ public class TablaT {
         }
         return  nombre;
     }
+
+    public boolean check_uses(String name_estado){
+        int contador = 0;
+        for (ArrayList e : this.estados){ // verifica si un estado ya existe, revisa la lista de estados y compara el conjunto de transiciones de cada uno de los estados
+            ArrayList transiciones = (ArrayList) e.get(2);
+            for (int i = 0; i <transiciones.size() ; i++) {
+                Transition t = (Transition) transiciones.get(i);
+                if (t.finalState.equals(name_estado)){
+                    contador++;
+                }
+            }
+        }
+
+        if (contador >1){
+            return true;
+        }
+
+        return false;
+    }
+
 }
 

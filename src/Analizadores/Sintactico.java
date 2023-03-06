@@ -580,7 +580,6 @@ class CUP$Sintactico$actions {
 		
 mensajero.guarda_regex(ID, reg.toString());
 
-
               CUP$Sintactico$result = parser.getSymbolFactory().newSymbol("REGEX",4, ((java_cup.runtime.Symbol)CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-2)), ((java_cup.runtime.Symbol)CUP$Sintactico$stack.peek()), RESULT);
             }
           return CUP$Sintactico$result;

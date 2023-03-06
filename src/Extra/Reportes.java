@@ -3,7 +3,6 @@ package Extra;
 import Arboles.NodoArbol;
 import Arboles.Transition;
 import Ventanas.Main;
-
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -310,12 +309,13 @@ public class Reportes {
                     texto += estado.get(0) + ",";
                 }
                 else{
-                    texto += estado.get(0) + ";\n";
+                    texto += estado.get(0) + "; \n";
                 }
             }
         }
 
         texto += "node [shape = circle]; \n";
+        texto = texto.replace(",node", " node");
 
         // haciendo las conexiones entre los nodos
 

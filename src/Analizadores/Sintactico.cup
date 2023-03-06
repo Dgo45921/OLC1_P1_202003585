@@ -131,7 +131,6 @@ LISTA ::= coma CARACTER:car_lista LISTA:result_lista
 
 REGEX ::= id:ID flecha REG_EXP:reg {:
 mensajero.guarda_regex(ID, reg.toString());
-
 :};
 
 REG_EXP::= concat REG_EXP:reg1 REG_EXP: reg2 {:RESULT="."+reg1.toString()+reg2.toString();:}
@@ -141,7 +140,6 @@ REG_EXP::= concat REG_EXP:reg1 REG_EXP: reg2 {:RESULT="."+reg1.toString()+reg2.t
          | interrogacion REG_EXP:reg7 {:RESULT="?"+reg7.toString();:}
          | ELEMENTO_REGEX:e {:RESULT=e;:}
          ;
-
 
 
 ELEMENTO_REGEX ::= llave_abre id:ID llave_cierra{:RESULT ="{"+ ID + "}";:}

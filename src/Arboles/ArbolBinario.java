@@ -76,7 +76,12 @@ public class ArbolBinario {
                     hojas.add(nodo);
                 }
 
+
                 else if (new_regex[i] == '"'){
+                    if (i==66){
+                        System.out.println("a");
+                    }
+
                     // Acá agregaremos nodos hoja que tengan como lexeman un valor entre comillas
                     posible_id.append(new_regex[i]);
                     for (int j = i+1; j <new_regex.length ; j++) {
@@ -123,7 +128,7 @@ public class ArbolBinario {
                         }
                     }
                 }
-                else{
+                else if (new_regex[i] == '}'){
                     for (int j = i; j <new_regex.length ; j++) {
                         posible_id.append(new_regex[j]);
                         if (new_regex[j] == '{'){
