@@ -1,7 +1,7 @@
 package Arboles;
 
 public class Type {
-    public static enum Types{
+    public enum Types{
         HOJA,
         AND,
         OR,

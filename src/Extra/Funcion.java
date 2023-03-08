@@ -76,7 +76,8 @@ public class Funcion {
 
 
     public void guarda_evaluaciones(String ID, String cadena){
-        Main.lista_evaluaciones.put(ID,cadena);
+        Evaluacion eval  = new Evaluacion(ID, cadena);
+        Main.lista_evaluaciones.add(eval);
     }
 
     public void guarda_regex(String ID, String cadena){

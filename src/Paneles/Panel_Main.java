@@ -216,10 +216,10 @@ public class Panel_Main extends JPanel implements ActionListener {
     public void generaArbolesYTablas(){
         for (Map.Entry<String,Object> mapElement : Main.regex_valor.entrySet()) {
             String key = mapElement.getKey();
-
             String regex_value = (String) (mapElement.getValue());
             //System.out.println(key + " : " + regex_value);
             ArbolBinario arbolito = new ArbolBinario(regex_value);
+            arbolito.setName(key);
             Main.lista_arboles.add(arbolito);
         }
 

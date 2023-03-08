@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Stack;
 
 public class ArbolBinario {
+    private String name;
     private NodoArbol raiz;
     private ArrayList<NodoArbol> hojas = new ArrayList<NodoArbol>();
     private ArrayList<ArrayList> tabla_sig_pos = new ArrayList<ArrayList>();
@@ -253,6 +254,14 @@ public class ArbolBinario {
 
     public void setTabla_transiciones(ArrayList tabla_transiciones) {
         this.tabla_transiciones = tabla_transiciones;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }
 

@@ -1,8 +1,7 @@
 package Ventanas;
 
 import Arboles.ArbolBinario;
-import Arboles.NodoArbol;
-import Arboles.TablaT;
+import Extra.JsonReport;
 import Extra.Reportes;
 import Paneles.*;
 import javax.swing.*;
@@ -17,6 +16,7 @@ import java.nio.file.Paths;
 import java.util.Objects;
 
 public class Main_frame extends JFrame implements ActionListener {
+    public boolean AFD_existent = false;
     public boolean guardado = false;
     // Instanciando los paneles que formaran parte de la ventana principal
     public Panel_Main panel_principal = new Panel_Main();
@@ -126,13 +126,20 @@ public class Main_frame extends JFrame implements ActionListener {
                 for (int i =0; i< Main.lista_arboles.size(); i++) {
                     ArbolBinario arbolito = Main.lista_arboles.get(i);
                     repo.generate_AFD(arbolito.getTabla_transiciones(), i);
+                    AFD_existent = true;
                 }
             }
 
       }
         if (e.getSource() == analyze_input) {
-            if (Objects.equals(Panel_Main.input_texto.getText(), "")) {
-                JOptionPane.showMessageDialog(null, "El input no puede estar vacío ");
+            if (AFD_existent) {
+                JsonReport json = new JsonReport();
+                json.CadenaPerteneciente();
+
+            }
+            else{
+                JOptionPane.showMessageDialog(null, "No hay AFD generados ");
+
             }
         }
 

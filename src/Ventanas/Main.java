@@ -3,6 +3,7 @@ package Ventanas;
 
 import Arboles.ArbolBinario;
 import Extra.Errores;
+import Extra.Evaluacion;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -14,7 +15,7 @@ public class Main {
     public static Main_frame principal;
     public static Hashtable<String, Object> conjuntos_valor = new Hashtable<String, Object>();
     public static Hashtable<String, Object> regex_valor = new Hashtable<String, Object>();
-    public static Hashtable<String, Object> lista_evaluaciones = new Hashtable<String, Object>();
+    public static ArrayList<Evaluacion> lista_evaluaciones = new ArrayList<>();
     public static ArrayList<ArbolBinario> lista_arboles = new ArrayList<>();
     public static ArrayList<Errores> lista_errores = new ArrayList<Errores>();
     public static void main(String[] args) throws IOException {
