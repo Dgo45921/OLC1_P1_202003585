@@ -1,7 +1,7 @@
 package Ventanas;
 
 import Arboles.ArbolBinario;
-import Extra.JsonReport;
+import Extra.EvaluacionCadenas;
 import Extra.Reportes;
 import Paneles.*;
 import javax.swing.*;
@@ -133,8 +133,10 @@ public class Main_frame extends JFrame implements ActionListener {
       }
         if (e.getSource() == analyze_input) {
             if (AFD_existent) {
-                JsonReport json = new JsonReport();
+                EvaluacionCadenas json = new EvaluacionCadenas();
                 json.CadenaPerteneciente();
+                Reportes repo = new Reportes();
+                repo.generate_Json();
 
             }
             else{

@@ -1,9 +1,14 @@
 package Extra;
 
 
+import com.google.gson.annotations.SerializedName;
+
 public class Evaluacion {
+    @SerializedName("ExpresionRegular")
     private String key;
+    @SerializedName("Valor")
     private String value;
+    @SerializedName("Resultado")
     private boolean perteneciente;
 
     public Evaluacion(String key, String value){

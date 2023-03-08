@@ -4,6 +4,11 @@ import Arboles.NodoArbol;
 import Arboles.Transition;
 import Arboles.Type;
 import Ventanas.Main;
+import com.google.gson.ExclusionStrategy;
+import com.google.gson.FieldAttributes;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -359,5 +364,27 @@ public class Reportes {
 
 
     }
+
+
+    public void generate_Json(){
+        Gson gson = new GsonBuilder()
+                .setExclusionStrategies()
+                .setPrettyPrinting() // Agregar esta línea
+                .create();
+
+        String json = gson.toJson(Main.lista_evaluaciones);
+        try {
+            FileWriter writer = new FileWriter("SALIDAS_202003585/salida.json");
+            writer.write(json);
+            writer.close();
+            System.out.println("El archivo se ha guardado correctamente.");
+        } catch (IOException e) {
+            System.out.println("Ocurrió un error al guardar el archivo.");
+            e.printStackTrace();
+        }
+    }
+
+
+
 
 }

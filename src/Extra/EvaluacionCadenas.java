@@ -3,12 +3,12 @@ package Extra;
 import Arboles.ArbolBinario;
 import Arboles.Transition;
 import Ventanas.Main;
-
+import com.google.gson.ExclusionStrategy;
+import com.google.gson.FieldAttributes;
 import java.util.ArrayList;
-import java.util.Map;
 import java.util.Objects;
 
-public class JsonReport {
+public class EvaluacionCadenas {
 
     public void CadenaPerteneciente(){
         for (Evaluacion eval : Main.lista_evaluaciones) {
@@ -19,9 +19,11 @@ public class JsonReport {
             cadena_a_evaluar = cadena_a_evaluar.replaceFirst("\"", "");
             if (isPerteneciente(cadena_a_evaluar, tabla_transiciones)){
                 System.out.println("la cadena: "+ cadena_a_evaluar + " hizo match");
+                eval.setPerteneciente(true);
             }
             else{
                 System.out.println("la cadena: "+ cadena_a_evaluar + " no hizo match");
+                eval.setPerteneciente(false);
             }
 
         }
