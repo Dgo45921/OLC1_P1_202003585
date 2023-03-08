@@ -95,6 +95,7 @@ public class ArbolBinario {
                                     hojas.add(nodo);
                                     break;
                                 }
+
                         }
                         else if (new_regex[j] == '\\'){
                             i = j;

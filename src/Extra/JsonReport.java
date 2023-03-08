@@ -15,11 +15,13 @@ public class JsonReport {
             String key = eval.getKey();
             ArrayList tabla_transiciones = EncuentraTablaCorrespondiente(key);
             String cadena_a_evaluar = eval.getValue();
-            if (isPerteneciente(cadena_a_evaluar.replace("\"", ""), tabla_transiciones)){
-                System.out.println("la cadena: "+ cadena_a_evaluar + "hizo match");
+            cadena_a_evaluar = cadena_a_evaluar.substring(0, cadena_a_evaluar.length() - 1);
+            cadena_a_evaluar = cadena_a_evaluar.replaceFirst("\"", "");
+            if (isPerteneciente(cadena_a_evaluar, tabla_transiciones)){
+                System.out.println("la cadena: "+ cadena_a_evaluar + " hizo match");
             }
             else{
-                System.out.println("la cadena: "+ cadena_a_evaluar + "no hizo match");
+                System.out.println("la cadena: "+ cadena_a_evaluar + " no hizo match");
             }
 
         }
@@ -49,12 +51,74 @@ public class JsonReport {
                 // obtengo la transicion actual
                 Transition transicion_actual = (Transition) ((ArrayList)((ArrayList) current_state.get(2))).get(i);
                 // reviso si la transicion actual va con cadena o es conjunto
-                if (transicion_actual.transition.startsWith("\\\"")){
+                if (transicion_actual.transition.startsWith("\"")){
                     // creo la subcadena para eliminarla de la cadena actual
-                    String subcadena = transicion_actual.transition.replace("\\\"", "");
+                    String subcadena = transicion_actual.transition;
+                    subcadena = subcadena.substring(0, subcadena.length() - 1);
+                    subcadena = subcadena.replaceFirst("\"", "");
                     // reviso si mi cadena original empieza con la subcadena para eliminar esa subcadena
                     if (cadena.startsWith(subcadena)){
                         cadena = cadena.replaceFirst(subcadena, "");
+                        String nuevo_estado = (transicion_actual.finalState.replace("S", ""));
+                        int indice_nuevo_estado = Integer.parseInt(nuevo_estado);
+                        current_state = (ArrayList) tabla_transiciones.get(indice_nuevo_estado);
+                        tamanio = ((ArrayList) current_state.get(2)).size();
+                        i = 0;
+                        cambio_hecho =true;
+                        if ((Boolean)current_state.get(3)  && cadena.equals("")){
+                            hallado = true;
+                            break;
+                        }
+                    }
+
+                }
+                else if (transicion_actual.transition.startsWith("\\\"")) {
+                    // creo la subcadena para eliminarla de la cadena actual
+                    String subcadena = "\\\"";
+                    // reviso si mi cadena original empieza con la subcadena para eliminar esa subcadena
+                    if (cadena.startsWith(subcadena)){
+                        cadena = cadena.replaceFirst("\\\\\"", "");
+                        String nuevo_estado = (transicion_actual.finalState.replace("S", ""));
+                        int indice_nuevo_estado = Integer.parseInt(nuevo_estado);
+                        current_state = (ArrayList) tabla_transiciones.get(indice_nuevo_estado);
+                        tamanio = ((ArrayList) current_state.get(2)).size();
+                        i = 0;
+                        cambio_hecho =true;
+                        if ((Boolean)current_state.get(3)  && cadena.equals("")){
+                            hallado = true;
+                            break;
+                        }
+                    }
+
+
+                }
+                else if (transicion_actual.transition.startsWith("\\n")) {
+                    // creo la subcadena para eliminarla de la cadena actual
+                    String subcadena = "\\n";
+                    // reviso si mi cadena original empieza con la subcadena para eliminar esa subcadena
+                    if (cadena.startsWith(subcadena)){
+                        cadena = cadena.replaceFirst("\\\\n", "");
+                        String nuevo_estado = (transicion_actual.finalState.replace("S", ""));
+                        int indice_nuevo_estado = Integer.parseInt(nuevo_estado);
+                        current_state = (ArrayList) tabla_transiciones.get(indice_nuevo_estado);
+                        tamanio = ((ArrayList) current_state.get(2)).size();
+                        i = 0;
+                        cambio_hecho =true;
+                        if ((Boolean)current_state.get(3)  && cadena.equals("")){
+                            hallado = true;
+                            break;
+                        }
+                    }
+
+                }
+
+
+                else if (transicion_actual.transition.startsWith("\\'")) {
+                    // creo la subcadena para eliminarla de la cadena actual
+                    String subcadena = "\\'";
+                    // reviso si mi cadena original empieza con la subcadena para eliminar esa subcadena
+                    if (cadena.startsWith(subcadena)){
+                        cadena = cadena.replaceFirst("\\\\'", "");
                         String nuevo_estado = (transicion_actual.finalState.replace("S", ""));
                         int indice_nuevo_estado = Integer.parseInt(nuevo_estado);
                         current_state = (ArrayList) tabla_transiciones.get(indice_nuevo_estado);

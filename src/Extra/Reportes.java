@@ -322,15 +322,15 @@ public class Reportes {
             ArrayList transiciones = (ArrayList) estado.get(2);
             for (int j = 0; j < transiciones.size(); j++) {
                 Transition trans = (Transition) transiciones.get(j);
-                trans.transition = trans.transition.replace("\"", "\\\"").replace("", "");
-                if (trans.transition.equals("\\\\\"")) {
-                    trans.transition = "\\\\\\\"";
-                } else if (trans.transition.equals("\\'")) {
-                    trans.transition = "\\\\'";
-                } else if (trans.transition.equals("\\n")) {
-                    trans.transition = "\\\\n";
+                String x = trans.transition.replace("\"", "\\\"").replace("", "");
+                if (x.equals("\\\\\"")) {
+                    x = "\\\\\\\"";
+                } else if (x.equals("\\'")) {
+                   x = "\\\\'";
+                } else if (x.equals("\\n")) {
+                    x = "\\\\n";
                 }
-                texto += trans.initialState + "->" + trans.finalState + " [label = \"" + trans.transition + "\"];\n";
+                texto += trans.initialState + "->" + trans.finalState + " [label = \"" + x + "\"];\n";
             }
 
         }
