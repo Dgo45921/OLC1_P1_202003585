@@ -34,27 +34,27 @@ public class Funcion {
 
             // Verifica que sean numeros los limites de los rangos (num~num)
             if(isNumeric(limite_inferior) && isNumeric(limite_superior)){
-                ArrayList<Integer> conjunto = new ArrayList<Integer>();
+                ArrayList<String> conjunto = new ArrayList<>();
                 for (int i = Integer.parseInt(limite_inferior); i <=Integer.parseInt(limite_superior) ; i++) {
-                    conjunto.add(i);
+                    conjunto.add(Integer.toString(i));
                 }
                 Main.conjuntos_valor.put(ID, conjunto);
             }
 
             // verifica que sean letras los limites de los rangos (letra~letra)
             else if(isLetter(limite_inferior) && isLetter(limite_superior)){
-                ArrayList<Character> conjunto = new ArrayList<Character>();
+                ArrayList<String> conjunto = new ArrayList<>();
                 for (char i = limite_inferior.charAt(0); i <= limite_superior.charAt(0) ; i++) {
-                    conjunto.add(i);
+                    conjunto.add(Character.toString(i));
                 }
                 Main.conjuntos_valor.put(ID, conjunto);
             }
             // caso en el que sea un rango caracter~caracter
             else{
-                ArrayList<Character> conjunto = new ArrayList<Character>();
+                ArrayList<String> conjunto = new ArrayList<>();
                 for (char i = limite_inferior.charAt(0); i <= limite_superior.charAt(0) ; i++) {
                     if (!Character.isDigit(i) && !Character.isDigit(i) && !Character.isLetter(i) && !Character.isLetter(i)){
-                        conjunto.add(i);
+                        conjunto.add(Character.toString(i));
                     }
                 }
                 Main.conjuntos_valor.put(ID, conjunto);
