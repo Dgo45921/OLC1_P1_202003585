@@ -36,16 +36,15 @@ public class JsonReport {
     }
 
     public boolean isPerteneciente(String cadena, ArrayList tabla_transiciones){
-        boolean cambio_hecho = false;
+        boolean cambio_hecho;
         boolean hallado = false;
         ArrayList current_state = (ArrayList) tabla_transiciones.get(0);
         int tamanio = ((ArrayList) current_state.get(2)).size();
-        outerloop:
-        while (!hallado){
+
             // itero sobre todas las transiciones del estado actual
             int i = 0;
             while (i < tamanio)  {
-
+                hallado = false;
                 cambio_hecho =false;
                 // obtengo la transicion actual
                 Transition transicion_actual = (Transition) ((ArrayList)((ArrayList) current_state.get(2))).get(i);
@@ -64,7 +63,7 @@ public class JsonReport {
                         cambio_hecho =true;
                         if ((Boolean)current_state.get(3)  && cadena.equals("")){
                             hallado = true;
-                            break outerloop;
+                            break;
                         }
                     }
 
@@ -82,16 +81,15 @@ public class JsonReport {
                         cambio_hecho =true;
                         if ((Boolean)current_state.get(3)  && cadena.equals("")){
                             hallado = true;
-                            break outerloop;
+                            break;
                         }
 
                     }
                 }
 
-
                 if ((Boolean)current_state.get(3)  && cadena.equals("")){
                     hallado = true;
-                    break outerloop;
+                    break;
                 }
 
                 if (!cambio_hecho) {
@@ -100,7 +98,6 @@ public class JsonReport {
 
 
             }
-        }
 
         return hallado;
 
