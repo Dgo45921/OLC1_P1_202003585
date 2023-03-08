@@ -39,10 +39,13 @@ public class JsonReport {
         boolean cambio_hecho = false;
         boolean hallado = false;
         ArrayList current_state = (ArrayList) tabla_transiciones.get(0);
+        int tamanio = ((ArrayList) current_state.get(2)).size();
         outerloop:
         while (!hallado){
             // itero sobre todas las transiciones del estado actual
-            for (int i = 0; i < ((ArrayList) current_state.get(2)).size() ; i++) {
+            int i = 0;
+            while (i < tamanio)  {
+
                 cambio_hecho =false;
                 // obtengo la transicion actual
                 Transition transicion_actual = (Transition) ((ArrayList)((ArrayList) current_state.get(2))).get(i);
@@ -52,10 +55,11 @@ public class JsonReport {
                     String subcadena = transicion_actual.transition.replace("\\\"", "");
                     // reviso si mi cadena original empieza con la subcadena para eliminar esa subcadena
                     if (cadena.startsWith(subcadena)){
-                        cadena = cadena.replace(subcadena, "");
+                        cadena = cadena.replaceFirst(subcadena, "");
                         String nuevo_estado = (transicion_actual.finalState.replace("S", ""));
                         int indice_nuevo_estado = Integer.parseInt(nuevo_estado);
                         current_state = (ArrayList) tabla_transiciones.get(indice_nuevo_estado);
+                        tamanio = ((ArrayList) current_state.get(2)).size();
                         i = 0;
                         cambio_hecho =true;
                         if ((Boolean)current_state.get(3)  && cadena.equals("")){
@@ -73,6 +77,7 @@ public class JsonReport {
                         String nuevo_estado = (transicion_actual.finalState.replace("S", ""));
                         int indice_nuevo_estado = Integer.parseInt(nuevo_estado);
                         current_state = (ArrayList) tabla_transiciones.get(indice_nuevo_estado);
+                        tamanio = ((ArrayList) current_state.get(2)).size();
                         i = 0;
                         cambio_hecho =true;
                         if ((Boolean)current_state.get(3)  && cadena.equals("")){
@@ -84,10 +89,15 @@ public class JsonReport {
                 }
 
 
-                if (i == ((ArrayList) current_state.get(2)).size()-1 && !cambio_hecho){
-                    System.out.println("estado muerto");
+                if ((Boolean)current_state.get(3)  && cadena.equals("")){
+                    hallado = true;
                     break outerloop;
                 }
+
+                if (!cambio_hecho) {
+                    i++; // Incremento el valor de i solo si no se ha hecho ningún cambio
+                }
+
 
             }
         }
@@ -112,7 +122,7 @@ public class JsonReport {
         for (int i = 0; i <caracteres.size() ; i++) {
             String  caracter = (String) caracteres.get(i);
             if (cadena_a_evaluar.startsWith(caracter)){
-               cadena_a_evaluar = cadena_a_evaluar.replace(caracter, "");
+               cadena_a_evaluar = cadena_a_evaluar.replaceFirst(caracter, "");
                return cadena_a_evaluar;
             }
         }
