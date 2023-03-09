@@ -2,9 +2,8 @@ package Extra;
 
 import Arboles.ArbolBinario;
 import Arboles.Transition;
+import Paneles.Panel_Main;
 import Ventanas.Main;
-import com.google.gson.ExclusionStrategy;
-import com.google.gson.FieldAttributes;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -18,12 +17,14 @@ public class EvaluacionCadenas {
             cadena_a_evaluar = cadena_a_evaluar.substring(0, cadena_a_evaluar.length() - 1);
             cadena_a_evaluar = cadena_a_evaluar.replaceFirst("\"", "");
             if (isPerteneciente(cadena_a_evaluar, tabla_transiciones)){
-                System.out.println("la cadena: "+ cadena_a_evaluar + " hizo match");
                 eval.setPerteneciente(true);
+                String cadenita = "\nLa expresión: " + eval.getValue() + " es válida con la expresión regular: " + eval.getKey();
+                Panel_Main.output_console.setText(Panel_Main.output_console.getText() + cadenita);
             }
             else{
-                System.out.println("la cadena: "+ cadena_a_evaluar + " no hizo match");
                 eval.setPerteneciente(false);
+                String cadenita = "\nLa expresión: " + eval.getValue() + " no es válida con la expresión regular: " + eval.getKey();
+                Panel_Main.output_console.setText(Panel_Main.output_console.getText() + cadenita);
             }
 
         }
