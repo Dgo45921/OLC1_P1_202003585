@@ -39,8 +39,14 @@ public class TablaT {
                             for (Object obj2:((ArrayList)(ArrayList)final_state.get(1))){
                                 concat.add(obj2);
                             }
-                            for (Object obj2:((ArrayList)(ArrayList)SigPos.get(1))){
-                                concat.add(obj2);
+
+                            if (!((ArrayList)SigPos).get(1).equals(((ArrayList)final_state).get(1))){
+
+                                for (Object obj2:((ArrayList)(ArrayList)SigPos.get(1))){
+                                    if (!concat.contains(obj2)){
+                                        concat.add(obj2);
+                                    }
+                                }
                             }
 
 
