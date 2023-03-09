@@ -230,8 +230,8 @@ public class Panel_Main extends JPanel implements ActionListener {
             raiz.sig_pos();
 
             Reportes repo = new Reportes();
-            System.out.println("tabla de sigPOS");
-            repo.printTable(arbolito.getTabla_sig_pos());
+//            System.out.println("tabla de sigPOS");
+//            repo.printTable(arbolito.getTabla_sig_pos());
             repo.dotTree(raiz);
             repo.generate_tree(i);
 
@@ -239,7 +239,7 @@ public class Panel_Main extends JPanel implements ActionListener {
             repo.Generate_SigPosTable(arbolito.getTabla_sig_pos(), i);
 
             TablaT generadorTrancisiones = new TablaT(arbolito);
-            generadorTrancisiones.impTable();
+//            generadorTrancisiones.impTable();
             repo.generateTransitionTable(generadorTrancisiones.estados, arbolito.getHojas(), i);
             arbolito.setTabla_transiciones(generadorTrancisiones.estados);
 

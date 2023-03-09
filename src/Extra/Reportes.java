@@ -13,6 +13,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Objects;
 
 public class Reportes {
@@ -367,6 +368,7 @@ public class Reportes {
 
 
     public void generate_Json(){
+        Date d=new Date();
         Gson gson = new GsonBuilder()
                 .setExclusionStrategies()
                 .setPrettyPrinting() // Agregar esta línea
@@ -374,7 +376,7 @@ public class Reportes {
 
         String json = gson.toJson(Main.lista_evaluaciones);
         try {
-            FileWriter writer = new FileWriter("SALIDAS_202003585/salida.json");
+            FileWriter writer = new FileWriter("SALIDAS_202003585/salida" + d.getHours()+ "_" + d.getMinutes() + "_" + d.getSeconds() + "_"+".json");
             writer.write(json);
             writer.close();
             System.out.println("El archivo se ha guardado correctamente.");

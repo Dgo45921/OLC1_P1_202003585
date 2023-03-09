@@ -200,7 +200,7 @@ public class TablaT {
     public boolean verifica_TransicionesDuplicadas(ArrayList transiciones, ArrayList SigPos){
         for(Object t:  transiciones){
             if (((Transition)t).transition.equals(SigPos.get(0))){
-                System.out.println("el estado: "+ ((Transition) t).initialState+ " tiene conflicto con la transicion: "+ ((Transition) t).transition);
+               // System.out.println("el estado: "+ ((Transition) t).initialState+ " tiene conflicto con la transicion: "+ ((Transition) t).transition);
                 if (((Transition) t).initialState.equals("S0")){
                     System.out.println("a");
                 }
