@@ -1,5 +1,6 @@
 package Ventanas;
 
+import AFND.AFND;
 import Arboles.ArbolBinario;
 import Extra.EvaluacionCadenas;
 import Extra.Reportes;
@@ -127,7 +128,14 @@ public class Main_frame extends JFrame implements ActionListener {
                     ArbolBinario arbolito = Main.lista_arboles.get(i);
                     repo.generate_AFD(arbolito.getTabla_transiciones(), i);
                     AFD_existent = true;
+                    AFND automata = new AFND();
+                    System.out.println("----------- AFND -------------------");
+                    automata.generar_AFND(arbolito.getRaiz());
                 }
+
+
+
+
             }
 
       }
