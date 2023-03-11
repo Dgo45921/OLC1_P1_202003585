@@ -43,7 +43,8 @@ LETRA = [A-Za-z]
 NUMERO = \d+
 ESPECIALES = \\n|\\\'|\\\"
 SYMBOL = [!-$]|[&-)]|\/|-|[=->]|@|[\[-\`]
-IDENTIFICADOR = [a-zA-Z_][a-zA-Z0-9_]*
+IDENTIFICADOR = [a-zA-Z][a-zA-Z0-9_]*
+FLECHA = -\s*>
 
 %state YYINITIAL
 %state MULTI
@@ -62,13 +63,12 @@ IDENTIFICADOR = [a-zA-Z_][a-zA-Z0-9_]*
 <YYINITIAL> "." {System.out.println("Se encontró token en linea: "+ yyline+ " columna: "+ yycolumn+ " con valor : "+ yytext()); return new Symbol(sym.concat, yyline, yycolumn, yytext());}
 <YYINITIAL> "~" {System.out.println("Se encontró token en linea: "+ yyline+ " columna: "+ yycolumn+ " con valor : "+ yytext()); return new Symbol(sym.virgulilla, yyline, yycolumn, yytext());}
 <YYINITIAL> "," {System.out.println("Se encontró token en linea: "+ yyline+ " columna: "+ yycolumn+ " con valor : "+ yytext()); return new Symbol(sym.coma, yyline, yycolumn, yytext());}
-<YYINITIAL> "->" {System.out.println("Se encontró token en linea: "+ yyline+ " columna: "+ yycolumn+ " con valor : "+ yytext()); return new Symbol(sym.flecha, yyline, yycolumn, yytext());}
 <YYINITIAL> "*" {System.out.println("Se encontró token en linea: "+ yyline+ " columna: "+ yycolumn+ " con valor : "+ yytext()); return new Symbol(sym.klenee, yyline, yycolumn, yytext());}
 <YYINITIAL> "|" {System.out.println("Se encontró token en linea: "+ yyline+ " columna: "+ yycolumn+ " con valor : "+ yytext()); return new Symbol(sym.or, yyline, yycolumn, yytext());}
 <YYINITIAL> "+" {System.out.println("Se encontró token en linea: "+ yyline+ " columna: "+ yycolumn+ " con valor : "+ yytext()); return new Symbol(sym.plus, yyline, yycolumn, yytext());}
 <YYINITIAL> "?" {System.out.println("Se encontró token en linea: "+ yyline+ " columna: "+ yycolumn+ " con valor : "+ yytext()); return new Symbol(sym.interrogacion, yyline, yycolumn, yytext());   }
 
-
+<YYINITIAL> {FLECHA} {System.out.println("Se encontró token en linea: "+ yyline+ " columna: "+ yycolumn+ " con valor : "+ yytext()); return new Symbol(sym.flecha, yyline, yycolumn, yytext());}
 <YYINITIAL> {LETRA}  {System.out.println("Se encontró token en linea: "+ yyline+ " columna: "+ yycolumn+ " con valor : "+ yytext()); return new Symbol(sym.letra, yyline, yycolumn, yytext());}
 <YYINITIAL> {IDENTIFICADOR} {System.out.println("Se encontró token en linea: "+ yyline+ " columna: "+ yycolumn+ " con valor : "+ yytext()); return new Symbol(sym.id, yyline, yycolumn, yytext());}
 <YYINITIAL> {CADENA} {System.out.println("Se encontró token en linea: "+ yyline+ " columna: "+ yycolumn+ " con valor : "+ yytext()); return new Symbol(sym.cadena, yyline, yycolumn, yytext());}

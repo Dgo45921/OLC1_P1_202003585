@@ -39,17 +39,17 @@ public class Lexico implements java_cup.runtime.Scanner {
    * Translates characters to character classes
    */
   private static final char [] ZZ_CMAP = {
-     0,  0,  0,  0,  0,  0,  0,  0,  0,  2,  5,  5,  5,  5,  0,  0, 
+     0,  0,  0,  0,  0,  0,  0,  0,  0, 15,  5,  5,  5,  5,  0,  0, 
      0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 
-     2, 32,  3, 11, 11, 23, 11, 10, 11, 11, 28, 30, 26, 12, 24,  6, 
-    14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 21, 22,  1, 11, 27, 31, 
-    11,  7,  7, 15,  7,  7,  7,  7,  7,  7, 18,  7,  7,  7, 17, 16, 
-     7,  7,  7,  7,  7,  7,  7,  7,  7,  7,  7, 11,  4, 11, 11, 13, 
+    15, 32,  3, 11, 11, 25, 11, 10, 11, 11, 29, 30, 28, 12, 26,  6, 
+    13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 23, 24,  1, 11, 16, 31, 
+    11,  7,  7, 17,  7,  7,  7,  7,  7,  7, 20,  7,  7,  7, 19, 18, 
+     7,  7,  7,  7,  7,  7,  7,  7,  7,  7,  7, 11,  4, 11, 11, 14, 
     11,  7,  7,  7,  7,  7,  7,  7,  7,  7,  7,  7,  7,  7,  9,  7, 
-     7,  7,  7,  7,  7,  7,  7,  7,  7,  7,  7, 19, 29, 20, 25,  0, 
+     7,  7,  7,  7,  7,  7,  7,  7,  7,  7,  7, 21,  2, 22, 27,  0, 
      0,  0,  0,  0,  0,  5,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 
      0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 
-     2,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 
+    15,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 
      0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 
      0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 
      0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 
@@ -63,14 +63,14 @@ public class Lexico implements java_cup.runtime.Scanner {
   private static final int [] ZZ_ACTION = zzUnpackAction();
 
   private static final String ZZ_ACTION_PACKED_0 =
-    "\3\0\1\1\1\2\1\3\3\4\1\5\1\6\2\4"+
-    "\1\7\1\5\1\10\1\11\1\12\1\13\1\14\1\15"+
-    "\1\16\1\17\1\20\1\21\1\22\1\23\1\24\1\25"+
-    "\1\26\1\27\1\0\1\30\1\0\1\31\1\3\1\32"+
-    "\1\7\1\30\1\7\1\33";
+    "\3\0\1\1\1\2\1\3\2\4\1\5\1\4\1\6"+
+    "\1\7\2\4\1\6\1\10\1\11\1\12\1\13\1\14"+
+    "\1\15\1\16\1\17\1\20\1\21\1\22\1\23\1\24"+
+    "\1\25\1\26\1\0\1\27\1\0\1\30\1\5\1\31"+
+    "\1\0\1\32\1\31\1\27\1\31\1\33";
 
   private static int [] zzUnpackAction() {
-    int [] result = new int[41];
+    int [] result = new int[42];
     int offset = 0;
     offset = zzUnpackAction(ZZ_ACTION_PACKED_0, offset, result);
     return result;
@@ -96,14 +96,14 @@ public class Lexico implements java_cup.runtime.Scanner {
 
   private static final String ZZ_ROWMAP_PACKED_0 =
     "\0\0\0\41\0\102\0\143\0\143\0\143\0\204\0\245"+
-    "\0\306\0\347\0\u0108\0\143\0\u0129\0\347\0\u014a\0\143"+
+    "\0\143\0\306\0\347\0\u0108\0\143\0\u0129\0\u014a\0\143"+
     "\0\143\0\143\0\143\0\143\0\143\0\143\0\143\0\143"+
-    "\0\143\0\143\0\143\0\143\0\143\0\143\0\143\0\204"+
-    "\0\143\0\u016b\0\143\0\u018c\0\143\0\u01ad\0\204\0\u01ce"+
-    "\0\347";
+    "\0\143\0\143\0\143\0\143\0\143\0\143\0\204\0\143"+
+    "\0\u016b\0\143\0\u018c\0\347\0\u0129\0\143\0\u01ad\0\204"+
+    "\0\u01ce\0\347";
 
   private static int [] zzUnpackRowMap() {
-    int [] result = new int[41];
+    int [] result = new int[42];
     int offset = 0;
     offset = zzUnpackRowMap(ZZ_ROWMAP_PACKED_0, offset, result);
     return result;
@@ -126,18 +126,19 @@ public class Lexico implements java_cup.runtime.Scanner {
   private static final int [] ZZ_TRANS = zzUnpackTrans();
 
   private static final String ZZ_TRANS_PACKED_0 =
-    "\1\4\1\5\1\6\1\7\1\10\1\6\1\11\1\12"+
-    "\1\13\1\12\2\14\1\15\1\16\1\13\1\17\3\12"+
-    "\1\20\1\21\1\22\1\23\1\24\1\25\1\26\1\27"+
-    "\1\14\1\30\1\31\1\32\1\33\1\14\33\6\1\34"+
-    "\4\6\1\35\40\36\1\37\41\0\3\40\1\41\1\42"+
-    "\34\40\3\0\1\43\5\0\2\43\34\0\1\44\41\0"+
-    "\1\16\1\0\1\16\3\0\6\16\26\0\1\13\5\0"+
-    "\1\13\55\0\1\45\14\0\1\16\1\0\1\16\3\0"+
-    "\3\16\1\46\2\16\16\0\3\40\1\47\1\42\34\40"+
-    "\5\44\1\0\33\44\7\0\1\16\1\0\1\16\3\0"+
-    "\4\16\1\50\1\16\25\0\1\16\1\0\1\16\3\0"+
-    "\5\16\1\51\16\0";
+    "\1\4\1\5\1\6\1\7\1\10\1\11\1\12\1\13"+
+    "\1\14\1\13\2\15\1\16\1\14\1\15\1\11\1\15"+
+    "\1\17\3\13\1\20\1\21\1\22\1\23\1\24\1\25"+
+    "\1\26\1\27\1\30\1\31\1\32\1\15\20\11\1\33"+
+    "\17\11\1\34\40\35\1\36\41\0\3\37\1\40\1\41"+
+    "\34\37\3\0\1\42\5\0\2\42\34\0\1\43\41\0"+
+    "\1\44\1\0\1\44\3\0\2\44\2\0\4\44\24\0"+
+    "\1\14\4\0\1\14\30\0\1\45\11\0\1\45\1\46"+
+    "\27\0\1\44\1\0\1\44\3\0\2\44\2\0\1\44"+
+    "\1\47\2\44\14\0\3\37\1\50\1\41\34\37\5\43"+
+    "\1\0\33\43\7\0\1\44\1\0\1\44\3\0\2\44"+
+    "\2\0\2\44\1\51\1\44\23\0\1\44\1\0\1\44"+
+    "\3\0\2\44\2\0\3\44\1\52\14\0";
 
   private static int [] zzUnpackTrans() {
     int [] result = new int[495];
@@ -178,11 +179,11 @@ public class Lexico implements java_cup.runtime.Scanner {
   private static final int [] ZZ_ATTRIBUTE = zzUnpackAttribute();
 
   private static final String ZZ_ATTRIBUTE_PACKED_0 =
-    "\3\0\3\11\5\1\1\11\3\1\20\11\1\0\1\11"+
-    "\1\0\1\11\1\1\1\11\4\1";
+    "\3\0\3\11\2\1\1\11\3\1\1\11\2\1\17\11"+
+    "\1\0\1\11\1\0\1\11\2\1\1\0\1\11\4\1";
 
   private static int [] zzUnpackAttribute() {
-    int [] result = new int[41];
+    int [] result = new int[42];
     int offset = 0;
     offset = zzUnpackAttribute(ZZ_ATTRIBUTE_PACKED_0, offset, result);
     return result;
@@ -648,7 +649,7 @@ boolean flag = false;
             // fall through
           case 29: break;
           case 3: 
-            { 
+            { System.out.println("Se encontró token en linea: "+ yyline+ " columna: "+ yycolumn+ " con valor : "+ yytext()); return new Symbol(sym.or, yyline, yycolumn, yytext());
             } 
             // fall through
           case 30: break;
@@ -658,17 +659,17 @@ boolean flag = false;
             // fall through
           case 31: break;
           case 5: 
-            { System.out.println("Se encontró token en linea: "+ yyline+ " columna: "+ yycolumn+ " con valor : "+ yytext()); return new Symbol(sym.letra, yyline, yycolumn, yytext());
+            { 
             } 
             // fall through
           case 32: break;
           case 6: 
-            { System.out.println("Se encontró token en linea: "+ yyline+ " columna: "+ yycolumn+ " con valor : "+ yytext()); return new Symbol(sym.numero, yyline, yycolumn, yytext());
+            { System.out.println("Se encontró token en linea: "+ yyline+ " columna: "+ yycolumn+ " con valor : "+ yytext()); return new Symbol(sym.letra, yyline, yycolumn, yytext());
             } 
             // fall through
           case 33: break;
           case 7: 
-            { System.out.println("Se encontró token en linea: "+ yyline+ " columna: "+ yycolumn+ " con valor : "+ yytext()); return new Symbol(sym.id, yyline, yycolumn, yytext());
+            { System.out.println("Se encontró token en linea: "+ yyline+ " columna: "+ yycolumn+ " con valor : "+ yytext()); return new Symbol(sym.numero, yyline, yycolumn, yytext());
             } 
             // fall through
           case 34: break;
@@ -718,33 +719,28 @@ boolean flag = false;
             // fall through
           case 43: break;
           case 17: 
-            { System.out.println("Se encontró token en linea: "+ yyline+ " columna: "+ yycolumn+ " con valor : "+ yytext()); return new Symbol(sym.or, yyline, yycolumn, yytext());
+            { System.out.println("Se encontró token en linea: "+ yyline+ " columna: "+ yycolumn+ " con valor : "+ yytext()); return new Symbol(sym.plus, yyline, yycolumn, yytext());
             } 
             // fall through
           case 44: break;
           case 18: 
-            { System.out.println("Se encontró token en linea: "+ yyline+ " columna: "+ yycolumn+ " con valor : "+ yytext()); return new Symbol(sym.plus, yyline, yycolumn, yytext());
+            { System.out.println("Se encontró token en linea: "+ yyline+ " columna: "+ yycolumn+ " con valor : "+ yytext()); return new Symbol(sym.interrogacion, yyline, yycolumn, yytext());
             } 
             // fall through
           case 45: break;
           case 19: 
-            { System.out.println("Se encontró token en linea: "+ yyline+ " columna: "+ yycolumn+ " con valor : "+ yytext()); return new Symbol(sym.interrogacion, yyline, yycolumn, yytext());
-            } 
-            // fall through
-          case 46: break;
-          case 20: 
             { if(flag){
                   yybegin(YYINITIAL);
               }
             } 
             // fall through
-          case 47: break;
-          case 21: 
+          case 46: break;
+          case 20: 
             { flag=true;
             } 
             // fall through
-          case 48: break;
-          case 22: 
+          case 47: break;
+          case 21: 
             { yybegin(YYINITIAL);
                 yypushback(1);
                 //System.out.println("que onda");
@@ -752,19 +748,24 @@ boolean flag = false;
                 return new Symbol(sym.symbol, yyline, yycolumn, "<");
             } 
             // fall through
+          case 48: break;
+          case 22: 
+            { yybegin(MULTI);
+            } 
+            // fall through
           case 49: break;
           case 23: 
-            { yybegin(MULTI);
+            { System.out.println("Se encontró token en linea: "+ yyline+ " columna: "+ yycolumn+ " con valor : "+ yytext()); return new Symbol(sym.cadena, yyline, yycolumn, yytext());
             } 
             // fall through
           case 50: break;
           case 24: 
-            { System.out.println("Se encontró token en linea: "+ yyline+ " columna: "+ yycolumn+ " con valor : "+ yytext()); return new Symbol(sym.cadena, yyline, yycolumn, yytext());
+            { System.out.println("Se encontró token en linea: "+ yyline+ " columna: "+ yycolumn+ " con valor : "+ yytext()); return new Symbol(sym.especial, yyline, yycolumn, yytext());
             } 
             // fall through
           case 51: break;
           case 25: 
-            { System.out.println("Se encontró token en linea: "+ yyline+ " columna: "+ yycolumn+ " con valor : "+ yytext()); return new Symbol(sym.especial, yyline, yycolumn, yytext());
+            { System.out.println("Se encontró token en linea: "+ yyline+ " columna: "+ yycolumn+ " con valor : "+ yytext()); return new Symbol(sym.id, yyline, yycolumn, yytext());
             } 
             // fall through
           case 52: break;

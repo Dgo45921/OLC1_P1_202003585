@@ -4,12 +4,12 @@ import Arboles.Transition;
 
 import java.util.ArrayList;
 
-public class NodoAFND {
+public class EstadoAFND {
     private String name;
     private ArrayList<Transition> transiciones;
     private boolean aceptacion;
 
-    public NodoAFND(String name, ArrayList<Transition> transiciones, boolean aceptacion) {
+    public EstadoAFND(String name, ArrayList<Transition> transiciones, boolean aceptacion) {
         this.name = name;
         this.transiciones = transiciones;
         this.aceptacion = aceptacion;
