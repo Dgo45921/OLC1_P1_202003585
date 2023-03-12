@@ -1,5 +1,6 @@
 package Extra;
 
+import AFND.AFND;
 import Arboles.NodoArbol;
 import Arboles.Transition;
 import Arboles.Type;
@@ -23,7 +24,6 @@ public class Reportes {
             "node [  ];";
 
     public int id = 0;
-    public int finalId = 0;
 
 
     public void dotTree(NodoArbol root) {
@@ -332,7 +332,7 @@ public class Reportes {
                 if (x.equals("\\\\\"")) {
                     x = "\\\\\\\"";
                 } else if (x.equals("\\'")) {
-                   x = "\\\\'";
+                    x = "\\\\'";
                 } else if (x.equals("\\n")) {
                     x = "\\\\n";
                 }
@@ -367,8 +367,8 @@ public class Reportes {
     }
 
 
-    public void generate_Json(){
-        Date d=new Date();
+    public void generate_Json() {
+        Date d = new Date();
         Gson gson = new GsonBuilder()
                 .setExclusionStrategies()
                 .setPrettyPrinting() // Agregar esta línea
@@ -376,7 +376,7 @@ public class Reportes {
 
         String json = gson.toJson(Main.lista_evaluaciones);
         try {
-            FileWriter writer = new FileWriter("SALIDAS_202003585/salida" + d.getHours()+ "_" + d.getMinutes() + "_" + d.getSeconds() + "_"+".json");
+            FileWriter writer = new FileWriter("SALIDAS_202003585/salida" + d.getHours() + "_" + d.getMinutes() + "_" + d.getSeconds() + "_" + ".json");
             writer.write(json);
             writer.close();
             System.out.println("El archivo se ha guardado correctamente.");
@@ -387,6 +387,65 @@ public class Reportes {
     }
 
 
+    public AFND generar_AFND(NodoArbol root, int indice) {
+        ArrayList<Transition> transiciones = new ArrayList<>();
+        AFND izq, der;
+        String fin = "";
+        String inicio = "S" + indice;
+        switch (root.type) {
+            case HOJA:
+                String lexema_hoja = root.lexema;
+                transiciones.add(new Transition(inicio, lexema_hoja, "S" + (indice + 1)));
+                return new AFND(inicio, "S" + (indice + 1), transiciones);
+            case AND:
+                izq = generar_AFND(root.izquierda, indice);
+                transiciones.addAll(izq.getTransiciones());
+                der = generar_AFND(root.derecha, Integer.parseInt(izq.Estado_final.replace("S", "")));
+                transiciones.addAll(der.getTransiciones());
+                fin = "S" + (Integer.parseInt(izq.Estado_final.replace("S", "")));
+                break;
+            case OR:
+                izq = generar_AFND(root.izquierda, indice + 1);
+                transiciones.add(new Transition(inicio, "ε", izq.Estado_inicial));
+                transiciones.addAll(izq.getTransiciones());
+                der = generar_AFND(root.derecha, Integer.parseInt(izq.Estado_final.replace("S", ""))+1);
+                transiciones.add(new Transition(inicio, "ε", der.Estado_inicial));
+                transiciones.addAll(der.getTransiciones());
+                fin = "S" + (Integer.parseInt(der.Estado_final.replace("S", "")) + 1);
+                transiciones.add(new Transition(izq.Estado_final, "ε", fin));
+                transiciones.add(new Transition(der.Estado_final, "ε", fin));
+                break;
+            case PLUS:
+                izq = generar_AFND(root.izquierda, indice + 1);
+                transiciones.add(new Transition(inicio, "ε", izq.Estado_inicial));
+                transiciones.addAll(izq.getTransiciones());
+                transiciones.add(new Transition(izq.Estado_final, "ε", izq.Estado_inicial));
+                fin = "S" + (Integer.parseInt(izq.Estado_final.replace("S", "")) + 1);
+                transiciones.add(new Transition(izq.Estado_final, "ε", fin));
+                break;
+            case KLEENE:
+                izq = generar_AFND(root.izquierda, indice + 1);
+                transiciones.add(new Transition(inicio, "ε", izq.Estado_inicial));
+                transiciones.addAll(izq.getTransiciones());
+                transiciones.add(new Transition(izq.Estado_final, "ε", izq.Estado_inicial));
+                fin = "S" + (Integer.parseInt(izq.Estado_final.replace("S", "")) + 1);
+                transiciones.add(new Transition(izq.Estado_final, "ε", fin));
+                transiciones.add(new Transition(inicio, "ε", fin));
+                break;
+            case INTERROGACION:
+                izq = generar_AFND(root.izquierda, indice + 1);
+                transiciones.add(new Transition(inicio, "ε", izq.Estado_inicial));
+                transiciones.addAll(izq.getTransiciones());
+                fin = "S" + (Integer.parseInt(izq.Estado_final.replace("S", "")) + 1);
+                transiciones.add(new Transition(izq.Estado_final, "ε", fin));
+                transiciones.add(new Transition(inicio, "ε", fin));
+                break;
+        }
+
+
+        return new AFND(inicio, fin, transiciones);
+
+    }
 
 
 }
