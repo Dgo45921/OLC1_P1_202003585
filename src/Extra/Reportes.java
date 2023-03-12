@@ -3,10 +3,7 @@ package Extra;
 import AFND.AFND;
 import Arboles.NodoArbol;
 import Arboles.Transition;
-import Arboles.Type;
 import Ventanas.Main;
-import com.google.gson.ExclusionStrategy;
-import com.google.gson.FieldAttributes;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -54,9 +51,9 @@ public class Reportes {
         }
     }
 
-    public void generate_tree(int iterable) {
-        String dotFilePath = "ARBOLES_202003585/" + "Arbol_" + iterable + ".dot";
-        String pngFilePath = "ARBOLES_202003585/" + "Arbol_" + iterable + ".png";
+    public void generate_tree(String name) {
+        String dotFilePath = "ARBOLES_202003585/" + "Arbol_" + name + ".dot";
+        String pngFilePath = "ARBOLES_202003585/" + "Arbol_" + name + ".png";
         codigo_arbol += "}";
         try {
             FileWriter archivo = new FileWriter(dotFilePath);
@@ -81,15 +78,8 @@ public class Reportes {
     }
 
 
-    public void printTable(ArrayList<ArrayList> table) {
-        for (ArrayList item : table) {
-            System.out.println(item.get(0) + " - " + item.get(1) + " - " + item.get(2));
-        }
 
-    }
-
-
-    public void Generate_SigPosTable(ArrayList<ArrayList> table, int iterable) {
+    public void Generate_SigPosTable(ArrayList<ArrayList> table, String name) {
         String texto = "digraph G {\n" +
                 "    rankdir=LR\n" +
                 "    node [shape=none fontname=Helvetica]\n" +
@@ -130,8 +120,8 @@ public class Reportes {
         texto += "</TABLE>\n" + "    >];\n" + "}";
 
 
-        String dotFilePath = "SIGUIENTES_202003585/" + "siguientes_" + iterable + ".dot";
-        String pngFilePath = "SIGUIENTES_202003585/" + "siguientes_" + iterable + ".png";
+        String dotFilePath = "SIGUIENTES_202003585/" + "siguientes_" + name + ".dot";
+        String pngFilePath = "SIGUIENTES_202003585/" + "siguientes_" + name + ".png";
 
         try {
             FileWriter archivo = new FileWriter(dotFilePath);
@@ -156,7 +146,7 @@ public class Reportes {
 
     }
 
-    public void generateTransitionTable(ArrayList<ArrayList> estados, ArrayList<NodoArbol> hojas, int iterable) {
+    public void generateTransitionTable(ArrayList<ArrayList> estados, ArrayList<NodoArbol> hojas, String name) {
         ArrayList<String> encabezados = new ArrayList<>();
         encabezados.add("Estados/Terminales");
         String texto = "digraph G {\n" +
@@ -214,8 +204,8 @@ public class Reportes {
 
         // metodos para generar el .dot
 
-        String dotFilePath = "TRANSICIONES_202003585/" + "Transicion_" + iterable + ".dot";
-        String pngFilePath = "TRANSICIONES_202003585/" + "Transicion_" + iterable + ".png";
+        String dotFilePath = "TRANSICIONES_202003585/" + "Transicion_" + name + ".dot";
+        String pngFilePath = "TRANSICIONES_202003585/" + "Transicion_" + name + ".png";
         try {
             FileWriter archivo = new FileWriter(dotFilePath);
             PrintWriter pw = new PrintWriter(archivo);
@@ -299,13 +289,18 @@ public class Reportes {
         }
     }
 
-    public void generate_AFD(ArrayList<ArrayList> estados, int iterable) {
-        String texto = "digraph finite_state_machine {\n" +
+    public void generate_AFD(ArrayList<ArrayList> estados,String name) {
+        String texto = "digraph AFD {\n" +
+                "labelloc=\"t\";\n" +
+                "    label=\""+ name +"\";"+
                 "\tfontname=\"Helvetica,Arial,sans-serif\"\n" +
                 "\tnode [fontname=\"Helvetica,Arial,sans-serif\"]\n" +
                 "\tedge [fontname=\"Helvetica,Arial,sans-serif\"]\n" +
                 "\trankdir=LR;\n" +
-                "\tnode [shape = doublecircle]; ";
+                "\tnode [shape = doublecircle]; "+
+                "begin[shape=none label=\"\"];\n" +
+                "node[shape=circle]" +
+                "begin->" + "s0" + "; \n";
         // definiendo que nodos serán los que serán de aceptación en el grafo
         for (int i = 0; i < estados.size(); i++) {
             ArrayList estado = estados.get(i);
@@ -344,8 +339,8 @@ public class Reportes {
 
         texto += "}";
         //System.out.println(texto);
-        String dotFilePath = "AFD_202003585/" + "AFD_" + iterable + ".dot";
-        String pngFilePath = "AFD_202003585/" + "AFD_" + iterable + ".png";
+        String dotFilePath = "AFD_202003585/" + "AFD_" + name + ".dot";
+        String pngFilePath = "AFD_202003585/" + "AFD_" + name + ".png";
         try {
             FileWriter archivo = new FileWriter(dotFilePath);
             PrintWriter pw = new PrintWriter(archivo);
@@ -389,61 +384,106 @@ public class Reportes {
 
     public AFND generar_AFND(NodoArbol root, int indice) {
         ArrayList<Transition> transiciones = new ArrayList<>();
-        AFND izq, der;
-        String fin = "";
-        String inicio = "S" + indice;
+        AFND afnd1, afnd2;
+        String estado_inicial = "S" + indice;
+        String estado_final = "";
         switch (root.type) {
             case HOJA:
                 String lexema_hoja = root.lexema;
-                transiciones.add(new Transition(inicio, lexema_hoja, "S" + (indice + 1)));
-                return new AFND(inicio, "S" + (indice + 1), transiciones);
+                transiciones.add(new Transition(estado_inicial, lexema_hoja, "S" + (indice + 1)));
+                return new AFND(estado_inicial, "S" + (indice + 1), transiciones);
             case AND:
-                izq = generar_AFND(root.izquierda, indice);
-                transiciones.addAll(izq.getTransiciones());
-                der = generar_AFND(root.derecha, Integer.parseInt(izq.Estado_final.replace("S", "")));
-                transiciones.addAll(der.getTransiciones());
-                fin = "S" + (Integer.parseInt(izq.Estado_final.replace("S", "")));
+                afnd1 = generar_AFND(root.izquierda, indice);
+                transiciones.addAll(afnd1.getTransiciones());
+                afnd2 = generar_AFND(root.derecha, Integer.parseInt(afnd1.Estado_final.replace("S", "")));
+                transiciones.addAll(afnd2.getTransiciones());
+                estado_final = "S" + (Integer.parseInt(afnd2.Estado_final.replace("S", "")));
                 break;
             case OR:
-                izq = generar_AFND(root.izquierda, indice + 1);
-                transiciones.add(new Transition(inicio, "ε", izq.Estado_inicial));
-                transiciones.addAll(izq.getTransiciones());
-                der = generar_AFND(root.derecha, Integer.parseInt(izq.Estado_final.replace("S", ""))+1);
-                transiciones.add(new Transition(inicio, "ε", der.Estado_inicial));
-                transiciones.addAll(der.getTransiciones());
-                fin = "S" + (Integer.parseInt(der.Estado_final.replace("S", "")) + 1);
-                transiciones.add(new Transition(izq.Estado_final, "ε", fin));
-                transiciones.add(new Transition(der.Estado_final, "ε", fin));
+                afnd1 = generar_AFND(root.izquierda, indice + 1);
+                transiciones.add(new Transition(estado_inicial, "ε", afnd1.Estado_inicial));
+                transiciones.addAll(afnd1.getTransiciones());
+                afnd2 = generar_AFND(root.derecha, Integer.parseInt(afnd1.Estado_final.replace("S", "")) + 1);
+                transiciones.add(new Transition(estado_inicial, "ε", afnd2.Estado_inicial));
+                transiciones.addAll(afnd2.getTransiciones());
+                estado_final = "S" + (Integer.parseInt(afnd2.Estado_final.replace("S", "")) + 1);
+                transiciones.add(new Transition(afnd1.Estado_final, "ε", estado_final));
+                transiciones.add(new Transition(afnd2.Estado_final, "ε", estado_final));
                 break;
             case PLUS:
-                izq = generar_AFND(root.izquierda, indice + 1);
-                transiciones.add(new Transition(inicio, "ε", izq.Estado_inicial));
-                transiciones.addAll(izq.getTransiciones());
-                transiciones.add(new Transition(izq.Estado_final, "ε", izq.Estado_inicial));
-                fin = "S" + (Integer.parseInt(izq.Estado_final.replace("S", "")) + 1);
-                transiciones.add(new Transition(izq.Estado_final, "ε", fin));
+                afnd1 = generar_AFND(root.izquierda, indice + 1);
+                transiciones.add(new Transition(estado_inicial, "ε", afnd1.Estado_inicial));
+                transiciones.addAll(afnd1.getTransiciones());
+                transiciones.add(new Transition(afnd1.Estado_final, "ε", afnd1.Estado_inicial));
+                estado_final = "S" + (Integer.parseInt(afnd1.Estado_final.replace("S", "")) + 1);
+                transiciones.add(new Transition(afnd1.Estado_final, "ε", estado_final));
                 break;
             case KLEENE:
-                izq = generar_AFND(root.izquierda, indice + 1);
-                transiciones.add(new Transition(inicio, "ε", izq.Estado_inicial));
-                transiciones.addAll(izq.getTransiciones());
-                transiciones.add(new Transition(izq.Estado_final, "ε", izq.Estado_inicial));
-                fin = "S" + (Integer.parseInt(izq.Estado_final.replace("S", "")) + 1);
-                transiciones.add(new Transition(izq.Estado_final, "ε", fin));
-                transiciones.add(new Transition(inicio, "ε", fin));
+                afnd1 = generar_AFND(root.izquierda, indice + 1);
+                transiciones.add(new Transition(estado_inicial, "ε", afnd1.Estado_inicial));
+                transiciones.addAll(afnd1.getTransiciones());
+                transiciones.add(new Transition(afnd1.Estado_final, "ε", afnd1.Estado_inicial));
+                estado_final = "S" + (Integer.parseInt(afnd1.Estado_final.replace("S", "")) + 1);
+                transiciones.add(new Transition(afnd1.Estado_final, "ε", estado_final));
+                transiciones.add(new Transition(estado_inicial, "ε", estado_final));
                 break;
             case INTERROGACION:
-                izq = generar_AFND(root.izquierda, indice + 1);
-                transiciones.add(new Transition(inicio, "ε", izq.Estado_inicial));
-                transiciones.addAll(izq.getTransiciones());
-                fin = "S" + (Integer.parseInt(izq.Estado_final.replace("S", "")) + 1);
-                transiciones.add(new Transition(izq.Estado_final, "ε", fin));
-                transiciones.add(new Transition(inicio, "ε", fin));
+                afnd1 = generar_AFND(root.izquierda, indice + 1);
+                transiciones.add(new Transition(estado_inicial, "ε", afnd1.Estado_inicial));
+                transiciones.addAll(afnd1.getTransiciones());
+                estado_final = "S" + (Integer.parseInt(afnd1.Estado_final.replace("S", "")) + 1);
+                transiciones.add(new Transition(afnd1.Estado_final, "ε", estado_final));
+                transiciones.add(new Transition(estado_inicial, "ε", estado_final));
                 break;
         }
 
 
-        return new AFND(inicio, fin, transiciones);
+        return new AFND(estado_inicial, estado_final, transiciones);
+
+    }
+
+    public void toDotAFND(String name, AFND afnd) {
+        String afnd_text = "digraph G{\n" +
+                "\tfontname=\"Helvetica,Arial,sans-serif\"\n" +
+                "\tnode [fontname=\"Helvetica,Arial,sans-serif\"]\n" +
+                "\tedge [fontname=\"Helvetica,Arial,sans-serif\"]\n" +
+                "labelloc=\"t\";\n" +
+                "    label=\""+ name +"\";"+
+                "node [shape=doublecircle]; " + afnd.Estado_final + ";" + "rankdir=LR;\n" +
+                "begin[shape=none label=\"\"];\n" +
+                "node[shape=circle]" +
+                "begin->" + afnd.Estado_inicial + "; \n";
+
+        afnd_text+= "node[shape=circle]";
+
+        for (Transition transicion : afnd.getTransiciones()) {
+            afnd_text += transicion.initialState + "->" + transicion.finalState + "[label=" + "\"" + transicion.transition + "\"];\n";
+        }
+
+        afnd_text+= "}";
+
+
+        String dotFilePath = "AFND_202003585/" + "AFND_" + name + ".dot";
+        String pngFilePath = "AFND_202003585/" + "AFND_" + name + ".png";
+        try {
+            FileWriter archivo = new FileWriter(dotFilePath);
+            PrintWriter pw = new PrintWriter(archivo);
+            pw.println(afnd_text);
+            archivo.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        try {
+            Process p = Runtime.getRuntime().exec("dot -Tpng " + dotFilePath + " -o " + pngFilePath);
+            p.waitFor();
+            System.out.println("Arbol generado exitosamente en: " + pngFilePath);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
 
     }
 

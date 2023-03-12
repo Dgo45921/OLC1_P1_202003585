@@ -126,11 +126,11 @@ public class Main_frame extends JFrame implements ActionListener {
             else{
                 for (int i =0; i< Main.lista_arboles.size(); i++) {
                     ArbolBinario arbolito = Main.lista_arboles.get(i);
-                    repo.generate_AFD(arbolito.getTabla_transiciones(), i);
+                    repo.generate_AFD(arbolito.getTabla_transiciones(), arbolito.getName());
                     AFD_existent = true;
                     System.out.println("----------- AFND -------------------");
                     AFND afnd = repo.generar_AFND(arbolito.getRaiz().izquierda,0);
-                    System.out.println("a");
+                    repo.toDotAFND(arbolito.getName(), afnd);
                 }
 
 
