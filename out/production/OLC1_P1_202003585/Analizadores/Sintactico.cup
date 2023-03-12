@@ -1,0 +1,147 @@
+package Analizadores;
+import java_cup.runtime.*;
+import Extra.*;
+import Ventanas.Main;
+
+//PARSER 
+parser code
+{://Codigo visible
+    
+    public void syntax_error(Symbol s){
+        System.out.println("Error R de sintaxis: "+ s.value +" Linea "+(s.left+1)+" columna "+(s.right+1) );
+        Errores error = new Errores(s.right+1, (s.left+1), ""+s.value, "Sintáctico R" );
+        Main.lista_errores.add(error);
+    }
+
+    public void unrecovered_syntax_error(Symbol s) throws java.lang.Exception{ 
+        System.out.println("Error NR de sintaxis: "+ s.value +" Linea "+(s.left+1)+" columna "+(s.right+1) );
+        Errores error = new Errores(s.right+1, (s.left+1), ""+s.value, "Sintáctico NR" );
+        Main.lista_errores.add(error);
+    }
+
+:}
+action code
+{:
+    String regex_guardado = "";
+    String cadena = "";
+    Funcion mensajero = new Funcion();
+
+:}
+
+terminal String reservada_conjunto, llave_abre, llave_cierra, dos_puntos, punto_y_coma, porcentaje, concat, virgulilla, coma, flecha, klenee;
+terminal String or, plus, interrogacion, id, cadena, letra, numero, symbol, especial, menor;
+
+nonterminal INICIO, INSTRUCCIONES, SENTENCIA, CONJUNTOS, REGEX, EVALUACION, RANGO, LISTA, CARACTER,CARACTER2, REG_EXP;
+nonterminal ELEMENTO_REGEX, LISTA_SENTENCIAS_EVAL, LISTA_SENTENCIAS;
+
+
+//precedence left concat, or;
+//precedence left  klenee, interrogacion, plus;
+
+start with INICIO;
+
+INICIO ::= INSTRUCCIONES;
+
+INSTRUCCIONES ::= llave_abre
+                  LISTA_SENTENCIAS
+                  porcentaje porcentaje
+                  LISTA_SENTENCIAS_EVAL
+                  llave_cierra;
+
+
+// NO TERMINALES PARA REALIZAR UNA EVALUACION ------------------------------------------------------------------------------
+
+EVALUACION ::= id:ID dos_puntos cadena:chain punto_y_coma {:
+
+                mensajero.guarda_evaluaciones(ID, chain.toString());
+:};
+
+LISTA_SENTENCIAS::= SENTENCIA LISTA_SENTENCIAS| SENTENCIA;
+LISTA_SENTENCIAS_EVAL ::= EVALUACION LISTA_SENTENCIAS_EVAL|EVALUACION;
+
+SENTENCIA ::= CONJUNTOS|REGEX punto_y_coma;
+
+
+// NO TERMINALES DE CONJUNTOS----------------------------------------------------------------------------------------------------
+CONJUNTOS ::= reservada_conjunto dos_puntos id:ID flecha RANGO:rango
+             {:
+                mensajero.guarda_rango(ID, rango.toString());
+             :};
+
+
+
+RANGO ::= CARACTER:res1 CARACTER2:res2
+            {:
+                RESULT = res1.toString() + res2.toString();
+            :}
+;
+
+
+CARACTER::=letra:l {:RESULT=l;:}
+           |numero:n {:RESULT=n;:}
+           |symbol:s {:RESULT=s;:}
+           |llave_abre:la {:RESULT=la;:}
+           |llave_cierra:lc {:RESULT=lc;:}
+           |dos_puntos:dp {:RESULT=dp;:}
+           |punto_y_coma:pc {:RESULT=pc;:}
+           |porcentaje:per {:RESULT=per;:}
+           |concat:con {:RESULT=con;:}
+           |coma:com {:RESULT=com;:}
+           |klenee:kle {:RESULT=kle;:}
+           ;
+
+
+CARACTER2::= virgulilla CARACTER:car12 punto_y_coma
+        {:
+            // retorna el rango en el caso de que haya una virgulilla
+            RESULT="~"+car12.toString();
+        :}
+
+        |LISTA:lis
+            {:
+                RESULT = lis;
+            :}
+
+
+;
+
+
+LISTA ::= coma CARACTER:car_lista LISTA:result_lista
+        {:
+            // retorna los valores de la lista seguidos de coma
+            if (result_lista != null) {
+            RESULT= "," + car_lista.toString() + result_lista.toString();
+            }
+            else{
+            RESULT = "," + car_lista.toString();
+            }
+
+        :}
+        |punto_y_coma
+
+            {:
+                RESULT = ""; // retorna una cadena vacia ya que el rango solo es de 1 elemento
+            :}
+
+
+;
+
+
+// NO TERMINALES DE REGEX----------------------------------------------------------------------------------------------------
+
+REGEX ::= id:ID flecha REG_EXP:reg {:
+mensajero.guarda_regex(ID, reg.toString());
+:};
+
+REG_EXP::= concat REG_EXP:reg1 REG_EXP: reg2 {:RESULT="."+reg1.toString()+reg2.toString();:}
+         | or REG_EXP:reg3 REG_EXP: reg4 {:RESULT="|"+reg3.toString()+reg4.toString();:}
+         | klenee REG_EXP:reg5 {:RESULT="*"+reg5.toString();:}
+         | plus REG_EXP:reg6 {:RESULT="+"+reg6.toString();:}
+         | interrogacion REG_EXP:reg7 {:RESULT="?"+reg7.toString();:}
+         | ELEMENTO_REGEX:e {:RESULT=e;:}
+         ;
+
+
+ELEMENTO_REGEX ::= llave_abre id:ID llave_cierra{:RESULT ="{"+ ID + "}";:}
+                   | cadena:cad {:RESULT = cad;:}
+                   | especial:esp {:RESULT = esp;:};
