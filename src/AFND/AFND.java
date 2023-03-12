@@ -1,9 +1,5 @@
 package AFND;
-
-import Arboles.NodoArbol;
 import Arboles.Transition;
-import Arboles.Type;
-
 import java.util.ArrayList;
 
 

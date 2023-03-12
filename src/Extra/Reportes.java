@@ -6,7 +6,6 @@ import Arboles.Transition;
 import Ventanas.Main;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -261,7 +260,7 @@ public class Reportes {
             pw.println("<head>\n");
             pw.println("<meta charset=\"UTF-8\">");
             pw.println("<title>Reporte de errores</title>\n");
-            pw.println("<link rel=\"stylesheet\" href=\"style.css\">");
+            pw.println("<link rel=\"stylesheet\" href=\"../style.css\">");
             pw.println("</head>\n");
             pw.println("<body>\n");
             pw.println("<h1>Reporte de errores</h1>");
@@ -300,7 +299,7 @@ public class Reportes {
                 "\tnode [shape = doublecircle]; "+
                 "begin[shape=none label=\"\"];\n" +
                 "node[shape=circle]" +
-                "begin->" + "s0" + "; \n";
+                "begin->" + "S0" + "; \n";
         // definiendo que nodos serán los que serán de aceptación en el grafo
         for (int i = 0; i < estados.size(); i++) {
             ArrayList estado = estados.get(i);

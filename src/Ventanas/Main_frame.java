@@ -18,7 +18,7 @@ import java.util.Objects;
 
 public class Main_frame extends JFrame implements ActionListener {
     public boolean AFD_existent = false;
-    public boolean guardado = false;
+    public String ruta_guardado = "";
     // Instanciando los paneles que formaran parte de la ventana principal
     public Panel_Main panel_principal = new Panel_Main();
     // Instanciando los elementos que van a existir en nuestro menu
@@ -95,11 +95,13 @@ public class Main_frame extends JFrame implements ActionListener {
         if (e.getSource() == new_option) {
             System.out.println("inicializo un nuevo archivo");
             Panel_Main.input_texto.setText("");
+            ruta_guardado = "";
         }
 
         if (e.getSource() == open) {
             System.out.println("yo abro el archivo");
             String path = get_file_path();
+            ruta_guardado = path;
             if (!Objects.equals(path, "")) {
                 try {
                     set_input_text(path);
@@ -111,10 +113,60 @@ public class Main_frame extends JFrame implements ActionListener {
 
         if (e.getSource() == save) {
             System.out.println("yo guardo el archivo");
+            if (Objects.equals(ruta_guardado, "")){
+                JFileChooser fileChooser = new JFileChooser();
+                int retval = fileChooser.showSaveDialog(save);
+                if (retval == JFileChooser.APPROVE_OPTION) {
+                    File file = fileChooser.getSelectedFile();
+                    if (file == null) {
+                        return;
+                    }
+                    if (!file.getName().toLowerCase().endsWith(".olc")) {
+                        file = new File(file.getParentFile(), file.getName() + ".olc");
+                    }
+                    try {
+                        Panel_Main.input_texto.write(new OutputStreamWriter(new FileOutputStream(file),"utf-8"));
+                        ruta_guardado = file.getAbsolutePath();
+                        System.out.println(ruta_guardado);
+                    } catch (Exception X) {
+                        X.printStackTrace();
+                    }
+                }
+            }
+            else{
+                try {
+                    FileWriter archivo = new FileWriter(ruta_guardado);
+                    PrintWriter pw = new PrintWriter(archivo);
+                    pw.println(Panel_Main.input_texto.getText());
+                    archivo.close();
+                } catch (Exception y) {
+                    y.printStackTrace();
+                }
+            }
+
         }
 
         if (e.getSource() == save_as) {
             System.out.println("yo guardo como");
+            JFileChooser fileChooser = new JFileChooser();
+            int retval = fileChooser.showSaveDialog(save);
+            if (retval == JFileChooser.APPROVE_OPTION) {
+                File file = fileChooser.getSelectedFile();
+                if (file == null) {
+                    return;
+                }
+                if (!file.getName().toLowerCase().endsWith(".olc")) {
+                    file = new File(file.getParentFile(), file.getName() + ".olc");
+                }
+                try {
+                    Panel_Main.input_texto.write(new OutputStreamWriter(new FileOutputStream(file),"utf-8"));
+                    ruta_guardado = file.getAbsolutePath();
+                    System.out.println(ruta_guardado);
+                } catch (Exception X) {
+                    X.printStackTrace();
+                }
+            }
+
         }
         if (e.getSource() == generate_afd) {
             System.out.println("creo afd");
@@ -128,7 +180,6 @@ public class Main_frame extends JFrame implements ActionListener {
                     ArbolBinario arbolito = Main.lista_arboles.get(i);
                     repo.generate_AFD(arbolito.getTabla_transiciones(), arbolito.getName());
                     AFD_existent = true;
-                    System.out.println("----------- AFND -------------------");
                     AFND afnd = repo.generar_AFND(arbolito.getRaiz().izquierda,0);
                     repo.toDotAFND(arbolito.getName(), afnd);
                 }
