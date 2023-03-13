@@ -2,11 +2,6 @@ package Arboles;
 
 import java.util.ArrayList;
 
-
-
-
-
-
 public class TablaT {
     public  ArrayList<ArrayList> estados = new ArrayList<>();
     public  int contador;
@@ -24,7 +19,7 @@ public class TablaT {
             ArrayList<Integer> sig_posActual = (ArrayList) estado_actual.get(1); // obtenemos las siguientes posiciones del estado actual
             for(int id_hoja: sig_posActual){ // empieza a recorrer los siguientes del estado actual
                 TablaSigPos nuevaTablaSigPos = new TablaSigPos();
-                ArrayList SigPos =(ArrayList)nuevaTablaSigPos.next(id_hoja, tabla).clone(); // se encarga de obtener las siguientes posiciones de la hoja que estamos analizando
+                ArrayList SigPos =(ArrayList)nuevaTablaSigPos.siguientes(id_hoja, tabla).clone(); // se encarga de obtener las siguientes posiciones de la hoja que estamos analizando
                 ArrayList SigPos2 = (ArrayList) SigPos.clone();
 
                 if (verifica_TransicionesDuplicadas((ArrayList) estado_actual.get(2), SigPos2)){
@@ -188,21 +183,6 @@ public class TablaT {
         this.contador = 1;
     }
 
-    public void impTable(){
-        for(ArrayList state : this.estados){
-            String tran = "[";
-            for(Object tr : (ArrayList)state.get(2)){
-                Transition t = (Transition) tr;
-                tran += t.toString() + ", ";
-            }
-            tran += "]";
-
-            tran = tran.replace(", ]", "]");
-
-            System.out.println(state.get(0) + " " + state.get(1) + " " + tran + " " + state.get(3));
-        }
-    }
-
     public boolean verifica_TransicionesDuplicadas(ArrayList transiciones, ArrayList SigPos){
         for(Object t:  transiciones){
             if (((Transition)t).transition.equals(SigPos.get(0))){
@@ -245,10 +225,6 @@ public class TablaT {
         return null;
     }
 
-
-    public ArrayList<ArrayList> getEstados() {
-        return estados;
-    }
 
     public String getStateName(ArrayList concat){
         String nombre = "";

@@ -24,7 +24,7 @@ public class TablaSigPos {
 
     }
 
-    public ArrayList next(int numNode, ArrayList<ArrayList> table){
+    public ArrayList siguientes(int numNode, ArrayList<ArrayList> table){
         ArrayList result = new ArrayList();
         for(ArrayList item : table){
             if( (int) item.get(0) == numNode ){

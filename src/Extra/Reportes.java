@@ -296,10 +296,10 @@ public class Reportes {
                 "\tnode [fontname=\"Helvetica,Arial,sans-serif\"]\n" +
                 "\tedge [fontname=\"Helvetica,Arial,sans-serif\"]\n" +
                 "\trankdir=LR;\n" +
-                "\tnode [shape = doublecircle]; "+
                 "begin[shape=none label=\"\"];\n" +
                 "node[shape=circle]" +
-                "begin->" + "S0" + "; \n";
+                "begin->" + "S0" + "; \n"+
+        "\tnode [shape = doublecircle]; ";
         // definiendo que nodos serán los que serán de aceptación en el grafo
         for (int i = 0; i < estados.size(); i++) {
             ArrayList estado = estados.get(i);

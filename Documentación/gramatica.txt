@@ -1,0 +1,72 @@
+
+Estos terminales de abajo se dejaron como tal, porque pueden representar muchos símbolos.
+ Tomar en cuenta que los terminales siempre están en mayúsculas y los no terminales siempre están en mayúscula
+
+terminales: letra, numero, symbol, id, cadena
+
+
+INICIO ::= INSTRUCCIONES;
+
+INSTRUCCIONES ::= "{"
+                  LISTA_SENTENCIAS
+                  "%" "%"
+                  LISTA_SENTENCIAS_EVAL
+                  "}"
+
+
+// NO TERMINALES PARA REALIZAR UNA EVALUACION ------------------------------------------------------------------------------
+
+EVALUACION ::= id ":" cadena ";"
+
+LISTA_SENTENCIAS::= SENTENCIA LISTA_SENTENCIAS| SENTENCIA;
+LISTA_SENTENCIAS_EVAL ::= EVALUACION LISTA_SENTENCIAS_EVAL|EVALUACION;
+
+SENTENCIA ::= CONJUNTOS|REGEX ";"
+
+
+// NO TERMINALES DE CONJUNTOS----------------------------------------------------------------------------------------------------
+CONJUNTOS ::= "CONJ" ":" id "->" RANGO
+             
+
+
+
+RANGO ::= CARACTER CARACTER2
+
+
+
+CARACTER::= letra
+           |numero
+           |symbol
+           |"{"
+           |"}"
+           |":"
+           |";"
+           |"%"
+           |"."
+           |","
+           |"*"
+           
+
+
+CARACTER2::= "~" CARACTER ";"
+
+
+LISTA ::= "," CARACTER LISTA
+
+
+
+// NO TERMINALES DE REGEX----------------------------------------------------------------------------------------------------
+
+REGEX ::= id "->" REG_EXP
+
+REG_EXP::= "." REG_EXP REG_EXP 
+         | "|" REG_EXP REG_EXP
+         | "*" REG_EXP
+         | "+" REG_EXP
+         | "?" REG_EXP
+         | ELEMENTO_REGEX
+         ;
+
+
+ELEMENTO_REGEX ::= "{" id "}"
+
