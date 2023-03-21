@@ -5,7 +5,7 @@ Estos terminales de abajo se dejaron como tal, porque pueden representar muchos 
 terminales: letra, numero, symbol, id, cadena
 
 
-INICIO ::= INSTRUCCIONES;
+INICIO ::= INSTRUCCIONES
 
 INSTRUCCIONES ::= "{"
                   LISTA_SENTENCIAS
@@ -48,10 +48,10 @@ CARACTER::= letra
            
 
 
-CARACTER2::= "~" CARACTER ";"
+CARACTER2::= "~" CARACTER ";" | LISTA
 
 
-LISTA ::= "," CARACTER LISTA
+LISTA ::= "," CARACTER LISTA | ";"
 
 
 

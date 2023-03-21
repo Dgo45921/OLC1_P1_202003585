@@ -1,0 +1,27 @@
+{
+CONJ: letra -> a~z;
+CONJ: separados -> 2,a,e,R,d,0,9;
+CONJ: mayus-> G~O;
+CONJ: nums-> 1~5;
+CONJ: symbols-> #~;;
+lizama -> ..."a" "b"*"b"*|"a" "b";
+ekisde -> ... "a" "b" *| "1" "2" | "1" "2";
+EXPreg0 -> .| "a" "b" \";
+EXPreg1 -> . |{letra} "2" * {nums};
+EXPreg2 -> .. |{letra} "2" * {nums} . | * |{separados} {mayus} "x" {separados};
+EXPreg3 -> .....? \" ||.."x""y""z""w". "z" "y"*||.. "x" "y" "z" "w" . "z" "y" "a" "b" "b"  ;
+
+
+%%
+// pruebas 
+<! comentario multilinea
+asdasdasdasd
+asdsad!>
+ekisde: "ab122221"; // si pertenece
+EXPreg1: "a12344445"; // si pertenece
+EXPreg1: "a12344445c"; // no pertenece
+EXPreg2: "a55559GJJJ0"; // si pertenece
+EXPreg0: "b\""; // si pertenece
+EXPreg0: "a\""; // si pertenece
+EXPreg3: "\"xyzwwwwabb"; // si pertenece
+}	
