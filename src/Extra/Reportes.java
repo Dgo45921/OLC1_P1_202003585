@@ -38,7 +38,7 @@ public class Reportes {
                 root.lexema = "\\\\n";
             }
 
-            codigo_arbol += "nodo" + root.id_2 + " [label=\"{Primeros\\n" + root.primeros + "}|" + "{"+ root.lexema +"|" + root.anulable +"}|" +"{ultimos\\n" + root.ultimos + "}" + "\"];\n"; // crear el nodo con el id y el texto
+            codigo_arbol += "nodo" + root.id_2 + " [label=\"{Primeros\\n" + root.primeros + "}|" + "{"+ root.lexema +"|" + root.anulable +"}|" +"{Últimos\\n" + root.ultimos + "}" + "\"];\n"; // crear el nodo con el id y el texto
             if (root.izquierda != null) {
                 codigo_arbol += "nodo" + root.id_2 + " -> " + "nodo" + root.izquierda.id_2 + "[minlen=3 ]" + ";\n"; // agregar la conexión con el hijo izquierdo
             }
