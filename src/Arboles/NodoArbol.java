@@ -1,8 +1,9 @@
 package Arboles;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
-public class NodoArbol {
+public class NodoArbol implements Cloneable {
     public ArrayList<Integer> primeros;
     public ArrayList<Integer> ultimos;
     public boolean anulable;
@@ -119,7 +120,7 @@ public class NodoArbol {
                         Hoja hoja = new Hoja();
                         NodoArbol nodo = hoja.get_hoja(elemento, hojas);
                         TablaSigPos table= new TablaSigPos();
-                        table.agregar_tabla_sigPos(nodo.id, nodo.lexema, ((NodoArbol) derecha_siguiente).primeros, tabla);
+                        table.agregar_tabla_sigPos(nodo.id, nodo.lexema, (ArrayList) ((NodoArbol) derecha_siguiente).primeros.clone(), tabla);
                     }
                     break;
                 case KLEENE:
@@ -128,7 +129,7 @@ public class NodoArbol {
                         Hoja hoja = new Hoja();
                         NodoArbol nodo = hoja.get_hoja(item, hojas);
                         TablaSigPos table = new TablaSigPos();
-                        table.agregar_tabla_sigPos(nodo.id, nodo.lexema, ((NodoArbol) izquierda_siguiente).primeros, tabla);
+                        table.agregar_tabla_sigPos(nodo.id, nodo.lexema, (ArrayList) ((NodoArbol) izquierda_siguiente).primeros.clone(), tabla);
                     }
                     break;
 
