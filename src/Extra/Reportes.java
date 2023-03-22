@@ -443,13 +443,11 @@ public class Reportes {
 
     public void toDotAFND(String name, AFND afnd) {
         String afnd_text = "digraph G{\n" +
-                "\tfontname=\"Helvetica,Arial,sans-serif\"\n" +
-                "\tnode [fontname=\"Helvetica,Arial,sans-serif\"]\n" +
-                "\tedge [fontname=\"Helvetica,Arial,sans-serif\"]\n" +
                 "labelloc=\"t\";\n" +
                 "    label=\""+ name +"\";"+
-                "node [shape=doublecircle]; " + afnd.Estado_final + ";" + "rankdir=LR;\n" +
+                " graph [nodesep=0.5, ranksep=1, fontsize=10, rankdir=LR];"+
                 "begin[shape=none label=\"\"];\n" +
+                "node [shape=doublecircle]; " + afnd.Estado_final + ";" + "\n" +
                 "node[shape=circle]" +
                 "begin->" + afnd.Estado_inicial + "; \n";
 

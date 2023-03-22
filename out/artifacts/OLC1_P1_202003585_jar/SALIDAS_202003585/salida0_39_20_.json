@@ -1,0 +1,32 @@
+[
+  {
+    "ExpresionRegular": "url",
+    "Valor": "\"https://facebook.com\"",
+    "Resultado": true
+  },
+  {
+    "ExpresionRegular": "url",
+    "Valor": "\"http://google.es\"",
+    "Resultado": true
+  },
+  {
+    "ExpresionRegular": "url",
+    "Valor": "\"https://compiladores-1.com\"",
+    "Resultado": false
+  },
+  {
+    "ExpresionRegular": "correoElectronico",
+    "Valor": "\"lachalana666@ingusac.com\"",
+    "Resultado": true
+  },
+  {
+    "ExpresionRegular": "correoElectronico",
+    "Valor": "\"micorreo_123@gMAIL.com\"",
+    "Resultado": true
+  },
+  {
+    "ExpresionRegular": "correoElectronico",
+    "Valor": "\"compiladores1.lab@hotMAIL.es\"",
+    "Resultado": false
+  }
+]

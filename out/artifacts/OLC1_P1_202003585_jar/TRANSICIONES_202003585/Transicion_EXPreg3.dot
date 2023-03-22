@@ -1,0 +1,139 @@
+digraph G {
+    rankdir=LR
+    node [shape=none fontname=Helvetica]
+
+    A [label=<
+      <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+       <TR>
+<TD BGCOLOR="#ff6363">Estados/Terminales</TD>
+<TD BGCOLOR="#ff6363">"b"</TD>
+<TD BGCOLOR="#ff6363">"a"</TD>
+<TD BGCOLOR="#ff6363">"y"</TD>
+<TD BGCOLOR="#ff6363">"z"</TD>
+<TD BGCOLOR="#ff6363">"w"</TD>
+<TD BGCOLOR="#ff6363">"x"</TD>
+<TD BGCOLOR="#ff6363">\\"</TD>
+</TR>
+<TR>
+<TD>S0 {0,1,4,5}</TD>
+<TD>-</TD>
+<TD>-</TD>
+<TD>-</TD>
+<TD>S4</TD>
+<TD>S3</TD>
+<TD>S2</TD>
+<TD>S1</TD>
+</TR>
+<TR>
+<TD>S1 {1,4,5}</TD>
+<TD>-</TD>
+<TD>-</TD>
+<TD>-</TD>
+<TD>S4</TD>
+<TD>S3</TD>
+<TD>S2</TD>
+<TD>-</TD>
+</TR>
+<TR>
+<TD>S2 {2}</TD>
+<TD>-</TD>
+<TD>-</TD>
+<TD>S5</TD>
+<TD>-</TD>
+<TD>-</TD>
+<TD>-</TD>
+<TD>-</TD>
+</TR>
+<TR>
+<TD>S3 {7,10,11,13}</TD>
+<TD>-</TD>
+<TD>S8</TD>
+<TD>-</TD>
+<TD>S7</TD>
+<TD>S3</TD>
+<TD>S6</TD>
+<TD>-</TD>
+</TR>
+<TR>
+<TD>S4 {6}</TD>
+<TD>-</TD>
+<TD>-</TD>
+<TD>S3</TD>
+<TD>-</TD>
+<TD>-</TD>
+<TD>-</TD>
+<TD>-</TD>
+</TR>
+<TR>
+<TD>S5 {3}</TD>
+<TD>-</TD>
+<TD>-</TD>
+<TD>-</TD>
+<TD>S3</TD>
+<TD>-</TD>
+<TD>-</TD>
+<TD>-</TD>
+</TR>
+<TR>
+<TD>S6 {8}</TD>
+<TD>-</TD>
+<TD>-</TD>
+<TD>S9</TD>
+<TD>-</TD>
+<TD>-</TD>
+<TD>-</TD>
+<TD>-</TD>
+</TR>
+<TR>
+<TD>S7 {12}</TD>
+<TD>-</TD>
+<TD>-</TD>
+<TD>S3</TD>
+<TD>-</TD>
+<TD>-</TD>
+<TD>-</TD>
+<TD>-</TD>
+</TR>
+<TR>
+<TD>S8 {14}</TD>
+<TD>S10</TD>
+<TD>-</TD>
+<TD>-</TD>
+<TD>-</TD>
+<TD>-</TD>
+<TD>-</TD>
+<TD>-</TD>
+</TR>
+<TR>
+<TD>S9 {9}</TD>
+<TD>-</TD>
+<TD>-</TD>
+<TD>-</TD>
+<TD>S3</TD>
+<TD>-</TD>
+<TD>-</TD>
+<TD>-</TD>
+</TR>
+<TR>
+<TD>S10 {15}</TD>
+<TD>S11</TD>
+<TD>-</TD>
+<TD>-</TD>
+<TD>-</TD>
+<TD>-</TD>
+<TD>-</TD>
+<TD>-</TD>
+</TR>
+<TR>
+<TD>S11* {16}</TD>
+<TD>-</TD>
+<TD>-</TD>
+<TD>-</TD>
+<TD>-</TD>
+<TD>-</TD>
+<TD>-</TD>
+<TD>-</TD>
+</TR>
+</TABLE>
+    >];
+}

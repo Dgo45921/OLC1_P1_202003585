@@ -1,0 +1,15 @@
+digraph AFD {
+labelloc="t";
+    label="identificador";	fontname="Helvetica,Arial,sans-serif"
+	node [fontname="Helvetica,Arial,sans-serif"]
+	edge [fontname="Helvetica,Arial,sans-serif"]
+	rankdir=LR;
+begin[shape=none label=""];
+node[shape=circle]begin->S0; 
+	node [shape = doublecircle]; S1; 
+node [shape = circle]; 
+S0->S1 [label = "{abecedarioMinus}"];
+S1->S1 [label = "\"_\""];
+S1->S1 [label = "{abecedarioMinus}"];
+S1->S1 [label = "{digito}"];
+}

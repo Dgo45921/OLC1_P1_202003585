@@ -1,0 +1,26 @@
+digraph G{
+labelloc="t";
+    label="url"; graph [nodesep=0.5, ranksep=1, fontsize=10, rankdir=LR];begin[shape=none label=""];
+node [shape=doublecircle]; S17;
+node[shape=circle]begin->S0; 
+node[shape=circle]S0->S1[label="\"h\""];
+S1->S2[label="\"t\""];
+S2->S3[label="\"t\""];
+S3->S4[label="\"p\""];
+S4->S5[label="ε"];
+S5->S6[label="\"s\""];
+S6->S7[label="ε"];
+S4->S7[label="ε"];
+S7->S8[label="\":\""];
+S8->S9[label="\"/\""];
+S9->S10[label="\"/\""];
+S10->S11[label="ε"];
+S11->S12[label="{minuscula}"];
+S12->S11[label="ε"];
+S12->S13[label="ε"];
+S13->S14[label="\".\""];
+S14->S15[label="ε"];
+S15->S16[label="{minuscula}"];
+S16->S15[label="ε"];
+S16->S17[label="ε"];
+}

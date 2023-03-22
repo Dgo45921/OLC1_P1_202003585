@@ -1,0 +1,152 @@
+digraph G {
+    rankdir=LR
+    node [shape=none fontname=Helvetica]
+
+    A [label=<
+      <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+       <TR>
+<TD BGCOLOR="#ff6363">Estados/Terminales</TD>
+<TD BGCOLOR="#ff6363">{minuscula}</TD>
+<TD BGCOLOR="#ff6363">"."</TD>
+<TD BGCOLOR="#ff6363">"/"</TD>
+<TD BGCOLOR="#ff6363">":"</TD>
+<TD BGCOLOR="#ff6363">"s"</TD>
+<TD BGCOLOR="#ff6363">"p"</TD>
+<TD BGCOLOR="#ff6363">"t"</TD>
+<TD BGCOLOR="#ff6363">"h"</TD>
+</TR>
+<TR>
+<TD>S0 {0}</TD>
+<TD>-</TD>
+<TD>-</TD>
+<TD>-</TD>
+<TD>-</TD>
+<TD>-</TD>
+<TD>-</TD>
+<TD>-</TD>
+<TD>S1</TD>
+</TR>
+<TR>
+<TD>S1 {1}</TD>
+<TD>-</TD>
+<TD>-</TD>
+<TD>-</TD>
+<TD>-</TD>
+<TD>-</TD>
+<TD>-</TD>
+<TD>S2</TD>
+<TD>-</TD>
+</TR>
+<TR>
+<TD>S2 {2}</TD>
+<TD>-</TD>
+<TD>-</TD>
+<TD>-</TD>
+<TD>-</TD>
+<TD>-</TD>
+<TD>-</TD>
+<TD>S3</TD>
+<TD>-</TD>
+</TR>
+<TR>
+<TD>S3 {3}</TD>
+<TD>-</TD>
+<TD>-</TD>
+<TD>-</TD>
+<TD>-</TD>
+<TD>-</TD>
+<TD>S4</TD>
+<TD>-</TD>
+<TD>-</TD>
+</TR>
+<TR>
+<TD>S4 {4,5}</TD>
+<TD>-</TD>
+<TD>-</TD>
+<TD>-</TD>
+<TD>S6</TD>
+<TD>S5</TD>
+<TD>-</TD>
+<TD>-</TD>
+<TD>-</TD>
+</TR>
+<TR>
+<TD>S5 {5}</TD>
+<TD>-</TD>
+<TD>-</TD>
+<TD>-</TD>
+<TD>S6</TD>
+<TD>-</TD>
+<TD>-</TD>
+<TD>-</TD>
+<TD>-</TD>
+</TR>
+<TR>
+<TD>S6 {6}</TD>
+<TD>-</TD>
+<TD>-</TD>
+<TD>S7</TD>
+<TD>-</TD>
+<TD>-</TD>
+<TD>-</TD>
+<TD>-</TD>
+<TD>-</TD>
+</TR>
+<TR>
+<TD>S7 {7}</TD>
+<TD>-</TD>
+<TD>-</TD>
+<TD>S8</TD>
+<TD>-</TD>
+<TD>-</TD>
+<TD>-</TD>
+<TD>-</TD>
+<TD>-</TD>
+</TR>
+<TR>
+<TD>S8 {8}</TD>
+<TD>S9</TD>
+<TD>-</TD>
+<TD>-</TD>
+<TD>-</TD>
+<TD>-</TD>
+<TD>-</TD>
+<TD>-</TD>
+<TD>-</TD>
+</TR>
+<TR>
+<TD>S9 {8,9}</TD>
+<TD>S9</TD>
+<TD>S10</TD>
+<TD>-</TD>
+<TD>-</TD>
+<TD>-</TD>
+<TD>-</TD>
+<TD>-</TD>
+<TD>-</TD>
+</TR>
+<TR>
+<TD>S10 {10}</TD>
+<TD>S11</TD>
+<TD>-</TD>
+<TD>-</TD>
+<TD>-</TD>
+<TD>-</TD>
+<TD>-</TD>
+<TD>-</TD>
+<TD>-</TD>
+</TR>
+<TR>
+<TD>S11* {10,11}</TD>
+<TD>S11</TD>
+<TD>-</TD>
+<TD>-</TD>
+<TD>-</TD>
+<TD>-</TD>
+<TD>-</TD>
+<TD>-</TD>
+<TD>-</TD>
+</TR>
+</TABLE>
+    >];
+}

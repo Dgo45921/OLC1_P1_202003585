@@ -1,0 +1,16 @@
+digraph AFD {
+labelloc="t";
+    label="decimales";	fontname="Helvetica,Arial,sans-serif"
+	node [fontname="Helvetica,Arial,sans-serif"]
+	edge [fontname="Helvetica,Arial,sans-serif"]
+	rankdir=LR;
+begin[shape=none label=""];
+node[shape=circle]begin->S0; 
+	node [shape = doublecircle]; S3; 
+node [shape = circle]; 
+S0->S1 [label = "{digito}"];
+S1->S1 [label = "{digito}"];
+S1->S2 [label = "\".\""];
+S2->S3 [label = "{digito}"];
+S3->S3 [label = "{digito}"];
+}

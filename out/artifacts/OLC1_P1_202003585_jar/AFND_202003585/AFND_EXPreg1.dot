@@ -1,0 +1,17 @@
+digraph G{
+labelloc="t";
+    label="EXPreg1"; graph [nodesep=0.5, ranksep=1, fontsize=10, rankdir=LR];begin[shape=none label=""];
+node [shape=doublecircle]; S8;
+node[shape=circle]begin->S0; 
+node[shape=circle]S0->S1[label="ε"];
+S1->S2[label="{letra}"];
+S0->S3[label="ε"];
+S3->S4[label="\"2\""];
+S2->S5[label="ε"];
+S4->S5[label="ε"];
+S5->S6[label="ε"];
+S6->S7[label="{nums}"];
+S7->S6[label="ε"];
+S7->S8[label="ε"];
+S5->S8[label="ε"];
+}

@@ -1,0 +1,22 @@
+digraph AFD {
+labelloc="t";
+    label="EXPreg2";	fontname="Helvetica,Arial,sans-serif"
+	node [fontname="Helvetica,Arial,sans-serif"]
+	edge [fontname="Helvetica,Arial,sans-serif"]
+	rankdir=LR;
+begin[shape=none label=""];
+node[shape=circle]begin->S0; 
+	node [shape = doublecircle]; S4,S5; 
+node [shape = circle]; 
+S0->S1 [label = "{letra}"];
+S0->S1 [label = "\"2\""];
+S1->S1 [label = "{nums}"];
+S1->S2 [label = "{mayus}"];
+S1->S3 [label = "\"x\""];
+S1->S4 [label = "{separados}"];
+S2->S2 [label = "{mayus}"];
+S2->S4 [label = "{separados}"];
+S3->S5 [label = "{separados}"];
+S4->S2 [label = "{mayus}"];
+S4->S4 [label = "{separados}"];
+}

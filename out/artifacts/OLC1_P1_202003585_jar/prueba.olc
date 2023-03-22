@@ -4,7 +4,7 @@ CONJ: separados -> 2,a,e,R,d,0,9;
 CONJ: mayus-> G~O;
 CONJ: nums-> 1~5;
 CONJ: symbols-> #~;;
-lizama -> ..."a" "b"*"b"*|"a" "b";
+liz -> ..."a" "b"*"b"*|"a" "b";
 ekisde -> ... "a" "b" *| "1" "2" | "1" "2";
 EXPreg0 -> .| "a" "b" \";
 EXPreg1 -> . |{letra} "2" * {nums};

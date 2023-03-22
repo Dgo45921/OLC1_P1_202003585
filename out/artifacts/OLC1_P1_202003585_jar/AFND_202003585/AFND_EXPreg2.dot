@@ -1,0 +1,33 @@
+digraph G{
+labelloc="t";
+    label="EXPreg2"; graph [nodesep=0.5, ranksep=1, fontsize=10, rankdir=LR];begin[shape=none label=""];
+node [shape=doublecircle]; S20;
+node[shape=circle]begin->S0; 
+node[shape=circle]S0->S1[label="ε"];
+S1->S2[label="{letra}"];
+S0->S3[label="ε"];
+S3->S4[label="\"2\""];
+S2->S5[label="ε"];
+S4->S5[label="ε"];
+S5->S6[label="ε"];
+S6->S7[label="{nums}"];
+S7->S6[label="ε"];
+S7->S8[label="ε"];
+S5->S8[label="ε"];
+S8->S9[label="ε"];
+S9->S10[label="ε"];
+S10->S11[label="ε"];
+S11->S12[label="{separados}"];
+S10->S13[label="ε"];
+S13->S14[label="{mayus}"];
+S12->S15[label="ε"];
+S14->S15[label="ε"];
+S15->S10[label="ε"];
+S15->S16[label="ε"];
+S9->S16[label="ε"];
+S8->S17[label="ε"];
+S17->S18[label="\"x\""];
+S16->S19[label="ε"];
+S18->S19[label="ε"];
+S19->S20[label="{separados}"];
+}

@@ -1,0 +1,37 @@
+[
+  {
+    "ExpresionRegular": "ekisde",
+    "Valor": "\"ab122221\"",
+    "Resultado": true
+  },
+  {
+    "ExpresionRegular": "EXPreg1",
+    "Valor": "\"a12344445\"",
+    "Resultado": true
+  },
+  {
+    "ExpresionRegular": "EXPreg1",
+    "Valor": "\"a12344445c\"",
+    "Resultado": false
+  },
+  {
+    "ExpresionRegular": "EXPreg2",
+    "Valor": "\"a55559GJJJ0\"",
+    "Resultado": true
+  },
+  {
+    "ExpresionRegular": "EXPreg0",
+    "Valor": "\"b\\\"\"",
+    "Resultado": true
+  },
+  {
+    "ExpresionRegular": "EXPreg0",
+    "Valor": "\"a\\\"\"",
+    "Resultado": true
+  },
+  {
+    "ExpresionRegular": "EXPreg3",
+    "Valor": "\"\\\"xyzwwwwabb\"",
+    "Resultado": true
+  }
+]

@@ -1,0 +1,34 @@
+digraph G
+{
+fontsize="5"node [shape = record];nodo4 [label="{Primeros\n[0]}|{.|false|-1}|{Últimos\n[7]}"];
+nodo4 -> nodo5[minlen=3 ];
+nodo4 -> nodo19[minlen=3 ];
+nodo5 [label="{Primeros\n[0]}|{.|false|-1}|{Últimos\n[6]}"];
+nodo5 -> nodo6[minlen=3 ];
+nodo5 -> nodo7[minlen=3 ];
+nodo6 [label="{Primeros\n[0]}|{\\'|false|0}|{Últimos\n[0]}"];
+nodo7 [label="{Primeros\n[1, 2, 3, 4, 5]}|{.|false|-1}|{Últimos\n[6]}"];
+nodo7 -> nodo8[minlen=3 ];
+nodo7 -> nodo18[minlen=3 ];
+nodo8 [label="{Primeros\n[1, 2, 3, 4, 5]}|{+|false|-1}|{Últimos\n[1, 2, 3, 4, 5]}"];
+nodo8 -> nodo9[minlen=3 ];
+nodo9 [label="{Primeros\n[1, 2, 3, 4, 5]}|{\||false|-1}|{Últimos\n[1, 2, 3, 4, 5]}"];
+nodo9 -> nodo10[minlen=3 ];
+nodo9 -> nodo17[minlen=3 ];
+nodo10 [label="{Primeros\n[1, 2, 3, 4]}|{\||false|-1}|{Últimos\n[1, 2, 3, 4]}"];
+nodo10 -> nodo11[minlen=3 ];
+nodo10 -> nodo16[minlen=3 ];
+nodo11 [label="{Primeros\n[1, 2, 3]}|{\||false|-1}|{Últimos\n[1, 2, 3]}"];
+nodo11 -> nodo12[minlen=3 ];
+nodo11 -> nodo15[minlen=3 ];
+nodo12 [label="{Primeros\n[1, 2]}|{\||false|-1}|{Últimos\n[1, 2]}"];
+nodo12 -> nodo13[minlen=3 ];
+nodo12 -> nodo14[minlen=3 ];
+nodo13 [label="{Primeros\n[1]}|{\\n|false|1}|{Últimos\n[1]}"];
+nodo14 [label="{Primeros\n[2]}|{{minus}|false|2}|{Últimos\n[2]}"];
+nodo15 [label="{Primeros\n[3]}|{{mayus}|false|3}|{Últimos\n[3]}"];
+nodo16 [label="{Primeros\n[4]}|{{digito}|false|4}|{Últimos\n[4]}"];
+nodo17 [label="{Primeros\n[5]}|{\" \"|false|5}|{Últimos\n[5]}"];
+nodo18 [label="{Primeros\n[6]}|{\\'|false|6}|{Últimos\n[6]}"];
+nodo19 [label="{Primeros\n[7]}|{#|false|7}|{Últimos\n[7]}"];
+}

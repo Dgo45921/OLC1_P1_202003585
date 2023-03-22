@@ -1,0 +1,32 @@
+digraph G{
+labelloc="t";
+    label="cadena"; graph [nodesep=0.5, ranksep=1, fontsize=10, rankdir=LR];begin[shape=none label=""];
+node [shape=doublecircle]; S21;
+node[shape=circle]begin->S0; 
+node[shape=circle]S0->S1[label="\\'"];
+S1->S2[label="ε"];
+S2->S3[label="ε"];
+S3->S4[label="ε"];
+S4->S5[label="ε"];
+S5->S6[label="ε"];
+S6->S7[label="\\n"];
+S5->S8[label="ε"];
+S8->S9[label="{minus}"];
+S7->S10[label="ε"];
+S9->S10[label="ε"];
+S4->S11[label="ε"];
+S11->S12[label="{mayus}"];
+S10->S13[label="ε"];
+S12->S13[label="ε"];
+S3->S14[label="ε"];
+S14->S15[label="{digito}"];
+S13->S16[label="ε"];
+S15->S16[label="ε"];
+S2->S17[label="ε"];
+S17->S18[label="\" \""];
+S16->S19[label="ε"];
+S18->S19[label="ε"];
+S19->S2[label="ε"];
+S19->S20[label="ε"];
+S20->S21[label="\\'"];
+}

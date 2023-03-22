@@ -1,0 +1,14 @@
+digraph AFD {
+labelloc="t";
+    label="EXPreg1";	fontname="Helvetica,Arial,sans-serif"
+	node [fontname="Helvetica,Arial,sans-serif"]
+	edge [fontname="Helvetica,Arial,sans-serif"]
+	rankdir=LR;
+begin[shape=none label=""];
+node[shape=circle]begin->S0; 
+	node [shape = doublecircle]; S1; 
+node [shape = circle]; 
+S0->S1 [label = "{letra}"];
+S0->S1 [label = "\"2\""];
+S1->S1 [label = "{nums}"];
+}

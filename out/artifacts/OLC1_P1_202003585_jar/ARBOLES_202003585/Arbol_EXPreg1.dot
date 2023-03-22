@@ -1,0 +1,18 @@
+digraph G
+{
+fontsize="5"node [shape = record];nodo1 [label="{Primeros\n[0, 1]}|{.|false|-1}|{Últimos\n[3]}"];
+nodo1 -> nodo2[minlen=3 ];
+nodo1 -> nodo8[minlen=3 ];
+nodo2 [label="{Primeros\n[0, 1]}|{.|false|-1}|{Últimos\n[0, 1, 2]}"];
+nodo2 -> nodo3[minlen=3 ];
+nodo2 -> nodo6[minlen=3 ];
+nodo3 [label="{Primeros\n[0, 1]}|{\||false|-1}|{Últimos\n[0, 1]}"];
+nodo3 -> nodo4[minlen=3 ];
+nodo3 -> nodo5[minlen=3 ];
+nodo4 [label="{Primeros\n[0]}|{{letra}|false|0}|{Últimos\n[0]}"];
+nodo5 [label="{Primeros\n[1]}|{\"2\"|false|1}|{Últimos\n[1]}"];
+nodo6 [label="{Primeros\n[2]}|{*|true|-1}|{Últimos\n[2]}"];
+nodo6 -> nodo7[minlen=3 ];
+nodo7 [label="{Primeros\n[2]}|{{nums}|false|2}|{Últimos\n[2]}"];
+nodo8 [label="{Primeros\n[3]}|{#|false|3}|{Últimos\n[3]}"];
+}

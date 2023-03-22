@@ -1,0 +1,27 @@
+digraph G {
+    rankdir=LR
+    node [shape=none fontname=Helvetica]
+
+    A [label=<
+      <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+       <TR>
+<TD BGCOLOR="#ff6363">Estados/Terminales</TD>
+<TD BGCOLOR="#ff6363">{nums}</TD>
+<TD BGCOLOR="#ff6363">"2"</TD>
+<TD BGCOLOR="#ff6363">{letra}</TD>
+</TR>
+<TR>
+<TD>S0 {0,1}</TD>
+<TD>-</TD>
+<TD>S1</TD>
+<TD>S1</TD>
+</TR>
+<TR>
+<TD>S1* {2,3}</TD>
+<TD>S1</TD>
+<TD>-</TD>
+<TD>-</TD>
+</TR>
+</TABLE>
+    >];
+}
